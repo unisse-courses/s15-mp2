@@ -1,1 +1,5 @@
-# s15-mp2
+# LaSell
+
+## Team Members:
+
+* LOQUINTE, Kenneth Uriel
