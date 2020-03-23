@@ -1,0 +1,23 @@
+{
+  "name": "s15-mp2",
+  "version": "1.0.0",
+  "description": "LaSell -- a bidding site for Lasallians",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unisse-courses/s15-mp2.git"
+  },
+  "author": "Kenneth Loquinte, Ryan Sarabia, Brian So",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/unisse-courses/s15-mp2/issues"
+  },
+  "homepage": "https://github.com/unisse-courses/s15-mp2#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0"
+  }
+}
