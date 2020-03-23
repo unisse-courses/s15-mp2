@@ -1,3 +1,7 @@
+#OS-generated
+.DS_Store
+desktop.ini
+
 # Logs
 logs
 *.log
