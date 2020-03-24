@@ -1,9 +1,62 @@
-/* General */
+/* Layouting purposes only (delete when finished) */
+body, body *{
+    border: 0.5px solid red;
+}
 
+
+/* General */
+body > *{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* Home */
+.home_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 10px;
+    justify-items: center;
+}
 
 /* Cards */
 
 .card {
+    width: 480px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+}
+
+.card_user {
+    display:grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    justify-content: center;
+}
+
+.card_user > p {
+    margin: 1px;
+}
+
+.card_user .name {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.card_user .location {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.card_user .rating {
+    grid-row: 1/3;
+    justify-self: center;
+    align-self: center;
+}
+
+.card_user >  img {
+    object-fit: cover;
+    width: 40px;
+    height: 40px;
+    border-radius: 75px;
+    grid-row: 1/3;
+    justify-self: center;
 }

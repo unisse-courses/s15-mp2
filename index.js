@@ -24,8 +24,10 @@ app.get('/home', function(req, res){
         title: "Home",
         auctions: [
             {
-                name: "buboi",
-                img: "images/merienda_dp.jpg"
+                name: "Merienda Cosgrove",
+                location: "Pasay City",
+                img: "images/merienda_dp.jpg",
+                rating: 4.5
             },
             {
                 name: "baboi"
