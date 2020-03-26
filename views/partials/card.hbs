@@ -1,23 +1,32 @@
 <div class="card">
     <div class="card_user">
-        {{#if img}}
-            <img src="{{img}}">
+        {{#if sellerImg}}
+            <img src="{{sellerImg}}">
         {{else}}
             <img src="images/defaultProfile.png">
         {{/if}}
-        <p class="name">{{name}}</p>
+        <p class="sellerName">{{sellerName}}</p>
         <p class="location">{{location}}</p>
         <p class="rating">{{rating}}</p>
     </div>
 
     <div class="card_image">
-
-
+        <img src="{{productImg}}">
     </div>
 
     <div class="card_info">
+        <p class="productName">{{productName}}</p>
+        {{#each categories}}
+            <p class="category">{{this}}</p>
+        {{/each}}
 
-        
+        <div class="status">
+            <img src="{{bidIcon}}"> 
+            <p class="bid">{{bidPrice}}</p>
+            <img src="{{eyeIcon}}">
+            <p class="watchers">{{watchers}}</p>
+            <p class="expiry">End: {{expiryDate}} {{expiryTime}}</p>
+        </div>
     </div>
 
 
