@@ -24,10 +24,17 @@ app.get('/home', function(req, res){
         title: "Home",
         auctions: [
             {
-                name: "Merienda Cosgrove",
+                sellerName: "meriendacosgrove",
                 location: "Pasay City",
-                img: "images/merienda_dp.jpg",
-                rating: 4.5
+                sellerImg: "images/merienda_dp.jpg",
+                rating: 4.5,
+                productName: "Chestplate",
+                productImg: "images/chestplate.jpg",
+                categories: ["home", "living", "furniture"],
+                expiryDate: "April 30, 2020",
+                expiryTime: "23:00",
+                bidPrice: 25.00,
+                watchers: 21
             },
             {
                 name: "baboi"
