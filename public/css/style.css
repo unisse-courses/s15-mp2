@@ -27,8 +27,20 @@ body > *{
     font-weight: bold;
 }
 
+/* HEADER */
 
-/* Home */
+.nav_container {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+}
+
+#nav {
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr
+    align-self: center;
+}
+
+/* HOME */
 .home_container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -44,7 +56,7 @@ body > *{
 }  not sure with dimensions pa */
 
 
-/* Cards */
+/* CARDS */
 
 .card {
     width: 350px;
