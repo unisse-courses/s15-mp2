@@ -5,7 +5,7 @@ const app = express();
 const port = 3000;
 
 /* DATA */
- var auctions = [
+var auctions = [
     {
         sellerName: "meriendacosgrove",
         location: "Pasay City",
@@ -61,8 +61,10 @@ app.get('/home', function(req, res){
     })
 });
 
-// app.get('/post/:auctionID', function(req,res){
-//     res.render
-
-// }
+app.get('/auction/:id', function(req,res){
+    res.render('auction',{
+        title: auctions[req.params.id].productName,
+        auction: auctions[req.params.id]
+    })
+});
 
