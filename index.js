@@ -27,7 +27,7 @@ app.get('/home', function(req, res){
                 sellerName: "meriendacosgrove",
                 location: "Pasay City",
                 sellerImg: "images/merienda_dp.jpg",
-                rating: 4.5,
+                rating: 4.52,
                 productName: "Chestplate",
                 productImg: "images/chestplate.jpg",
                 categories: ["home", "living", "furniture"],
@@ -37,8 +37,21 @@ app.get('/home', function(req, res){
                 watchers: 21
             },
             {
-                name: "baboi"
+                sellerName: "baboi",
+                location: "Pig farm"
+            },
+            {
+                sellerName: "baboi"
+            },
+            {
+                sellerName: "baboi"
             }
         ]
     })
 });
+
+// app.get('/post/:auctionID', function(req,res){
+//     res.render
+
+// }
+
