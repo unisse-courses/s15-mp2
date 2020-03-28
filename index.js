@@ -5,10 +5,39 @@ const mongodb = require('mongodb');
 const app = express();
 const port = 3000;
 
+
 const mongoClient = mongodb.MongoClient;
 const databaseURL = "mongodb://localhost:27017/";
 const dbname = "laselldb";
 const options = { useUnifiedTopology: true };
+
+/* DATA */
+var auctions = [
+    {
+        sellerName: "meriendacosgrove",
+        location: "Pasay City",
+        sellerImg: "images/merienda_dp.jpg",
+        rating: 4.52,
+        productName: "Chestplate",
+        productImg: "images/chestplate.jpg",
+        categories: ["home", "living", "furniture"],
+        expiryDate: "April 30, 2020",
+        expiryTime: "23:00",
+        bidPrice: 25.00,
+        watchers: 21
+    },
+    {
+        sellerName: "baboi",
+        location: "Pig farm"
+    },
+    {
+        sellerName: "baboi"
+    },
+    {
+        sellerName: "baboi"
+    }
+]
+/* END OF DATA */
 
 app.use(express.static("public"));
 
@@ -25,37 +54,12 @@ app.engine('hbs', hbs({
 
 app.set('view engine', 'hbs');
 
-app.get('/home', function(req, res){
-    res.render('home',{
-        title: "Home",
-        auctions: [
-            {
-                sellerName: "meriendacosgrove",
-                location: "Pasay City",
-                sellerImg: "images/merienda_dp.jpg",
-                rating: 4.52,
-                productName: "Chestplate",
-                productImg: "images/chestplate.jpg",
-                categories: ["home", "living", "furniture"],
-                expiryDate: "April 30, 2020",
-                expiryTime: "23:00",
-                bidPrice: 25.00,
-                watchers: 21
-            },
-            {
-                sellerName: "baboi",
-                location: "Pig farm"
-            },
-            {
-                sellerName: "baboi"
-            },
-            {
-                sellerName: "baboi"
-            }
-        ]
+app.get('/', function(req, res){
+    res.render('login',{ 
+        title: "Login/Register",
+        layout: "login"
     })
 });
-
 
 //Create collections (entities)
 mongoClient.connect(databaseURL, options, function(err, client) {
@@ -137,6 +141,18 @@ mongoClient.connect(databaseURL, options, function(err, client) {
 
 // app.get('/post/:auctionID', function(req,res){
 //     res.render
+=======
+app.get('/explore', function(req, res){
+    res.render('explore',{
+        title: "Explore",
+        auctions
+    })
+});
 
-// }
+app.get('/auction/:id', function(req,res){
+    res.render('auction',{
+        title: auctions[req.params.id].productName,
+        auction: auctions[req.params.id]
+    })
+});
 
