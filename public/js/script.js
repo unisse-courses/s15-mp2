@@ -11,7 +11,7 @@ var validateLogin = function(){
 /* NAVIGATION FUNCTIONS */
 
 var toHome = function(){
-    window.location.href = '/home';
+    window.location.href = '/explore';
 }
 
 var toAuction = function(key){

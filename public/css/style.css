@@ -33,35 +33,61 @@ body > *{
 
 .nav_container {
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 1fr 20fr;
     align-items: center;
     padding: 1px;
-    margin: 20px;
+    margin: 30px;
+    column-gap: 30px;
 }
 
-.nav_container h1 {
+.nav_container h1 { 
     margin: 1px;
+    justify-self: start;
+    letter-spacing: 3px;
+    
 }
 
 .nav {
     display:grid;
-    grid-template-columns: 4fr 3fr;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
+    justify-self: stretch;
+}
+
+.nav a{
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px; 
+    font-weight: bold;
+    color: black;
+    transition: 0.1s ease-out;
+}
+
+.nav a:hover{
+    color:gray;
 }
 
 .nav_left {
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: start;
     justify-self: start;
+    column-gap: 15px;
 }
 
 .nav_right {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
     justify-self: end;
+    column-gap: 15px;
 }
 
 
 
 
-/* HOME */
-.home_container {
+/* EXPLORE */
+.explore_container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     column-gap: 10px;
@@ -70,7 +96,7 @@ body > *{
 }
 
 /* @media only screen and (max-width: 800px){
-    .home_container {
+    .explore_container {
         grid-template-columns: 1fr;
     }
 }  not sure with dimensions pa */
