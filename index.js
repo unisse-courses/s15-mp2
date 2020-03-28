@@ -54,9 +54,9 @@ app.get('/', function(req, res){
     })
 });
 
-app.get('/home', function(req, res){
-    res.render('home',{
-        title: "Home",
+app.get('/explore', function(req, res){
+    res.render('explore',{
+        title: "Explore",
         auctions
     })
 });
