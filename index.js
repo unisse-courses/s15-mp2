@@ -63,15 +63,11 @@ app.get('/', function(req, res){
 
 //Create collections (entities)
 mongoClient.connect(databaseURL, options, function(err, client) {
-    /**
-      Only do database manipulation inside of the connection
-      When a connection is made, it will try to make the database
-      automatically. The collection(like a table) needs to be made.
-    **/
+   
     if (err) throw err;
     const dbo = client.db(dbname);
   
-    //Will create a collection if it has not yet been made
+    //Will create collections if it has not yet been made
     dbo.createCollection("users", function(err, res) {
       if (err) throw err;
       console.log("users created!");
@@ -141,7 +137,6 @@ mongoClient.connect(databaseURL, options, function(err, client) {
 
 // app.get('/post/:auctionID', function(req,res){
 //     res.render
-=======
 app.get('/explore', function(req, res){
     res.render('explore',{
         title: "Explore",
