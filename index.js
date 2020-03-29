@@ -97,42 +97,27 @@ mongoClient.connect(databaseURL, options, function(err, client) {
 
 //CRUD
 
-//Create
-// mongoClient.connect(databaseURL, function(err, client){
+//Register (Create on users)
 
-//     if(err) throw err;
-//     const dbo = client.db("laselldb");
+//Log in (Read on users)
 
-//     const collection = dbo.collection("nameOfEntity");
+//Add item for auction (receive user's username/update on user/create on auctions)
 
-//     //insertOne for single, insertMany for array
-//     collection.insertOne(data,/*, [options], */function(err, res){
-//         if(err) throw err;
-//         console.log("Insert Successful!");
-//         client.close();
-//     })
+//Bid on auction (receive user's username/create on bids/update on auctions)
 
-// })
+//Watch an auction (receive user's username/receive auction item's name/create on watched/update on auctions)
 
-//Read
-//findOne = retrieves first match
-//find = creates cursor for query to iterate over all results
-//findOneAndDelete
-//findOneAndReplace
-//findOneAndUpdate = one step to delete/replace/update
-//queryObj in the form {field: 'value'}
-// mongoClient.connect(databaseURL, function(err,client){
-//     if(err) throw err;
+//Search based on categories(read on auctions [use query an array with embedded documents])
 
-//     const dbo = client.db("laselldb");
+//View auction(read on bids/read on watched/read on auctions)
 
-//     dbo.collection("nameOfEntity").findOne(queryObj, /*, [options], */ function(err, res){
-//     //dbo.collection("nameOfEntity").find({}).toArray(function(err, res){
-//         if(err) throw err;
-//         console.log(res); //Prints out the document/array of documents
-//         client.close();
-//     })
-// })
+//Delete auction(delete on auctions)
+
+//View self profile(read on bids/read on watched/read on auctions)
+
+//view others profile(read on user/read on auctions)
+
+//rate user(receivecreate on ratings)
 
 
 // app.get('/post/:auctionID', function(req,res){
