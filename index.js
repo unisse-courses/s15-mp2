@@ -54,7 +54,7 @@ app.engine('hbs', hbs({
 
 app.set('view engine', 'hbs');
 
-app.get('/', function(req, res){
+app.get(['/','/login'], function(req, res){
     res.render('login',{ 
         title: "Login/Register",
         layout: "login"
