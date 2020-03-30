@@ -130,15 +130,38 @@ app.get(['/','/login'], function(req, res){
 
 app.post('/validateLogin', function(req, res){
     var valid = true;
-    //check if user exists
-    //check if username and password match
+    mongoClient.connect(databaseURL, options, function(err, client) {
+        if(err) throw err;
+        // Connect to the same database
+        const dbo = client.db(dbname);
+      
+        dbo.collection("users").find({$or: [{ username: req.body.username }, { email: req.body.email }]}).limit(1).toArray(function(err, result) {
+            if(err) throw err;
+        
+            console.log(result);
+            console.log("Read Successful!");
 
+            
+            if (result.length == 0){
+                console.log("Log in invalid")
+                thisSession = req.session;
+                thisSession.email = req.body.email;
+                res.end("");
+            }
+            else{
+                console.log("Log in successful");
+                client.close();
+                res.send("valid");
+
+            }  
+        });
+      });
     //do everything below only if valid
-    if(valid){
-        thisSession = req.session;
-        thisSession.email = req.body.email;
-        res.end("valid"); 
-    }
+    // if(valid){
+    //     thisSession = req.session;
+    //     thisSession.email = req.body.email;
+    //     res.end("valid"); 
+    // }
 })
 
 app.post('/validateRegister', function(req, res){
