@@ -1,10 +1,19 @@
 const express = require("express");
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const hbs = require("express-handlebars");
+const bodyParser = require('body-parser');
 const mongodb = require('mongodb');
 
 const app = express();
 const port = 3000;
 
+app.use(cookieParser());
+app.use(session({secret: "sikretong malupet"}));
+var thisSession;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const mongoClient = mongodb.MongoClient;
 const databaseURL = "mongodb://localhost:27017/";
@@ -53,13 +62,6 @@ app.engine('hbs', hbs({
 }));
 
 app.set('view engine', 'hbs');
-
-app.get('/', function(req, res){
-    res.render('login',{ 
-        title: "Login/Register",
-        layout: "login"
-    })
-});
 
 //Create collections (entities)
 mongoClient.connect(databaseURL, options, function(err, client) {
@@ -119,9 +121,39 @@ mongoClient.connect(databaseURL, options, function(err, client) {
 
 //rate user(receivecreate on ratings)
 
+app.get(['/','/login'], function(req, res){
+    res.render('login',{ 
+        title: "Login/Register",
+        layout: "login"
+    })
+});
 
-// app.get('/post/:auctionID', function(req,res){
-//     res.render
+app.post('/validateLogin', function(req, res){
+    var valid = true;
+    //check if user exists
+    //check if username and password match
+
+    //do everything below only if valid
+    if(valid){
+        thisSession = req.session;
+        thisSession.email = req.body.email;
+        res.end("valid"); 
+    }
+})
+
+app.post('/validateRegister', function(req, res){
+    var valid = true;
+
+    // check if user already exists
+    // save everything
+
+    if(valid){
+        thisSession = req.session;
+        thisSession.email = req.body.email;
+        res.end("valid"); 
+    }
+})
+
 app.get('/explore', function(req, res){
     res.render('explore',{
         title: "Explore",

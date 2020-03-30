@@ -1,1 +1,27 @@
-<button onclick="validateLogin()">LOGIN</button>
+
+<div>
+    <div id="tabs">
+        <button class="tablinks" onclick="logregSwitchTab(event, 'Login')">Login</button>
+        <button class="tablinks" onclick="logregSwitchTab(event, 'Register')" id="defaultTab">Register</button>
+    </div>
+    <p id="errorMsg"></p>
+
+    <div id="loginDiv">
+        <input type="text" id="loginEmail" name="email" placeholder="Email Address">
+        <input type="password" id="loginPassword" name="password" placeholder="Password">
+        <button onclick="validateLogin()">LOG IN</button>
+    </div>
+
+    <div id="registerDiv" hidden>
+        <div id="regphoto">
+            <input type="file" name="file" id="file" accept="image/*">
+            <button id="uploadImgBtn"> Upload your photo </button>
+            <img id="imgPreview" src="images/questionmark.png"> 
+        </div>
+        <input type="text" id="username" name="username" placeholder="Username"> 
+        <input type="text" id="registerEmail" name="email" placeholder="Email Address"> 
+        <input type="password" id="registerPassword" name="password" placeholder="Password"> 
+        <input type="password" id="confirmPassword" name="confirmpassword" placeholder="Confirm Password">
+        <button onclick="validateRegister()">REGISTER</button>
+    </div>
+</div>
