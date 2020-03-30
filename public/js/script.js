@@ -50,6 +50,7 @@ var validateRegister = function(){
     var confirmPassword = $("#confirmPassword").val();
     var valid = true;
 
+
     if(email == "" || username == "" || password == "" || confirmPassword == ""){
         $("#errorMsg").text("some required input fields are empty.");
         valid = false;
@@ -59,7 +60,13 @@ var validateRegister = function(){
     }
     
     if(valid){
-        $.post("/validateLogin",{img:img, email:email, username:username, password:password},function(data){
+        var newUser = {
+            email:email,
+            img: img,
+            username:username,
+            password:password,
+        }    
+        $.post("validateRegister", newUser,function(data){
             if(data==='valid') {
                 toHome();
             } else{
