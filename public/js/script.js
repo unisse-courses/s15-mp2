@@ -31,7 +31,13 @@ var validateLogin = function(){
     // validate if password match
 
     if(valid){
-        toHome();
+        $.post("validateLogin",{email:email,password:password},function(data){
+            if(data==="valid") {
+                toHome();
+            } else{
+                $("#errorMsg").text("Invalid Username or Password.");
+            }
+        });
     }
 }
 
@@ -47,17 +53,19 @@ var validateRegister = function(){
     if(email == "" || username == "" || password == "" || confirmPassword == ""){
         $("#errorMsg").text("some required input fields are empty.");
         valid = false;
-    }
-
-    if(password != confirmPassword){
+    } else if(password != confirmPassword){
         $("#errorMsg").text("passwords do not match.");
         valid = false;
     }
     
-    // validate if exists
-
     if(valid){
-        toHome();
+        $.post("/validateLogin",{img:img, email:email, username:username, password:password},function(data){
+            if(data==='valid') {
+                toHome();
+            } else{
+                $("#errorMsg").text("User already exists");
+            }
+        });
     }
 }
 
@@ -74,7 +82,6 @@ var logregSwitchTab = function (event, tabName){
         $("#registerDiv").hide();
         $("#loginDiv").show();
     }
-
     event.currentTarget.className += " active";
 }
 
