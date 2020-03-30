@@ -142,16 +142,57 @@ app.post('/validateLogin', function(req, res){
 })
 
 app.post('/validateRegister', function(req, res){
-    var valid = true;
 
-    // check if user already exists
-    // save everything
-
-    if(valid){
-        thisSession = req.session;
-        thisSession.email = req.body.email;
-        res.end("valid"); 
+    const newUser = {
+        username: req.body.username,
+        email: req.body.email,
+        img: req.body.img,
+        password: req.body.password
     }
+
+    mongoClient.connect(databaseURL, options, function(err, client) {
+        if(err) throw err;
+        // Connect to the same database
+        const dbo = client.db(dbname);
+      
+        dbo.collection("users").find({$or: [{ username: req.body.username }, { email: req.body.email }]}).limit(1).toArray(function(err, result) {
+            if(err) throw err;
+        
+            console.log(result);
+            console.log("Read Successful!");
+
+            
+            if (result.length == 0){
+                dbo.collection("users").insertOne(newUser, function(err, res) {
+                    if (err) throw err;
+
+                    console.log(res);
+                    console.log("Insert Successful!");
+                  
+                    client.close();
+                  });
+
+                thisSession = req.session;
+                thisSession.email = req.body.email;
+                res.end("valid");
+            }
+
+            else{
+                console.log("Registration invalid");
+                client.close();
+                res.send("");
+
+            }
+
+        
+        });
+      });
+
+    // if(valid){
+    //     thisSession = req.session;
+    //     thisSession.email = req.body.email;
+    //     res.end("valid"); 
+    // }
 })
 
 app.get('/explore', function(req, res){
