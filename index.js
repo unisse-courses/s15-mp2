@@ -25,15 +25,23 @@ var auctions = [
     {
         sellerName: "meriendacosgrove",
         location: "Pasay City",
-        sellerImg: "images/merienda_dp.jpg",
+        sellerImg: "/images/merienda_dp.jpg",
         rating: 4.52,
-        productName: "Chestplate",
-        productImg: "images/chestplate.jpg",
+        contactNum: "09554321234",
+        productName: "Chestplate Na Pwede Gawing Stool",
+        productImg: "/images/chestplate.jpg",
         categories: ["home", "living", "furniture"],
         expiryDate: "April 30, 2020",
         expiryTime: "23:00",
+        description: `  Perfect item for those who want the minimalist look
+                        with a touch of nature. Chair is very sturdy and can 
+                        hold up to 100kg of weight. I can deliver your the item
+                        via Lalamove or we can meet up @ Taft.
+                        Increments of 20`,
         bidPrice: 25.00,
-        watchers: 21
+        startPrice: 20.00,
+        watchers: 21,
+        delivery: "Meetup @ Taft, Lalamove"
     },
     {
         sellerName: "baboi",
