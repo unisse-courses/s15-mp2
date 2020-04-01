@@ -129,6 +129,15 @@ mongoClient.connect(databaseURL, options, function(err, client) {
 
 //rate user(receivecreate on ratings)
 
+function checkLogIn (req, res, next) {
+    thisSession = req.session;
+    if(thisSession.email){
+        next();
+    } else {
+        res.redirect('login');
+    }
+}
+
 app.get(['/','/login'], function(req, res){
     res.render('login',{ 
         title: "Login/Register",
@@ -151,14 +160,15 @@ app.post('/validateLogin', function(req, res){
 
             
             if (result.length == 0){
-                console.log("Log in invalid")
-                thisSession = req.session;
-                thisSession.email = req.body.email;
+                console.log("Log in invalid");
+                client.close();
                 res.end("");
             }
             else{
                 console.log("Log in successful");
                 client.close();
+                thisSession = req.session;
+                thisSession.email = req.body.email;
                 res.send("valid");
 
             }  
@@ -214,8 +224,6 @@ app.post('/validateRegister', function(req, res){
                 res.send("");
 
             }
-
-        
         });
       });
 
@@ -226,21 +234,21 @@ app.post('/validateRegister', function(req, res){
     // }
 })
 
-app.get('/explore', function(req, res){
+app.get('/explore', checkLogIn, function(req, res){
     res.render('explore',{
         title: "Explore",
         auctions
     })
 });
 
-app.get('/auction/:id', function(req,res){
+app.get('/auction/:id', checkLogIn, function(req,res){
     res.render('auction',{
         title: auctions[req.params.id].productName,
         auction: auctions[req.params.id]
     })
 });
 
-app.get('/activity', function(req,res){
+app.get('/activity', checkLogIn, function(req,res){
     res.render('activity',{
         title: "Activity",
         watched: auctions,
