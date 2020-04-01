@@ -134,7 +134,7 @@ function checkLogIn (req, res, next) {
     if(thisSession.email){
         next();
     } else {
-        res.redirect('login');
+        res.redirect('/login');
     }
 }
 
@@ -240,6 +240,28 @@ app.get('/explore', checkLogIn, function(req, res){
         auctions
     })
 });
+
+app.get('/create', checkLogIn, function(req,res){
+    res.render('create',{
+        title: "Create Auction"
+    })
+});
+
+app.post('/createAuction', checkLogIn, function(req, res){
+    var newAuction = {
+        productName:req.body.productName,
+        description:req.body.description,
+        delivery:req.body.delivery,
+        contactNum:req.body.contactNum,
+        expiryDate:req.body.expiryDate,
+        expiryTime:req.body.expiryTime,
+        startingBid:req.body.startingBid,
+        increments:req.body.increments,
+        productImg:req.body.productImg
+    }
+    //ikaw na bahala dito ryan
+    
+})
 
 app.get('/auction/:id', checkLogIn, function(req,res){
     res.render('auction',{

@@ -32,8 +32,18 @@ $(document).ready(function(){
             reader.readAsDataURL(file.prop('files')[0]);
         }
     });
-});
 
+    var now = new Date();
+    var tomorrow = ("0" + (now.getDate()+1)).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var date = now.getFullYear()+"-"+(month)+"-"+(tomorrow);
+    console.log(date);
+    $("#expiryDate").attr('min', date);
+
+    // $("#startingBid").keypress(function (evt) {
+    //     evt.preventDefault();
+    // });
+});
 
 /* VALIDATION FUNCTIONS */
 var validateLogin = function(){
@@ -92,6 +102,41 @@ var validateRegister = function(){
             } else{
                 $("#errorMsg").text("User already exists");
             }
+        });
+    }
+}
+
+var createAuction = function(){
+    var productName = $("#productName").val();
+    var description = $("#productDescription").val();
+    var delivery = $("#delivery").val();
+    var contactNum = $("#contactNum").val();
+    var expiryDate = $("#expiryDate").val();
+    var expiryTime = $("#expiryTime").val();
+    var startingBid = $("#startingBid").val();
+    var increments = $("#increments").val();
+    var productImg = $("#imgPreview").attr("src");
+
+    if(productName == "" || description == "" ||
+        delivery == "" || contactNum == "" || expiryDate == "" || 
+        expiryTime == "" || startingBid == "" || increments == ""){
+        $("#errorMsg").text("some required input fields are empty.");
+        console.log("error");
+    }else{
+        var newAuction = {
+            productName:productName,
+            description:description,
+            delivery:delivery,
+            contactNum:contactNum,
+            expiryDate:expiryDate,
+            expiryTime:expiryTime,
+            startingBid:startingBid,
+            increments:increments,
+            productImg:productImg
+        }
+        $.post("createAuction", newAuction, function(data){
+            console.log("Auction Created");
+            toHome();
         });
     }
 }
