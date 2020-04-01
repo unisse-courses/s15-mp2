@@ -1,0 +1,19 @@
+<div>
+    <h1>{{title}}</h1>
+    <div id="watchedContainer">
+        <h2>Watched</h2>
+        <div id="watchedList">
+            {{#each watched}}
+                {{> tile}}
+            {{/each}}
+        </div>
+    </div>
+    <div id="bidsContainer">
+        <h2>Bids</h2>
+        <div id="bidsList">
+            {{#each bids}}
+                {{> tile}}
+            {{/each}}
+        </div>
+    </div>
+</div>
