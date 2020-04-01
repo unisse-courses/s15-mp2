@@ -240,3 +240,11 @@ app.get('/auction/:id', function(req,res){
     })
 });
 
+app.get('/activity', function(req,res){
+    res.render('activity',{
+        title: "Activity",
+        watched: auctions,
+        bids: auctions,
+    })
+});
+
