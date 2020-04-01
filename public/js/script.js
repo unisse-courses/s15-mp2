@@ -1,5 +1,25 @@
 $(document).ready(function(){
 
+    $.each( $(".nav_left").children(), function(i, val){
+        if($(this).attr("href")==window.location.pathname) {
+            $(this).attr("class","activeTab");
+        }
+        else {
+            $(this).attr("class",""); 
+        }
+    });
+
+    // for (i in $("nav_left").children())
+    // {
+    //     console.log(i);
+    //     if($(this).attr("href")==window.location.pathname) {
+    //         $(this).attr("class","activeTab");
+    //     }
+    //     else {
+    //         $(this).attr("class",""); 
+    //     }
+    // }
+
 });
 
 

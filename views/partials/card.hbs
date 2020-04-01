@@ -1,5 +1,5 @@
 <div class="card" onclick="toAuction({{@index}})">
-    <div class="card_user">
+    <div class="seller_info">
         {{#if sellerImg}}
             <img src="{{sellerImg}}">
         {{else}}
@@ -16,16 +16,14 @@
 
     <div class="card_info">
         <p class="productName">{{productName}}</p>
-        {{#each categories}}
-            <p class="category">{{this}}</p>
-        {{/each}}
 
         <div class="status">
             <img id="bidIcon"> 
             <p class="bid">{{bidPrice}}</p>
             <img id="eyeIcon">
             <p class="watchers">{{watchers}}</p>
-            <p class="expiry">End: {{expiryDate}} {{expiryTime}}</p>
+            <img id="expiryIcon">
+            <p class="expiry"> {{expiryDate}} {{expiryTime}}</p>
         </div>
     </div>
 
