@@ -31,7 +31,6 @@ $(document).ready(function(){
             var reader = new FileReader();
             reader.onload = function(e) {
                 $("#imgPreview").attr("src", e.target.result);
-                console.log($("#imgPreview").attr("src"));
             }
             reader.readAsDataURL(file.prop('files')[0]);
         }
@@ -42,14 +41,12 @@ $(document).ready(function(){
     var day = ("0" + tomorrow.getDate()).slice(-2);
     var month = ("0" + (tomorrow.getMonth() + 1)).slice(-2);
     date = tomorrow.getFullYear()+"-"+(month)+"-"+(day);
-    console.log(date);
     $("#expiryDate").attr('min', date);
 
     $("#expiryDate").change(function(){
         if($("#expiryDate").val() == date){
             var hour = tomorrow.getHours();
             var min = tomorrow.getMinutes();
-            console.log(hour+":"+min);
             $("#expiryTime").attr('min', hour+":"+min);
         } else {
             $("#expiryTime").attr('min', "00:00");
@@ -139,10 +136,8 @@ var createAuction = function(){
         delivery == "" || contactNum == "" || expiryDate == "" || 
         expiryTime == "" || startingBid == "" || increments == ""){
         $("#errorMsg").text("some required input fields are empty.");
-        console.log("error");
     } else if($("#expiryDate").val() == date && 
     $("#expiryTime").val() < (tomorrow.getHours()+":"+tomorrow.getMinutes())){
-        console.log("buboi");
         $("#errorMsg").text("minimum due time is 24 hours from current time.");
     } else{
         var newAuction = {
@@ -157,7 +152,6 @@ var createAuction = function(){
             productImg:productImg
         }
         $.post("createAuction", newAuction, function(data){
-            console.log("Auction Created");
             toHome();
         });
     }
