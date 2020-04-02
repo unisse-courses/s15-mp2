@@ -152,7 +152,7 @@ app.post('/validateLogin', function(req, res){
         // Connect to the same database
         const dbo = client.db(dbname);
       
-        dbo.collection("users").find({$or: [{ username: req.body.username }, { email: req.body.email }]}).limit(1).toArray(function(err, result) {
+        dbo.collection("users").find({ username: req.body.username }, { email: req.body.email }, {password: req.body.password}).limit(1).toArray(function(err, result) {
             if(err) throw err;
         
             console.log(result);
@@ -277,8 +277,52 @@ app.post('/createAuction', checkLogIn, function(req, res){
         });
         res.end();
     });
+})
 
+app.get('/explorePopular', function(req, res){
     
+
+    mongoClient.connect(databaseURL, options, function(err, client) {
+        if(err) throw err;
+        const dbo = client.db(dbname);
+      
+        dbo.collection("auctions").find({$max: $watchers}).limit(100).toArray(function(err, result) {
+            if(err) throw err;
+        
+            console.log(result);
+            console.log("Read Successful!");
+
+        
+            console.log("Query returned" + result.length + "results");
+            client.close();
+            res.send(result);
+
+
+        });
+      });
+})
+
+app.get('/exploreNew', function(req, res){
+    
+
+    mongoClient.connect(databaseURL, options, function(err, client) {
+        if(err) throw err;
+        const dbo = client.db(dbname);
+      
+        dbo.collection("auctions").find({$max: $watchers}).limit(100).toArray(function(err, result) {
+            if(err) throw err;
+        
+            console.log(result);
+            console.log("Read Successful!");
+
+        
+            console.log("Query returned" + result.length + "results");
+            client.close();
+            res.send(result);
+
+
+        });
+      });
 })
 
 app.get('/auction/:id', checkLogIn, function(req,res){
