@@ -249,6 +249,7 @@ app.get('/create', checkLogIn, function(req,res){
 
 app.post('/createAuction', checkLogIn, function(req, res){
     var newAuction = {
+        sellerEmail: thisSession.email,
         productName:req.body.productName,
         description:req.body.description,
         delivery:req.body.delivery,
@@ -256,7 +257,9 @@ app.post('/createAuction', checkLogIn, function(req, res){
         expiryDate:req.body.expiryDate,
         expiryTime:req.body.expiryTime,
         startingBid:req.body.startingBid,
+        highestBid:0,
         increments:req.body.increments,
+        watchers:0,
         productImg:req.body.productImg
     }
 
