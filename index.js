@@ -275,6 +275,7 @@ app.post('/createAuction', checkLogIn, function(req, res){
         
           client.close();
         });
+        res.end();
     });
 
     
