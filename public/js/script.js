@@ -149,7 +149,8 @@ var createAuction = function(){
             expiryTime:expiryTime,
             startingBid:startingBid,
             increments:increments,
-            productImg:productImg
+            productImg:productImg,
+            dateCreated: new Date()
         }
         $.post("createAuction", newAuction, function(data){
             toHome();
