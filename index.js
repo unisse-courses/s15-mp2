@@ -260,7 +260,8 @@ app.post('/createAuction', checkLogIn, function(req, res){
         highestBid:0,
         increments:req.body.increments,
         watchers:0,
-        productImg:req.body.productImg
+        productImg:req.body.productImg,
+        dateCreated: req.body.dateCreated
     }
 
     mongoClient.connect(databaseURL, options, function(err, client) {
@@ -291,8 +292,7 @@ app.get('/explorePopular', function(req, res){
         
             console.log(result);
             console.log("Read Successful!");
-
-        
+               
             console.log("Query returned" + result.length + "results");
             client.close();
             res.send(result);
@@ -309,13 +309,12 @@ app.get('/exploreNew', function(req, res){
         if(err) throw err;
         const dbo = client.db(dbname);
       
-        dbo.collection("auctions").find({$max: $watchers}).limit(100).toArray(function(err, result) {
+        dbo.collection("auctions").find().sort({datefield: -1}).limit(100).toArray(function(err, result) {
             if(err) throw err;
         
             console.log(result);
             console.log("Read Successful!");
 
-        
             console.log("Query returned" + result.length + "results");
             client.close();
             res.send(result);
