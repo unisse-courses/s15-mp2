@@ -259,7 +259,22 @@ app.post('/createAuction', checkLogIn, function(req, res){
         increments:req.body.increments,
         productImg:req.body.productImg
     }
-    //ikaw na bahala dito ryan
+
+    mongoClient.connect(databaseURL, options, function(err, client) {
+        if(err) throw err;
+        // Connect to the same database
+        const dbo = client.db(dbname);
+      
+        dbo.collection("auctions").insertOne(newAuction, function(err, res) {
+          if (err) throw err;
+        
+          console.log(res);
+          console.log("Insert Successful!");
+        
+          client.close();
+        });
+    });
+
     
 })
 
