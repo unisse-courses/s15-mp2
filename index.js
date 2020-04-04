@@ -8,6 +8,14 @@ const mongodb = require('mongodb');
 const app = express();
 const port = 3000;
 
+const usersModel = require ('./models/users');
+const auctionsModel = require ('./models/auctions');
+// const bidsModel = require ('./models/bids');
+// const watchedModel = require ('./models/watched');
+// const ratingsModel = require ('./models/ratings');
+
+
+
 app.use(cookieParser());
 app.use(session({secret: "sikretong malupet"}));
 var thisSession;
@@ -72,38 +80,38 @@ app.engine('hbs', hbs({
 app.set('view engine', 'hbs');
 
 //Create collections (entities)
-mongoClient.connect(databaseURL, options, function(err, client) {
+// mongoClient.connect(databaseURL, options, function(err, client) {
    
-    if (err) throw err;
-    const dbo = client.db(dbname);
+//     if (err) throw err;
+//     const dbo = client.db(dbname);
   
-    //Will create collections if it has not yet been made
-    dbo.createCollection("users", function(err, res) {
-      if (err) throw err;
-      console.log("users created!");
-      client.close();
-    });
-    dbo.createCollection("ratings", function(err, res) {
-        if (err) throw err;
-        console.log("ratings created!");
-        client.close();
-    });
-    dbo.createCollection("watched", function(err, res) {
-        if (err) throw err;
-        console.log("watched created!");
-        client.close();
-    });
-    dbo.createCollection("auctions", function(err, res) {
-        if (err) throw err;
-        console.log("auctions created!");
-        client.close();
-    });
-    dbo.createCollection("bids", function(err, res) {
-        if (err) throw err;
-        console.log("bids created!");
-        client.close();
-    });    
-  });
+//     //Will create collections if it has not yet been made
+//     dbo.createCollection("users", function(err, res) {
+//       if (err) throw err;
+//       console.log("users created!");
+//       client.close();
+//     });
+//     dbo.createCollection("ratings", function(err, res) {
+//         if (err) throw err;
+//         console.log("ratings created!");
+//         client.close();
+//     });
+//     dbo.createCollection("watched", function(err, res) {
+//         if (err) throw err;
+//         console.log("watched created!");
+//         client.close();
+//     });
+//     dbo.createCollection("auctions", function(err, res) {
+//         if (err) throw err;
+//         console.log("auctions created!");
+//         client.close();
+//     });
+//     dbo.createCollection("bids", function(err, res) {
+//         if (err) throw err;
+//         console.log("bids created!");
+//         client.close();
+//     });    
+// });
 
 //CRUD
 
@@ -146,34 +154,49 @@ app.get(['/','/login'], function(req, res){
 });
 
 app.post('/validateLogin', function(req, res){
-    var valid = true;
-    mongoClient.connect(databaseURL, options, function(err, client) {
+
+    usersModel.findOne({username: req.body.username}, {email: req.body.email}, {password: req.body.password}), function(err, userResult){
         if(err) throw err;
-        // Connect to the same database
-        const dbo = client.db(dbname);
+        if (userResult.length){
+            console.log("Login successful!");
+            res.send("valid");
+        }
+        else{
+            console.log("Login failed")
+            res.send("");
+        }
+    }
+
+
+    //mongodb Version***
+
+    // mongoClient.connect(databaseURL, options, function(err, client) {
+    //     if(err) throw err;
+    //     // Connect to the same database
+    //     const dbo = client.db(dbname);
       
-        dbo.collection("users").find({ username: req.body.username }, { email: req.body.email }, {password: req.body.password}).limit(1).toArray(function(err, result) {
-            if(err) throw err;
+    //     dbo.collection("users").find({ username: req.body.username }, { email: req.body.email }, {password: req.body.password}).limit(1).toArray(function(err, result) {
+    //         if(err) throw err;
         
-            console.log(result);
-            console.log("Read Successful!");
+    //         console.log(result);
+    //         console.log("Read Successful!");
 
             
-            if (result.length == 0){
-                console.log("Log in invalid");
-                client.close();
-                res.end("");
-            }
-            else{
-                console.log("Log in successful");
-                client.close();
-                thisSession = req.session;
-                thisSession.email = req.body.email;
-                res.send("valid");
+    //         if (result.length == 0){
+    //             console.log("Log in invalid");
+    //             client.close();
+    //             res.end("");
+    //         }
+    //         else{
+    //             console.log("Log in successful");
+    //             client.close();
+    //             thisSession = req.session;
+    //             thisSession.email = req.body.email;
+    //             res.send("valid");
 
-            }  
-        });
-      });
+    //         }  
+    //     });
+    //   });
     //do everything below only if valid
     // if(valid){
     //     thisSession = req.session;
@@ -184,48 +207,88 @@ app.post('/validateLogin', function(req, res){
 
 app.post('/validateRegister', function(req, res){
 
-    const newUser = {
+    var newUser = new usersModel({
         username: req.body.username,
         email: req.body.email,
         img: req.body.img,
         password: req.body.password
-    }
+    });
 
-    mongoClient.connect(databaseURL, options, function(err, client) {
+    usersModel.find({$or:[{username: req.body.username}, {email: req.body.email}]}), function(err, userResults){
         if(err) throw err;
-        // Connect to the same database
-        const dbo = client.db(dbname);
+
+        if (userResults.length){
+            console.log("Username/email already exists");
+            res.send("");
+        }
+        else{
+            newUser.save(function(err, newUser) {
+                var result;
+            
+                /** == README == **
+                 Added error handling! Check out the object printed out in the console.
+                (Try clicking Add Student when the name or id is blank)
+                **/
+                if (err) {
+                console.log(err.errors);
+            
+                result = "";
+                res.send(result);
+                // throw err; // This is commented so that the server won't be killed.
+                } else {
+                console.log("Successfully added student!");
+                console.log(newUser); // Check out the logs and see there's a new __v attribute!
+            
+                // Let's create a custom response that the student was created successfully
+                result = "valid";
+            
+                // Sending the result as is to handle it the "AJAX-way".
+                res.send(result);
+                }
+            });
+        }
+    }
+    
+
+
+
+    //mongodb version***
+
+    // mongoClient.connect(databaseURL, options, function(err, client) {
+    //     if(err) throw err;
+    //     // Connect to the same database
+    //     const dbo = client.db(dbname);
       
-        dbo.collection("users").find({$or: [{ username: req.body.username }, { email: req.body.email }]}).limit(1).toArray(function(err, result) {
-            if(err) throw err;
+    //     dbo.collection("users").find({$or: [{ username: req.body.username }, { email: req.body.email }]}).limit(1).toArray(function(err, result) {
+    //         if(err) throw err;
         
-            console.log(result);
-            console.log("Read Successful!");
+    //         console.log(result);
+    //         console.log("Read Successful!");
 
             
-            if (result.length == 0){
-                dbo.collection("users").insertOne(newUser, function(err, res) {
-                    if (err) throw err;
+    //         if (result.length == 0){
+    //             dbo.collection("users").insertOne(newUser, function(err, res) {
+    //                 if (err) throw err;
 
-                    console.log(res);
-                    console.log("Insert Successful!");
+    //                 console.log(res);
+    //                 console.log("Insert Successful!");
                   
-                    client.close();
-                  });
+    //                 client.close();
+    //               });
 
-                thisSession = req.session;
-                thisSession.email = req.body.email;
-                res.end("valid");
-            }
+    //             thisSession = req.session;
+    //             thisSession.email = req.body.email;
+    //             res.end("valid");
+    //         }
 
-            else{
-                console.log("Registration invalid");
-                client.close();
-                res.send("");
+    //         else{
+    //             console.log("Registration invalid");
+    //             client.close();
+    //             res.send("");
 
-            }
-        });
-      });
+    //         }
+    //     });
+    //   });
 
     // if(valid){
     //     thisSession = req.session;
@@ -248,80 +311,118 @@ app.get('/create', checkLogIn, function(req,res){
 });
 
 app.post('/createAuction', checkLogIn, function(req, res){
-    var newAuction = {
+    var newAuction = new auctionsModel({
         sellerEmail: thisSession.email,
         productName:req.body.productName,
         description:req.body.description,
         delivery:req.body.delivery,
         contactNum:req.body.contactNum,
         expiryDate:req.body.expiryDate,
-        expiryTime:req.body.expiryTime,
         startingBid:req.body.startingBid,
         highestBid:0,
         increments:req.body.increments,
         watchers:0,
         productImg:req.body.productImg,
         dateCreated: req.body.dateCreated
+    })
+    newAuction.save(function(err, newAuction) {
+        var result;
+    
+        /** == README == **
+          Added error handling! Check out the object printed out in the console.
+          (Try clicking Add Student when the name or id is blank)
+        **/
+        if (err) {
+          console.log(err.errors);
+    
+          result = "Auction was not created!";
+          res.send(result);
+          // throw err; // This is commented so that the server won't be killed.
+        } else {
+          console.log("Successfully added auction!");
+          console.log(newAuction); // Check out the logs and see there's a new __v attribute!
+    
+          // Let's create a custom response that the student was created successfully
+          result = "Student created!";
+    
+          // Sending the result as is to handle it the "AJAX-way".
+          res.send(result);
+        }
+    
+      });
+
+
+    //mongodb Version***
+
+    // mongoClient.connect(databaseURL, options, function(err, client) {
+    //     if(err) throw err;
+    //     const dbo = client.db(dbname);
+      
+    //     dbo.collection("auctions").insertOne(newAuction, function(err, res) {
+    //       if (err) throw err;
+        
+    //       console.log(res);
+    //       console.log("Insert Successful!");
+        
+    //       client.close();
+    //     });
+    //     res.end();
+    // });
+})
+
+app.post('/explorePopular', function(req, res){
+    
+
+    auctionsModel.find({$max: $watchers}).limit(100), function(err, auctions){
+        console.log(auctions);
+        res.send(auctions);
     }
 
-    mongoClient.connect(databaseURL, options, function(err, client) {
-        if(err) throw err;
-        const dbo = client.db(dbname);
+    // mongoClient.connect(databaseURL, options, function(err, client) {
+    //     if(err) throw err;
+    //     const dbo = client.db(dbname);
       
-        dbo.collection("auctions").insertOne(newAuction, function(err, res) {
-          if (err) throw err;
+    //     dbo.collection("auctions").find({$max: $watchers}).limit(100).toArray(function(err, result) {
+    //         if(err) throw err;
         
-          console.log(res);
-          console.log("Insert Successful!");
-        
-          client.close();
-        });
-        res.end();
-    });
-})
-
-app.get('/explorePopular', function(req, res){
-    
-
-    mongoClient.connect(databaseURL, options, function(err, client) {
-        if(err) throw err;
-        const dbo = client.db(dbname);
-      
-        dbo.collection("auctions").find({$max: $watchers}).limit(100).toArray(function(err, result) {
-            if(err) throw err;
-        
-            console.log(result);
-            console.log("Read Successful!");
+    //         console.log(result);
+    //         console.log("Read Successful!");
                
-            console.log("Query returned" + result.length + "results");
-            client.close();
-            res.send(result);
+    //         console.log("Query returned" + result.length + "results");
+    //         client.close();
+    //         res.send(result);
 
 
-        });
-      });
+    //     });
+    //   });
 })
 
-app.get('/exploreNew', function(req, res){
+app.post('/exploreNew', function(req, res){
     
 
-    mongoClient.connect(databaseURL, options, function(err, client) {
-        if(err) throw err;
-        const dbo = client.db(dbname);
+    auctionsModel.find({}).sort({dateCreated: -1}).limit(100), function(err, auctions){
+        console.log(auctions);
+        res.send(auctions);
+    }
+
+    //mongodb Version***
+    // mongoClient.connect(databaseURL, options, function(err, client) {
+    //     if(err) throw err;
+    //     const dbo = client.db(dbname);
       
-        dbo.collection("auctions").find().sort({datefield: -1}).limit(100).toArray(function(err, result) {
-            if(err) throw err;
+    //     dbo.collection("auctions").find({}).sort({dateCreated: -1}).limit(100).toArray(function(err, result) {
+    //         if(err) throw err;
         
-            console.log(result);
-            console.log("Read Successful!");
+    //         console.log(result);
+    //         console.log("Read Successful!");
 
-            console.log("Query returned" + result.length + "results");
-            client.close();
-            res.send(result);
+    //         console.log("Query returned" + result.length + "results");
+    //         client.close();
+    //         res.send(result);
 
 
-        });
-      });
+    //     });
+    //   });
 })
 
 app.get('/auction/:id', checkLogIn, function(req,res){
