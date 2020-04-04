@@ -373,10 +373,10 @@ app.post('/createAuction', checkLogIn, function(req, res){
 app.post('/explorePopular', function(req, res){
     
 
-    auctionsModel.find({$max: $watchers}).limit(100), function(err, auctions){
+    auctionsModel.find({$max: $watchers}).limit(100).exec(function(err, auctions){
         console.log(auctions);
         res.send(auctions);
-    }
+    });
 
     // mongoClient.connect(databaseURL, options, function(err, client) {
     //     if(err) throw err;
@@ -400,10 +400,10 @@ app.post('/explorePopular', function(req, res){
 app.post('/exploreNew', function(req, res){
     
 
-    auctionsModel.find({}).sort({dateCreated: -1}).limit(100), function(err, auctions){
+    auctionsModel.find({}).sort({dateCreated: -1}).limit(100).exec(function(err, auctions){
         console.log(auctions);
         res.send(auctions);
-    }
+    });
 
     //mongodb Version***
     // mongoClient.connect(databaseURL, options, function(err, client) {
