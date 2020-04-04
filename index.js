@@ -155,17 +155,17 @@ app.get(['/','/login'], function(req, res){
 
 app.post('/validateLogin', function(req, res){
 
-    usersModel.findOne({username: req.body.username}, {email: req.body.email}, {password: req.body.password}), function(err, userResult){
+    usersModel.findOne({username: req.body.username}, {email: req.body.email}, {password: req.body.password}, function(err, userResult){
         if(err) throw err;
         if (userResult.length){
             console.log("Login successful!");
             res.send("valid");
         }
         else{
-            console.log("Login failed")
+            console.log("Login failed");
             res.send("");
         }
-    }
+    });
 
 
     //mongodb Version***
@@ -214,7 +214,7 @@ app.post('/validateRegister', function(req, res){
         password: req.body.password
     });
 
-    usersModel.find({$or:[{username: req.body.username}, {email: req.body.email}]}), function(err, userResults){
+    usersModel.find({$or:[{username: req.body.username}, {email: req.body.email}]}, function(err, userResults){
         if(err) throw err;
 
         if (userResults.length){
@@ -247,7 +247,7 @@ app.post('/validateRegister', function(req, res){
                 }
             });
         }
-    }
+    });
     
 
 
