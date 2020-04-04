@@ -23,10 +23,10 @@ var thisSession;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const mongoClient = mongodb.MongoClient;
-const databaseURL = "mongodb://localhost:27017/";
-const dbname = "laselldb";
-const options = { useUnifiedTopology: true };
+// const mongoClient = mongodb.MongoClient;
+// const databaseURL = "mongodb://localhost:27017/";
+// const dbname = "laselldb";
+// const options = { useUnifiedTopology: true };
 
 /* DATA */
 var auctions = [
