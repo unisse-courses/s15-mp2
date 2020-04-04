@@ -53,11 +53,11 @@ $(document).ready(function(){
         }
     })
 
-    $("#expiryDate").timepicker
+    $("#amount").attr()
 
-    // $("#startingBid").keypress(function (evt) {
-    //     evt.preventDefault();
-    // });
+    $("#amount").keypress(function (evt) {
+        evt.preventDefault();
+    });
 });
 
 /* VALIDATION FUNCTIONS */

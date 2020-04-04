@@ -38,8 +38,9 @@ var auctions = [
                         hold up to 100kg of weight. I can deliver your the item
                         via Lalamove or we can meet up @ Taft.
                         Increments of 20`,
-        bidPrice: 25.00,
-        startPrice: 20.00,
+        highestBid: 25.00,
+        startingBid: 20.00,
+        increments: 5,
         watchers: 21,
         delivery: "Meetup @ Taft, Lalamove"
     },

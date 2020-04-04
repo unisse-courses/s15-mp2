@@ -33,7 +33,12 @@
 
     <div class="auction_controls"> 
             <form> 
-                <input type="number" name="amount" id="amount" placeholder="Place bid amount"> 
+                <input type="number" name="amount" id="amount" placeholder="Place bid amount"
+                {{#if auction.highestBid>startingBid}}
+                    min=""+ ({{auction.highestBid}}+{{auction.increments})}+""
+                {{else}}
+                    min="{{auction.startingBid}}"
+                > 
                 <button id="bid"> Bid </button>
             </form>
     </div>
