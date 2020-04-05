@@ -10,9 +10,8 @@ const port = 3000;
 
 const usersModel = require ('./models/users');
 const auctionsModel = require ('./models/auctions');
-// const bidsModel = require ('./models/bids');
-// const watchedModel = require ('./models/watched');
-// const ratingsModel = require ('./models/ratings');
+const bidsModel = require ('./models/bids');
+const watchedModel = require ('./models/watched');
 
 
 
