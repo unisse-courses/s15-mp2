@@ -15,6 +15,7 @@ const watchedModel = require ('./models/watched');
 
 const login = require('./routes/loginRouter');
 const profile = require('./routes/profileRouter');
+const explore = require('./routes/exploreRouter');
 
 app.use(cookieParser());
 app.use(session({secret: "sikretong malupet"}));
@@ -92,8 +93,9 @@ const checkLogIn = function(req, res, next) {
     }
 }
 
-app.use('/profile', checkLogIn,profile);
 app.use('/login', login);
+app.use('/explore', checkLogIn, explore);
+app.use('/profile', checkLogIn, profile);
 
 app.get('/', function(req, res){
     res.redirect('/login');
@@ -301,12 +303,12 @@ app.get('/', function(req, res){
     // }
 // })
 
-app.get('/explore', checkLogIn, function(req, res){
-    res.render('explore',{
-        title: "Explore",
-        auctions
-    })
-});
+// app.get('/explore', checkLogIn, function(req, res){
+//     res.render('explore',{
+//         title: "Explore",
+//         auctions
+//     })
+// });
 
 app.get('/create', checkLogIn, function(req,res){
     res.render('create',{
