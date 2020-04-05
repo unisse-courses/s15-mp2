@@ -13,6 +13,7 @@ const auctionsModel = require ('./models/auctions');
 const bidsModel = require ('./models/bids');
 const watchedModel = require ('./models/watched');
 
+const login = require('./routes/loginRouter');
 const profile = require('./routes/profileRouter');
 
 app.use(cookieParser());
@@ -78,7 +79,25 @@ app.engine('hbs', hbs({
 
 app.set('view engine', 'hbs');
 
-app.use('/profile', profile);
+app.use(function(req, res, next) {
+    thisSession = req.session;
+    next();
+})
+
+const checkLogIn = function(req, res, next) {
+    if(thisSession.email){
+        next();
+    } else {
+        res.redirect('/login');
+    }
+}
+
+app.use('/profile', checkLogIn,profile);
+app.use('/login', login);
+
+app.get('/', function(req, res){
+    res.redirect('/login');
+});
 
 //Create collections (entities)
 // mongoClient.connect(databaseURL, options, function(err, client) {
@@ -138,37 +157,21 @@ app.use('/profile', profile);
 
 //rate user(receivecreate on ratings)
 
-function checkLogIn (req, res, next) {
-    thisSession = req.session;
-    if(thisSession.email){
-        next();
-    } else {
-        res.redirect('/login');
-    }
-}
-
-app.get(['/','/login'], function(req, res){
-    res.render('login',{ 
-        title: "Welcome to Lasell!",
-        layout: "login"
-    })
-});
-
-app.post('/validateLogin', function(req, res){
-
-    usersModel.findOne({username: req.body.username}, {email: req.body.email}, {password: req.body.password}, function(err, userResult){
-        if(err) throw err;
-        if (userResult.length){
-            console.log("Login successful!");
-            res.send("valid");
-        }
-        else{
-            console.log("Login failed");
-            res.send("");
-        }
-    });
 
 
+// app.post('/validateLogin', function(req, res){
+
+//     usersModel.findOne({username: req.body.username}, {email: req.body.email}, {password: req.body.password}, function(err, userResult){
+//         if(err) throw err;
+//         if (userResult.length){
+//             console.log("Login successful!");
+//             res.send("valid");
+//         }
+//         else{
+//             console.log("Login failed");
+//             res.send("");
+//         }
+//     });
     //mongodb Version***
 
     // mongoClient.connect(databaseURL, options, function(err, client) {
@@ -204,51 +207,51 @@ app.post('/validateLogin', function(req, res){
     //     thisSession.email = req.body.email;
     //     res.end("valid"); 
     // }
-})
+// })
 
-app.post('/validateRegister', function(req, res){
+// app.post('/validateRegister', function(req, res){
 
-    var newUser = new usersModel({
-        username: req.body.username,
-        email: req.body.email,
-        img: req.body.img,
-        password: req.body.password
-    });
+//     var newUser = new usersModel({
+//         username: req.body.username,
+//         email: req.body.email,
+//         img: req.body.img,
+//         password: req.body.password
+//     });
 
-    usersModel.find({$or:[{username: req.body.username}, {email: req.body.email}]}, function(err, userResults){
-        if(err) throw err;
+//     usersModel.find({$or:[{username: req.body.username}, {email: req.body.email}]}, function(err, userResults){
+//         if(err) throw err;
 
-        if (!userResults){
-            console.log("Username/email already exists");
-            res.send("");
-        }
-        else{
-            newUser.save(function(err, newUser) {
-                var result;
+//         if (!userResults){
+//             console.log("Username/email already exists");
+//             res.send("");
+//         }
+//         else{
+//             newUser.save(function(err, newUser) {
+//                 var result;
             
-                /** == README == **
-                 Added error handling! Check out the object printed out in the console.
-                (Try clicking Add Student when the name or id is blank)
-                **/
-                if (err) {
-                console.log(err.errors);
+//                 /** == README == **
+//                  Added error handling! Check out the object printed out in the console.
+//                 (Try clicking Add Student when the name or id is blank)
+//                 **/
+//                 if (err) {
+//                 console.log(err.errors);
             
-                result = "";
-                res.send(result);
-                // throw err; // This is commented so that the server won't be killed.
-                } else {
-                console.log("Successfully added student!");
-                console.log(newUser); // Check out the logs and see there's a new __v attribute!
+//                 result = "";
+//                 res.send(result);
+//                 // throw err; // This is commented so that the server won't be killed.
+//                 } else {
+//                 console.log("Successfully added student!");
+//                 console.log(newUser); // Check out the logs and see there's a new __v attribute!
             
-                // Let's create a custom response that the student was created successfully
-                result = "valid";
+//                 // Let's create a custom response that the student was created successfully
+//                 result = "valid";
             
-                // Sending the result as is to handle it the "AJAX-way".
-                res.send(result);
-                }
-            });
-        }
-    });
+//                 // Sending the result as is to handle it the "AJAX-way".
+//                 res.send(result);
+//                 }
+//             });
+//         }
+//     });
     
 
 
@@ -296,7 +299,7 @@ app.post('/validateRegister', function(req, res){
     //     thisSession.email = req.body.email;
     //     res.end("valid"); 
     // }
-})
+// })
 
 app.get('/explore', checkLogIn, function(req, res){
     res.render('explore',{

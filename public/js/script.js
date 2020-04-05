@@ -81,7 +81,7 @@ var validateLogin = function(){
     // validate if password match
 
     if(valid){
-        $.post("validateLogin",{email:email,password:password},function(data){
+        $.post("/login/validate",{email:email,password:password},function(data){
             if(data==="valid") {
                 toHome();
             } else{
@@ -116,7 +116,7 @@ var validateRegister = function(){
             username:username,
             password:password,
         }    
-        $.post("validateRegister", newUser,function(data){
+        $.post("/login/register", newUser,function(data){
             if(data==='valid') {
                 toHome();
             } else{
