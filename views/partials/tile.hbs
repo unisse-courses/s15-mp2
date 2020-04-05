@@ -1,8 +1,20 @@
-<div id="tile">
+<div class="tile">
     <img src="{{productImg}}">
-    <p>{{productName}}</p>
-    <p>{{description}}</p>
-    <p>{{bidPrice}}</p>
-    <img src="watchers.png" alt="mata">
-    <p>{{watchers}}</p>
+    <p class="productName"> {{productName}}</p>
+
+    <div class="bidPrice">
+        <img class="bidIcon">
+        <p>{{bidPrice}}</p>
+    </div>
+
+    <div class="watchers">
+        <img class="watchersIcon" alt="mata">
+        <p>{{watchers}}</p>
+    </div>
+
+    <div class="expiry">
+        <img class="expiryIcon" alt="expiry">
+        <p>{{expiryDate}}</p>
+    </div>
+
 </div>
