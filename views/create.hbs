@@ -5,30 +5,25 @@
     <div class="create_description">        
         <input type="text" id="productDescription" placeholder="Description">
 
-
         <div class="status">
             <input type="text" id="delivery" placeholder="Delivery">
-            <input type="text" id="contactNum" placeholder="Contact">
-            <input type="number" id="startingBid" placeholder="Starting Bid">
+            <input type="number" id="contactNum" placeholder="Contact No.">
+            <input type="number" id="startingBid" placeholder="Starting Bid" min="1">
             <input type="date" id="expiryDate" placeholder="Expiry Date">
             <input type="time" id="expiryTime" placeholder="Expiry Time">
-
         </div>
     </div>
 
     <input type="text" id="productName" placeholder="Product Name">
 
-
     <div class="create_image">
-        <img id="imgPreview" src="images/questionmark.png"> 
+        <img id="imgPreview" src="/images/questionmark.png"> 
         <input type="file" name="file" id="file" accept="image/*">
     </div>
-
 
     <div class="create_controls">
         <input type="number" id="increments" placeholder="Increments">
     </div>
-
 
     <p id="errorMsg"></p>
     <button onclick="createAuction()">Create Auction</button>
