@@ -377,7 +377,7 @@ app.post('/createAuction', checkLogIn, function(req, res){
 app.post('/explorePopular', function(req, res){
     
 
-    auctionsModel.find({$max: $watchers}).limit(100).exec(function(err, auctions){
+    auctionsModel.find({}).sort({watchers: 1}).limit(100).exec(function(err, auctions){
         console.log(auctions);
         res.send(auctions);
     });
@@ -428,6 +428,30 @@ app.post('/exploreNew', function(req, res){
     //     });
     //   });
 })
+
+app.post('/profilePage', function(req, res) {
+
+    
+
+    usersModel.findOne({ name: req.body.username }, function(err, profile) {
+      console.log(profile);
+      res.send(profile);
+    });
+});
+
+app.post('/profilePageAuctions', function(req, res) {
+
+  
+    usersModel.findOne({ username: req.body.username }, function(err, profile) {
+        console.log(profile);
+
+        auctionsModel.find({sellerEmail: profile.username}, function(err, auctions) {
+            if (err) throw err;
+            console.log(auctions);
+            res.send(auctions);
+          })
+    });
+});
 
 app.get('/auction/:id', checkLogIn, function(req,res){
     res.render('auction',{
