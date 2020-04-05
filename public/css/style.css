@@ -623,3 +623,72 @@ body > *{
 .profile_container > .seller_info > .sellerName {
     font-size: 30px;
 }
+
+
+
+
+
+
+/* POST */
+
+.post {
+    width: 350px;
+    padding: 15px 15px 15px 15px;
+    display: grid;
+    grid-template-columns: 1fr;
+    border-radius: 20px;
+}
+
+.post_image {
+    width: inherit;
+}
+
+.post_image > img {
+    width: inherit;
+    border-radius: 10px;
+    max-height: 300px;
+    min-height: 300px;
+    object-fit: contain;
+    background-color: white;
+}
+
+.post_info {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 2fr;
+    justify-items: stretch;
+    row-gap: 1px;
+}
+
+.card_info > * {
+    margin: 1px;
+}
+
+.card_info > .productName {
+    grid-column: 1/6;
+}
+
+.card_info > .status {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 5fr;
+    grid-row: 3;
+    grid-column: 1/6;
+    column-gap: 3px;
+    height: 100
+}
+
+.card_info > .status > p {
+    margin: 1px;
+    font-size: 13px;
+}
+
+.card_info > .status > .expiry {
+    grid-column: 6;
+}
+
+#bidIcon {
+    /* sprite settings */
+}
+
+#eyeIcon {
+    /* sprite settings */
+}
