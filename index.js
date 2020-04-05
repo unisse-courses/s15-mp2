@@ -217,7 +217,7 @@ app.post('/validateRegister', function(req, res){
     usersModel.find({$or:[{username: req.body.username}, {email: req.body.email}]}, function(err, userResults){
         if(err) throw err;
 
-        if (userResults.length){
+        if (!userResults){
             console.log("Username/email already exists");
             res.send("");
         }
