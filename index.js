@@ -13,7 +13,7 @@ const auctionsModel = require ('./models/auctions');
 const bidsModel = require ('./models/bids');
 const watchedModel = require ('./models/watched');
 
-
+const profile = require('./routes/profileRouter');
 
 app.use(cookieParser());
 app.use(session({secret: "sikretong malupet"}));
@@ -77,6 +77,8 @@ app.engine('hbs', hbs({
 }));
 
 app.set('view engine', 'hbs');
+
+app.use('/profile', profile);
 
 //Create collections (entities)
 // mongoClient.connect(databaseURL, options, function(err, client) {
