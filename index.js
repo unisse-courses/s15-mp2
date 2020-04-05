@@ -438,12 +438,12 @@ app.post('/exploreNew', function(req, res){
     //   });
 })
 
+
 //Following 2 app.post for profileRouter
 
 app.post('/profilePage', function(req, res) {
 
     
-
     usersModel.findOne({ name: req.body.username }, function(err, profile) {
       console.log(profile);
       res.send(profile);
@@ -463,6 +463,7 @@ app.post('/profilePageAuctions', function(req, res) {
           })
     });
 });
+
 
 app.get('/auction/:id', checkLogIn, function(req,res){
     res.render('auction',{
