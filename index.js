@@ -431,30 +431,6 @@ app.post('/exploreNew', function(req, res){
     //   });
 })
 
-app.post('/profilePage', function(req, res) {
-
-    
-
-    usersModel.findOne({ name: req.body.username }, function(err, profile) {
-      console.log(profile);
-      res.send(profile);
-    });
-});
-
-app.post('/profilePageAuctions', function(req, res) {
-
-  
-    usersModel.findOne({ username: req.body.username }, function(err, profile) {
-        console.log(profile);
-
-        auctionsModel.find({sellerEmail: profile.username}, function(err, auctions) {
-            if (err) throw err;
-            console.log(auctions);
-            res.send(auctions);
-          })
-    });
-});
-
 app.get('/auction/:id', checkLogIn, function(req,res){
     res.render('auction',{
         title: auctions[req.params.id].productName,

@@ -1,13 +1,12 @@
 <div class="profile_container">
     <div class="seller_info">
-        <img src="{{sellerImg}}" alt="image">
-        <p class="sellerName">sellername</p>
-        <p class="location">location</p>
+        <img src="{{profile.img}}" alt="image">
+        <p class="sellerName">{{profile.username}}</p>
+        <p class="location">{{profile.location}}</p>
     </div>
-
-
+    
     <div class="profile_posts">
-        {{#each auction}}
+        {{#each auctions}}
             {{>post}}
         {{/each}}
     </div>
