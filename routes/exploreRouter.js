@@ -3,7 +3,7 @@ const auctionsModel = require ('../models/auctions');
 
 router.get('/', function(req, res){
 
-    auctionsModel.find({}).sort({watchers: 1}).limit(100).exec(function(err, results){
+    auctionsModel.find({}).populate('sellerID').sort({watchers: 1}).limit(100).exec(function(err, results){
         var auctions = [];
         results.forEach(function(doc){
             auctions.push(doc.toObject());

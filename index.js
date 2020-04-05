@@ -1,3 +1,4 @@
+
 const express = require("express");
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -68,7 +69,7 @@ var auctions = [
     {
         sellerName: "baboi"
     }
-]
+
 /* END OF DATA */
 
 app.use(express.static("public"));
@@ -317,52 +318,59 @@ app.get('/', function(req, res){
 //     })
 // });
 
-// app.get('/create', checkLogIn, function(req,res){
-//     res.render('create',{
-//         title: "Create Auction"
-//     })
-// });
+//app.get('/create', checkLogIn, function(req,res){
+//    res.render('create',{
+//        title: "Create Auction"
+//    })
+//});
 
 app.post('/createAuction', checkLogIn, function(req, res){
-    var newAuction = new auctionsModel({
-        sellerEmail: thisSession.email,
-        productName:req.body.productName,
-        description:req.body.description,
-        delivery:req.body.delivery,
-        contactNum:req.body.contactNum,
-        expiryDate:req.body.expiryDate,
-        startingBid:req.body.startingBid,
-        highestBid:0,
-        increments:req.body.increments,
-        watchers:0,
-        productImg:req.body.productImg,
-        dateCreated: req.body.dateCreated
-    })
-    newAuction.save(function(err, newAuction) {
-        var result;
+
+    usersModel.findOne({email: thisSession.email}, function(err, seller){
+        
+
+        var newAuction = new auctionsModel({
+            sellerID: seller._id,
+            productName:req.body.productName,
+            description:req.body.description,
+            delivery:req.body.delivery,
+            contactNum:req.body.contactNum,
+            expiryDate:req.body.expiryDate,
+            startingBid:req.body.startingBid,
+            highestBid:0,
+            increments:req.body.increments,
+            watchers:0,
+            productImg:req.body.productImg,
+            dateCreated: req.body.dateCreated
+        })
+        newAuction.save(function(err, newAuction) {
+            var result;
+        
+            /** == README == **
+              Added error handling! Check out the object printed out in the console.
+              (Try clicking Add Student when the name or id is blank)
+            **/
+            if (err) {
+              console.log(err.errors);
+        
+              result = "Auction was not created!";
+              res.send(result);
+              // throw err; // This is commented so that the server won't be killed.
+            } else {
+              console.log("Successfully added auction!");
+              console.log(newAuction); // Check out the logs and see there's a new __v attribute!
+        
+              // Let's create a custom response that the student was created successfully
+              result = "Auction created!";
+        
+              // Sending the result as is to handle it the "AJAX-way".
+              res.send(result);
+            }
+        
+          });
+    });
+
     
-        /** == README == **
-          Added error handling! Check out the object printed out in the console.
-          (Try clicking Add Student when the name or id is blank)
-        **/
-        if (err) {
-          console.log(err.errors);
-    
-          result = "Auction was not created!";
-          res.send(result);
-          // throw err; // This is commented so that the server won't be killed.
-        } else {
-          console.log("Successfully added auction!");
-          console.log(newAuction); // Check out the logs and see there's a new __v attribute!
-    
-          // Let's create a custom response that the student was created successfully
-          result = "Student created!";
-    
-          // Sending the result as is to handle it the "AJAX-way".
-          res.send(result);
-        }
-    
-      });
 
 
     //mongodb Version***
@@ -386,7 +394,7 @@ app.post('/createAuction', checkLogIn, function(req, res){
 app.post('/explorePopular', function(req, res){
     
 
-    auctionsModel.find({}).sort({watchers: 1}).limit(100).exec(function(err, auctions){
+    auctionsModel.find({}).populate('sellerID').sort({watchers: 1}).limit(100).exec(function(err, auctions){
         console.log(auctions);
         res.send(auctions);
     });
@@ -413,7 +421,7 @@ app.post('/explorePopular', function(req, res){
 app.post('/exploreNew', function(req, res){
     
 
-    auctionsModel.find({}).sort({dateCreated: -1}).limit(100).exec(function(err, auctions){
+    auctionsModel.find({}).populate('sellerID').sort({dateCreated: -1}).limit(100).exec(function(err, auctions){
         console.log(auctions);
         res.send(auctions);
     });
@@ -438,6 +446,33 @@ app.post('/exploreNew', function(req, res){
     //   });
 })
 
+
+//Following 2 app.post for profileRouter
+
+app.post('/profilePage', function(req, res) {
+
+    
+    usersModel.findOne({ name: req.body.username }, function(err, profile) {
+      console.log(profile);
+      res.send(profile);
+    });
+});
+
+app.post('/profilePageAuctions', function(req, res) {
+
+  
+    usersModel.findOne({ username: req.body.username }, function(err, profile) {
+        console.log(profile);
+
+        auctionsModel.find({sellerEmail: profile.username}, function(err, auctions) {
+            if (err) throw err;
+            console.log(auctions);
+            res.send(auctions);
+          })
+    });
+});
+
+
 app.get('/auction/:id', checkLogIn, function(req,res){
     res.render('auction',{
         title: auctions[req.params.id].productName,
@@ -452,4 +487,3 @@ app.get('/activity', checkLogIn, function(req,res){
         bids: auctions,
     })
 });
-
