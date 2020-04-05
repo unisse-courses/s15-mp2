@@ -41,6 +41,7 @@ $(document).ready(function(){
     var day = ("0" + tomorrow.getDate()).slice(-2);
     var month = ("0" + (tomorrow.getMonth() + 1)).slice(-2);
     date = tomorrow.getFullYear()+"-"+(month)+"-"+(day);
+    console.log(date);
     $("#expiryDate").attr('min', date);
 
     $("#expiryDate").change(function(){
@@ -138,14 +139,19 @@ var createAuction = function(){
     var increments = $("#increments").val();
     var productImg = $("#imgPreview").attr("src");
 
+    console.log($("#expiryTime").val());
+    var curTime = (("0" + tomorrow.getHours()).slice(-2)+":"+("0" + tomorrow.getMinutes()).slice(-2));
+    console.log(curTime);
+
     if(productName == "" || description == "" ||
         delivery == "" || contactNum == "" || expiryDate == "" || 
         expiryTime == "" || startingBid == "" || increments == ""){
         $("#errorMsg").text("some required input fields are empty.");
     } else if($("#expiryDate").val() == date && 
-    $("#expiryTime").val() < (tomorrow.getHours()+":"+tomorrow.getMinutes())){
+    $("#expiryTime").val() < curTime){
         $("#errorMsg").text("minimum due time is 24 hours from current time.");
     } else{
+        $("#errorMsg").text("");
         var newAuction = {
             productName:productName,
             description:description,
@@ -158,7 +164,7 @@ var createAuction = function(){
             productImg:productImg,
             dateCreated: new Date()
         }
-        $.post("createAuction", newAuction, function(data){
+        $.post("auction/create", newAuction, function(data){
             toHome();
         });
     }
