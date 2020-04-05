@@ -5,3 +5,5 @@ router.get('/', function(req, res){
         title: "Your Profile"
     })
 });
+
+module.exports = router;
