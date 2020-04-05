@@ -147,7 +147,7 @@ function checkLogIn (req, res, next) {
 
 app.get(['/','/login'], function(req, res){
     res.render('login',{ 
-        title: "Login/Register",
+        title: "Welcome to Lasell!",
         layout: "login"
     })
 });
