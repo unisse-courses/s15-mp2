@@ -1,3 +1,14 @@
-<div>
-    THis is your profile
+<div class="profile_container">
+    <div class="seller_info">
+        <img src="{{sellerImg}}" alt="image">
+        <p class="sellerName">sellername</p>
+        <p class="location">location</p>
+    </div>
+
+
+    <div class="profile_posts">
+        {{#each auction}}
+            {{>post}}
+        {{/each}}
+    </div>
 </div>
