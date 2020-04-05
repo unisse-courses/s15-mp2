@@ -59,7 +59,6 @@ $(document).ready(function(){
     //     evt.preventDefault();
     // });
 
-
     //Default for Login
     $(".registerDiv").hide();
     $(".loginDiv").show();
