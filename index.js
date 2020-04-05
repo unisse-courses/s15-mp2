@@ -1,3 +1,4 @@
+
 const express = require("express");
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -16,13 +17,18 @@ const watchedModel = require ('./models/watched');
 const login = require('./routes/loginRouter');
 const profile = require('./routes/profileRouter');
 const explore = require('./routes/exploreRouter');
+const auction = require('./routes/auctionRouter');
 
 app.use(cookieParser());
 app.use(session({secret: "sikretong malupet"}));
 var thisSession;
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    parameterLimit: 100000,
+    limit: '50mb',
+    extended: true
+}));
 
 // const mongoClient = mongodb.MongoClient;
 // const databaseURL = "mongodb://localhost:27017/";
@@ -47,8 +53,9 @@ var auctions = [
                         hold up to 100kg of weight. I can deliver your the item
                         via Lalamove or we can meet up @ Taft.
                         Increments of 20`,
-        bidPrice: 25.00,
-        startPrice: 20.00,
+        highestBid: 25.00,
+        startingBid: 20.00,
+        increments: 5,
         watchers: 21,
         delivery: "Meetup @ Taft, Lalamove"
     },
@@ -62,7 +69,7 @@ var auctions = [
     {
         sellerName: "baboi"
     }
-]
+
 /* END OF DATA */
 
 app.use(express.static("public"));
@@ -96,6 +103,7 @@ const checkLogIn = function(req, res, next) {
 app.use('/login', login);
 app.use('/explore', checkLogIn, explore);
 app.use('/profile', checkLogIn, profile);
+app.use('/auction', checkLogIn, auction);
 
 app.get('/', function(req, res){
     res.redirect('/login');
@@ -310,11 +318,11 @@ app.get('/', function(req, res){
 //     })
 // });
 
-app.get('/create', checkLogIn, function(req,res){
-    res.render('create',{
-        title: "Create Auction"
-    })
-});
+//app.get('/create', checkLogIn, function(req,res){
+//    res.render('create',{
+//        title: "Create Auction"
+//    })
+//});
 
 app.post('/createAuction', checkLogIn, function(req, res){
 
@@ -479,4 +487,3 @@ app.get('/activity', checkLogIn, function(req,res){
         bids: auctions,
     })
 });
-

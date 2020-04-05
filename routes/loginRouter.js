@@ -44,29 +44,20 @@ router.post('/register', function(req, res){
         else{
             newUser.save(function(err, newUser) {
                 var result;
-            
-                /** == README == **
-                 Added error handling! Check out the object printed out in the console.
-                (Try clicking Add Student when the name or id is blank)
-                **/
                 if (err) {
-                console.log(err.errors);
-            
-                result = "";
-                res.send(result);
-                // throw err; // This is commented so that the server won't be killed.
+                    console.log(err.errors);
+                
+                    result = "";
+                    res.send(result);
                 } else {
-                console.log("Successfully added student!");
-                console.log(newUser); // Check out the logs and see there's a new __v attribute!
+                    console.log("Successfully added student!");
+                    console.log(newUser);
 
-                thisSession = req.session;
-                thisSession.email = req.body.email;
-            
-                // Let's create a custom response that the student was created successfully
-                result = "valid";
-            
-                // Sending the result as is to handle it the "AJAX-way".
-                res.send(result);
+                    thisSession = req.session;
+                    thisSession.email = req.body.email;
+
+                    result = "valid";
+                    res.send(result);
                 }
             });
         }
