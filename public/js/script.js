@@ -24,7 +24,7 @@ $(document).ready(function(){
     //     }
     // }
 
-    $("#uploadImgBtn").click(function() {
+    $("#file").change(function() {
         var file = $("#file");
 
         if (file.prop('files') && file.prop('files')[0]) {
@@ -53,11 +53,17 @@ $(document).ready(function(){
         }
     })
 
-    $("#amount").attr()
-
     $("#amount").keypress(function (evt) {
         evt.preventDefault();
     });
+    
+    // $("#startingBid").keypress(function (evt) {
+    //     evt.preventDefault();
+    // });
+
+    //Default for Login
+    $(".registerDiv").hide();
+    $(".loginDiv").show();
 });
 
 /* VALIDATION FUNCTIONS */
@@ -68,7 +74,7 @@ var validateLogin = function(){
     var valid = true;
 
     if(email == "" || password == ""){
-        $("#errorMsg").text("some required input fields are empty.");
+        $("#loginError").text("some required input fields are empty.");
         valid = false;
     }
 
@@ -76,11 +82,11 @@ var validateLogin = function(){
     // validate if password match
 
     if(valid){
-        $.post("validateLogin",{email:email,password:password},function(data){
+        $.post("/login/validate",{email:email,password:password},function(data){
             if(data==="valid") {
                 toHome();
             } else{
-                $("#errorMsg").text("Invalid Username or Password.");
+                $("#loginError").text("Invalid Username or Password.");
             }
         });
     }
@@ -97,10 +103,10 @@ var validateRegister = function(){
 
 
     if(email == "" || username == "" || password == "" || confirmPassword == ""){
-        $("#errorMsg").text("some required input fields are empty.");
+        $("#registerError").text("some required input fields are empty.");
         valid = false;
     } else if(password != confirmPassword){
-        $("#errorMsg").text("passwords do not match.");
+        $("#registerError").text("passwords do not match.");
         valid = false;
     }
     
@@ -111,11 +117,11 @@ var validateRegister = function(){
             username:username,
             password:password,
         }    
-        $.post("validateRegister", newUser,function(data){
+        $.post("/login/register", newUser,function(data){
             if(data==='valid') {
                 toHome();
             } else{
-                $("#errorMsg").text("User already exists");
+                $("#registerError").text("User already exists");
             }
         });
     }
@@ -149,7 +155,8 @@ var createAuction = function(){
             expiryTime:expiryTime,
             startingBid:startingBid,
             increments:increments,
-            productImg:productImg
+            productImg:productImg,
+            dateCreated: new Date()
         }
         $.post("createAuction", newAuction, function(data){
             toHome();
@@ -164,11 +171,11 @@ var logregSwitchTab = function (event, tabName){
     $(".tablinks").removeClass(" active");
 
     if(tabName == "Register"){
-        $("#loginDiv").hide();
-        $("#registerDiv").show();
+        $(".loginDiv").hide();
+        $(".registerDiv").show();
     } else {
-        $("#registerDiv").hide();
-        $("#loginDiv").show();
+        $(".registerDiv").hide();
+        $(".loginDiv").show();
     }
     event.currentTarget.className += " active";
 }

@@ -1,27 +1,46 @@
 
-<div>
-    <div id="tabs">
-        <button class="tablinks" onclick="logregSwitchTab(event, 'Login')">Login</button>
-        <button class="tablinks" onclick="logregSwitchTab(event, 'Register')" id="defaultTab">Register</button>
-    </div>
-    <p id="errorMsg"></p>
-
-    <div id="loginDiv">
-        <input type="text" id="loginEmail" name="email" placeholder="Email Address">
-        <input type="password" id="loginPassword" name="password" placeholder="Password">
-        <button onclick="validateLogin()">LOG IN</button>
-    </div>
-
-    <div id="registerDiv" hidden>
-        <div id="regphoto">
-            <input type="file" name="file" id="file" accept="image/*">
-            <button id="uploadImgBtn"> Upload your photo </button>
-            <img id="imgPreview" src="images/questionmark.png"> 
+<div class="login_background">
+    <div class="login_container">
+        <div class="login_left">
+        <h1> LaSell </h1>
         </div>
-        <input type="text" id="username" name="username" placeholder="Username"> 
-        <input type="text" id="registerEmail" name="email" placeholder="Email Address"> 
-        <input type="password" id="registerPassword" name="password" placeholder="Password"> 
-        <input type="password" id="confirmPassword" name="confirmpassword" placeholder="Confirm Password">
-        <button onclick="validateRegister()">REGISTER</button>
+        
+        <div class="login_right">
+            <h1> Welcome</h1>
+
+            <div>
+                <div class="login_tabs">
+                        <button class="tablinks active" onclick="logregSwitchTab(event, 'Login')">Login</button>
+                        <button class="tablinks" onclick="logregSwitchTab(event, 'Register')" id="defaultTab">Register</button>
+                </div>    
+                
+                <div class="tab_container">
+
+                    <div class="loginDiv">
+                        <input type="text" id="loginEmail" name="email" placeholder="Email Address">
+                        <input type="password" id="loginPassword" name="password" placeholder="Password">
+                        <p id="loginError"></p>
+                        <button class="login_button" onclick="validateLogin()">Login</button>
+                    </div>
+
+                    <div class="registerDiv" hidden>
+
+                         <div class="regphoto">
+                            <img id="imgPreview" src="images/questionmark.png"> 
+                            <input type="file" name="file" id="file" accept="image/*">
+                        </div>
+
+                        <input type="text" id="username" name="username" placeholder="Username"> 
+                        <input type="text" id="registerEmail" name="email" placeholder="Email Address"> 
+                        <input type="password" id="registerPassword" name="password" placeholder="Password"> 
+                        <input type="password" id="confirmPassword" name="confirmpassword" placeholder="Confirm Password">
+                        
+                        <p id="registerError"></p>
+
+                        <button class="login_button" onclick="validateRegister()">Register</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -1,7 +1,20 @@
 <div class="auction_container">
 
     <div class="auction_description">
-        <h1 class="productName"> {{auction.productName}} </h1>  
+
+
+       <div class="seller_info">
+            {{#if auction.sellerImg}}
+                <img src="{{auction.sellerImg}}">
+            {{else}}
+                <img src="images/defaultProfile.png">
+            {{/if}}
+            
+            <p class="name"> {{auction.sellerName}} </p>
+            <p class="location">  {{auction.location}} </p>
+            {{!-- <p class="rating"> {{auction.rating}} </p> --}}
+        </div>
+
 
         <p class="textdescription"> {{auction.description}} </p>
 
@@ -43,16 +56,6 @@
             </form>
     </div>
 
-    <div class="seller_info">
-        {{#if auction.sellerImg}}
-            <img src="{{auction.sellerImg}}">
-        {{else}}
-            <img src="images/defaultProfile.png">
-        {{/if}}
-        
-        <p class="sellername"> {{auction.sellerName}} </p>
-        <p class="location">  {{auction.location}} </p>
-        <p class="rating"> {{auction.rating}} </p>
-    </div>
+    <h1 class="productName"> {{auction.productName}} </h1>  
 
 </div>

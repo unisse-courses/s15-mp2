@@ -1,4 +1,4 @@
-<div class="card" onclick="toAuction({{@index}})">
+<div class="card" onclick="toAuction({{_id}})">
     <div class="seller_info">
         {{#if sellerImg}}
             <img src="{{sellerImg}}">
@@ -7,7 +7,7 @@
         {{/if}}
         <p class="sellerName">{{sellerName}}</p>
         <p class="location">{{location}}</p>
-        <p class="rating">{{rating}}</p>
+        {{!-- <p class="rating">{{rating}}</p> --}}
     </div>
 
     <div class="card_image">
@@ -19,11 +19,11 @@
 
         <div class="status">
             <img id="bidIcon"> 
-            <p class="bid">{{bidPrice}}</p>
+            <p class="bid">{{highestBid}}</p>
             <img id="eyeIcon">
             <p class="watchers">{{watchers}}</p>
             <img id="expiryIcon">
-            <p class="expiry"> {{expiryDate}} {{expiryTime}}</p>
+            <p class="expiry"> {{expiryDate}}</p>
         </div>
     </div>
 
