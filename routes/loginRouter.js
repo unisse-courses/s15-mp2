@@ -34,10 +34,10 @@ router.post('/register', function(req, res){
         password: req.body.password
     });
 
-    usersModel.find({$or:[{username: req.body.username}, {email: req.body.email}]}, function(err, userResults){
+    usersModel.findOne({$or:[{username: req.body.username}, {email: req.body.email}]}, function(err, userResults){
         if(err) throw err;
 
-        if (!userResults){
+        if (userResults){
             console.log("Username/email already exists");
             res.send("");
         }
