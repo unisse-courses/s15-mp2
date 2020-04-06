@@ -142,6 +142,9 @@ var createAuction = function(){
     var increments = $("#increments").val();
     var productImg = $("#imgPreview").attr("src");
 
+    var formattedDate = new Date(expiryDate + " " + expiryTime);
+    console.log(formattedDate);
+
     console.log($("#expiryTime").val());
     var curTime = (("0" + tomorrow.getHours()).slice(-2)+":"+("0" + tomorrow.getMinutes()).slice(-2));
     console.log(curTime);
@@ -162,8 +165,7 @@ var createAuction = function(){
             description:description,
             delivery:delivery,
             contactNum:contactNum,
-            expiryDate:expiryDate,
-            expiryTime:expiryTime,
+            expiryDate:formattedDate,
             startingBid:startingBid,
             increments:increments,
             productImg:productImg,
