@@ -14,8 +14,8 @@ const options = { useNewUrlParser: true,
 mongoose.connect(databaseURL, options);
 
 const bidsSchema = new mongoose.Schema({
-    bidderEmail: { type: String, required: [true, "No email provided"] },
-    auctionID: {type: Number, required: true},
+    bidderID: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required:true },
+    auctionID: { type: mongoose.Schema.Types.ObjectId, ref: 'auctions', required:true },
     price: { type: Number, required: true },
     bidDate : { type: Date, required: true }
   }
