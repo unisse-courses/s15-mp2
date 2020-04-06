@@ -7,6 +7,7 @@ router.get('/', function(req, res){
         var auctions = [];
         results.forEach(function(doc){
             auctions.push(doc.toObject());
+            console.log();
         })
         res.render('explore',{ title: "Explore", auctions})
     });
