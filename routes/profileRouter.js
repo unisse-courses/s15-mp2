@@ -3,7 +3,11 @@ const usersModel = require ('../models/users');
 const auctionsModel = require ('../models/auctions');
 
 router.get('/', function(req, res){
-    usersModel.findOne({ email: req.session.email }, function(err, doc) {
+    res.redirect('/profile/'+req.body.email);
+});
+
+router.get('/:id', function(req, res){
+    usersModel.findOne({ email: req.param.email }, function(err, doc) {
         console.log(doc);
         var profile = doc.toObject();
     
@@ -16,7 +20,7 @@ router.get('/', function(req, res){
                 auctions.push(auction.toObject());
             })
 
-            res.render('profile',{title: "Your Profile", profile, auctions})
+            res.render('profile',{title: profile.username, profile, auctions})
         })
     });
 });
