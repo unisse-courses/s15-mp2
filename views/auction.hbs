@@ -2,19 +2,17 @@
 
     <div class="auction_description">
 
-
        <div class="seller_info">
-            {{#if auction.sellerImg}}
-                <img src="{{auction.sellerImg}}">
+            {{#if auction.sellerID.img}}
+                <img src="{{auction.sellerID.img}}">
             {{else}}
                 <img src="images/defaultProfile.png">
             {{/if}}
             
-            <p class="name"> {{auction.sellerName}} </p>
-            <p class="location">  {{auction.location}} </p>
+            <p class="name"> {{auction.sellerID.username}} </p>
+            {{!-- <p class="location">  {{auction.location}} </p> --}}
             {{!-- <p class="rating"> {{auction.rating}} </p> --}}
         </div>
-
 
         <p class="textdescription"> {{auction.description}} </p>
 
@@ -31,10 +29,10 @@
             <div class="values">
                 <p> {{auction.delivery}} </p>
                 <p> {{auction.contactNum}} </p>
-                <p> AJAX HIGHEST BID </p>
-                <p> AJAX CURRENT BID </p>
-                <p> AJAX WATCHERS </p>
-                <p> {{auction.expiryDate}} {{auction.expiryTime}} </p> 
+                <p> {{auction.highestBid}} </p>
+                <p> {{auction.increments}} </p>
+                <p> {{auction.watchers}} </p>
+                <p> {{auction.expiryDate}}</p> 
             </div>
         </div>
 
@@ -46,12 +44,8 @@
 
     <div class="auction_controls"> 
             <form> 
-                <input type="number" name="amount" id="amount" placeholder="Place bid amount"
-                {{#if auction.highestBid>startingBid}}
-                    min=""+ ({{auction.highestBid}}+{{auction.increments})}+""
-                {{else}}
-                    min="{{auction.startingBid}}"
-                > 
+                <input type="number" name="amount" id="amount" placeholder="Place bid amount" 
+                    min="{{auction.highestBid}}"> 
                 <button id="bid"> Bid </button>
             </form>
     </div>

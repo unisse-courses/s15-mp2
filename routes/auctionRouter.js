@@ -46,17 +46,25 @@ router.post('/create', function(req, res){
 });
 
 router.get('/:id', function(req,res){
+    console.log("going to auction :" + req.params.id)
+    auctionsModel.findOne({_id: req.params.id}, function(err, auction){
+        console.log(auction);
 
-    //paedit nito ryan
+        var curAuction = auction.toObject()
+        var dateObject = curAuction['expiryDate']
+        var hours = ('0' + dateObject.getHours()).slice(-2);
+        var minutes = ('0' + dateObject.getMinutes()).slice(-2);
 
-    //para makuha mo yung id nung auction gamitin mo req.params.id
+        curAuction['expiryDate'] = curAuction.expiryDate.getFullYear()+"-"+
+                            ('0' + curAuction.expiryDate.getMonth()).slice(-2)+"-"+
+                            ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
+                                    hours + ":" + minutes;
 
-    auctionsModel.findOne({_id: req.params.id}), function(err, auction){
         res.render('auction',{
             title: auction.productName,
-            auction: auction
+            auction: curAuction
         })
-    }
+    })
 });
 
 module.exports = router;
