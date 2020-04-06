@@ -3,15 +3,19 @@ const usersModel = require ('../models/users');
 const auctionsModel = require ('../models/auctions');
 
 router.get('/', function(req, res){
-    res.redirect('/profile/'+req.body.email);
+    usersModel.findOne({ email: req.session.email }, function(err, profile) {
+        console.log(profile);
+        res.redirect('/profile/'+profile.username);
+    });
 });
 
-router.get('/:id', function(req, res){
-    usersModel.findOne({ email: req.param.email }, function(err, doc) {
+router.get('/:username', function(req, res){
+    console.log('username = '+ req.params.username);
+    usersModel.findOne({ username: req.params.username }, function(err, doc) {
         console.log(doc);
         var profile = doc.toObject();
     
-        auctionsModel.find({sellerEmail: profile.email}, function(err, results) {
+        auctionsModel.find({sellerID: profile.email}, function(err, results) {
             if (err) throw err;
             console.log(results);
             var auctions = [];

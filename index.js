@@ -30,48 +30,6 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-// const mongoClient = mongodb.MongoClient;
-// const databaseURL = "mongodb://localhost:27017/";
-// const dbname = "laselldb";
-// const options = { useUnifiedTopology: true };
-
-/* DATA */
-var auctions = [
-    {
-        sellerName: "meriendacosgrove",
-        location: "Pasay City",
-        sellerImg: "/images/merienda_dp.jpg",
-        rating: 4.52,
-        contactNum: "09554321234",
-        productName: "Chestplate Na Pwede Gawing Stool",
-        productImg: "/images/chestplate.jpg",
-        categories: ["home", "living", "furniture"],
-        expiryDate: "April 30, 2020",
-        expiryTime: "23:00",
-        description: `  Perfect item for those who want the minimalist look
-                        with a touch of nature. Chair is very sturdy and can 
-                        hold up to 100kg of weight. I can deliver your the item
-                        via Lalamove or we can meet up @ Taft.
-                        Increments of 20`,
-        highestBid: 25.00,
-        startingBid: 20.00,
-        increments: 5,
-        watchers: 21,
-        delivery: "Meetup @ Taft, Lalamove"
-    },
-    {
-        sellerName: "baboi",
-        location: "Pig farm"
-    },
-    {
-        sellerName: "baboi"
-    },
-    {
-        sellerName: "baboi"
-    }
-
-/* END OF DATA */
-
 app.use(express.static("public"));
 
 app.listen(port, function(){
@@ -108,6 +66,48 @@ app.use('/auction', checkLogIn, auction);
 app.get('/', function(req, res){
     res.redirect('/login');
 });
+
+// const mongoClient = mongodb.MongoClient;
+// const databaseURL = "mongodb://localhost:27017/";
+// const dbname = "laselldb";
+// const options = { useUnifiedTopology: true };
+
+/* DATA */
+// var auctions = [
+//     {
+//         sellerName: "meriendacosgrove",
+//         location: "Pasay City",
+//         sellerImg: "/images/merienda_dp.jpg",
+//         rating: 4.52,
+//         contactNum: "09554321234",
+//         productName: "Chestplate Na Pwede Gawing Stool",
+//         productImg: "/images/chestplate.jpg",
+//         categories: ["home", "living", "furniture"],
+//         expiryDate: "April 30, 2020",
+//         expiryTime: "23:00",
+//         description: `  Perfect item for those who want the minimalist look
+//                         with a touch of nature. Chair is very sturdy and can 
+//                         hold up to 100kg of weight. I can deliver your the item
+//                         via Lalamove or we can meet up @ Taft.
+//                         Increments of 20`,
+//         highestBid: 25.00,
+//         startingBid: 20.00,
+//         increments: 5,
+//         watchers: 21,
+//         delivery: "Meetup @ Taft, Lalamove"
+//     },
+//     {
+//         sellerName: "baboi",
+//         location: "Pig farm"
+//     },
+//     {
+//         sellerName: "baboi"
+//     },
+//     {
+//         sellerName: "baboi"
+//     }]
+
+/* END OF DATA */
 
 //Create collections (entities)
 // mongoClient.connect(databaseURL, options, function(err, client) {
@@ -328,7 +328,6 @@ app.post('/createAuction', checkLogIn, function(req, res){
 
     usersModel.findOne({email: thisSession.email}, function(err, seller){
         
-
         var newAuction = new auctionsModel({
             sellerID: seller._id,
             productName:req.body.productName,
@@ -449,13 +448,13 @@ app.post('/exploreNew', function(req, res){
 
 //Following 2 app.post for profileRouter
 
-app.post('/profilePage', function(req, res) {
+// app.post('/profilePage', function(req, res) {
 
-    usersModel.findOne({ name: req.body.username }, function(err, profile) {
-      console.log(profile);
-      res.send(profile);
-    });
-});
+//     usersModel.findOne({ name: req.body.username }, function(err, profile) {
+//       console.log(profile);
+//       res.send(profile);
+//     });
+// });
 
 app.post('/profilePageAuctions', function(req, res) {
 
@@ -470,18 +469,17 @@ app.post('/profilePageAuctions', function(req, res) {
     });
 });
 
+// app.get('/auction/:id', checkLogIn, function(req,res){
+//     res.render('auction',{
+//         title: auctions[req.params.id].productName,
+//         auction: auctions[req.params.id]
+//     })
+// });
 
-app.get('/auction/:id', checkLogIn, function(req,res){
-    res.render('auction',{
-        title: auctions[req.params.id].productName,
-        auction: auctions[req.params.id]
-    })
-});
-
-app.get('/activity', checkLogIn, function(req,res){
-    res.render('activity',{
-        title: "Activity",
-        watched: auctions,
-        bids: auctions,
-    })
-});
+// app.get('/activity', checkLogIn, function(req,res){
+//     res.render('activity',{
+//         title: "Activity",
+//         watched: auctions,
+//         bids: auctions,
+//     })
+// });

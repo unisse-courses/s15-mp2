@@ -40,7 +40,7 @@ router.post('/create', function(req, res){
     });
 });
 
-app.get('/:id', function(req,res){
+router.get('/:id', function(req,res){
 
     //paedit nito ryan
 
