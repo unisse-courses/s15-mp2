@@ -102,6 +102,9 @@ var validateRegister = function(){
     var confirmPassword = $("#confirmPassword").val();
     var valid = true;
 
+    if(img == '/images/icons/profileFiller.png'){
+        img = '/images/defaultProfile.png'
+    }
 
     if(email == "" || username == "" || password == "" || confirmPassword == ""){
         $("#registerError").text("some required input fields are empty.");
@@ -147,6 +150,8 @@ var createAuction = function(){
         delivery == "" || contactNum == "" || expiryDate == "" || 
         expiryTime == "" || startingBid == "" || increments == ""){
         $("#errorMsg").text("some required input fields are empty.");
+    } else if(productImg == '/images/icons/productFiller.png'){
+        $("#errorMsg").text("please provide a product image.");
     } else if($("#expiryDate").val() == date && 
     $("#expiryTime").val() < curTime){
         $("#errorMsg").text("minimum due time is 24 hours from current time.");
@@ -193,5 +198,6 @@ var toHome = function(){
 }
 
 var toAuction = function(key){
+    console.log("toAuction: " + key);
     window.location.href = '/auction/'+key;
 }

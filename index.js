@@ -18,6 +18,7 @@ const login = require('./routes/loginRouter');
 const profile = require('./routes/profileRouter');
 const explore = require('./routes/exploreRouter');
 const auction = require('./routes/auctionRouter');
+const activity = require('./routes/activityRouter');
 
 app.use(cookieParser());
 app.use(session({secret: "sikretong malupet"}));
@@ -62,6 +63,7 @@ app.use('/login', login);
 app.use('/explore', checkLogIn, explore);
 app.use('/profile', checkLogIn, profile);
 app.use('/auction', checkLogIn, auction);
+app.use('/activity', checkLogIn, activity);
 
 app.get('/', function(req, res){
     res.redirect('/login');
