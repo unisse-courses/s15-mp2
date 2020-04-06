@@ -14,8 +14,8 @@ const options = { useNewUrlParser: true,
 mongoose.connect(databaseURL, options);
 
 const watchedSchema = new mongoose.Schema({
-    watcherEmail: { type: String, required: [true, "No email provided"] },
-    auctionID: {type: Number, required: true},
+    watcherID: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required:true },
+    auctionID: { type: mongoose.Schema.Types.ObjectId, ref: 'auctions', required:true },
     bidDate : { type: Date, required: true }
   }
   /** README **

@@ -461,7 +461,7 @@ app.post('/profilePageAuctions', function(req, res) {
     usersModel.findOne({ username: req.body.username }, function(err, profile) {
         console.log(profile);
 
-        auctionsModel.find({sellerEmail: profile.username}, function(err, auctions) {
+        auctionsModel.find({sellerID: profile._id}, function(err, auctions) {
             if (err) throw err;
             console.log(auctions);
             res.send(auctions);
@@ -483,3 +483,55 @@ app.post('/profilePageAuctions', function(req, res) {
 //         bids: auctions,
 //     })
 // });
+
+
+
+//Activities
+
+//Auctions
+app.post('/profileActivitiesAuctions', function(req, res) {
+
+    usersModel.findOne({ username: req.body.username }, function(err, profile) {
+        console.log(profile);
+
+        //doc.toObject profile for router
+
+        auctionsModel.find({sellerID: profile._id}).populate('sellerID').exec(function(err, auctions) {
+            if (err) throw err;
+            console.log(auctions);
+            res.send(auctions);
+        });
+    });
+});
+
+//Watched
+app.post('/profileActivitiesWatched', function(req, res) {
+
+    usersModel.findOne({ username: req.body.username }, function(err, profile) {
+        console.log(profile);
+
+        //doc.toObject profile for router
+
+        watchedModel.find({watcherID: profile._id}).populate('watcherID').populate('auctionID').exec(function(err, watched) {
+            if (err) throw err;
+            console.log(watched);
+            res.send(watched);
+        });
+    });
+});
+
+//Bids
+app.post('/profileActivitiesBids', function(req, res) {
+
+    usersModel.findOne({ username: req.body.username }, function(err, profile) {
+        console.log(profile);
+
+        //doc.toObject profile for router
+
+        bidsModel.find({bidderID: profile._id}).populate('bidderID').populate('auctionID').exec(function(err, bids) {
+            if (err) throw err;
+            console.log(bids);
+            res.send(bids);
+        });
+    });
+});
