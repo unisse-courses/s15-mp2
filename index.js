@@ -1,3 +1,4 @@
+
 const express = require("express");
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -16,13 +17,18 @@ const watchedModel = require ('./models/watched');
 const login = require('./routes/loginRouter');
 const profile = require('./routes/profileRouter');
 const explore = require('./routes/exploreRouter');
+const auction = require('./routes/auctionRouter');
 
 app.use(cookieParser());
 app.use(session({secret: "sikretong malupet"}));
 var thisSession;
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    parameterLimit: 100000,
+    limit: '50mb',
+    extended: true
+}));
 
 // const mongoClient = mongodb.MongoClient;
 // const databaseURL = "mongodb://localhost:27017/";
@@ -47,8 +53,9 @@ var auctions = [
                         hold up to 100kg of weight. I can deliver your the item
                         via Lalamove or we can meet up @ Taft.
                         Increments of 20`,
-        bidPrice: 25.00,
-        startPrice: 20.00,
+        highestBid: 25.00,
+        startingBid: 20.00,
+        increments: 5,
         watchers: 21,
         delivery: "Meetup @ Taft, Lalamove"
     },
@@ -62,7 +69,7 @@ var auctions = [
     {
         sellerName: "baboi"
     }
-]
+
 /* END OF DATA */
 
 app.use(express.static("public"));
@@ -96,6 +103,7 @@ const checkLogIn = function(req, res, next) {
 app.use('/login', login);
 app.use('/explore', checkLogIn, explore);
 app.use('/profile', checkLogIn, profile);
+app.use('/auction', checkLogIn, auction);
 
 app.get('/', function(req, res){
     res.redirect('/login');
@@ -310,52 +318,59 @@ app.get('/', function(req, res){
 //     })
 // });
 
-app.get('/create', checkLogIn, function(req,res){
-    res.render('create',{
-        title: "Create Auction"
-    })
-});
+//app.get('/create', checkLogIn, function(req,res){
+//    res.render('create',{
+//        title: "Create Auction"
+//    })
+//});
 
 app.post('/createAuction', checkLogIn, function(req, res){
-    var newAuction = new auctionsModel({
-        sellerEmail: thisSession.email,
-        productName:req.body.productName,
-        description:req.body.description,
-        delivery:req.body.delivery,
-        contactNum:req.body.contactNum,
-        expiryDate:req.body.expiryDate,
-        startingBid:req.body.startingBid,
-        highestBid:0,
-        increments:req.body.increments,
-        watchers:0,
-        productImg:req.body.productImg,
-        dateCreated: req.body.dateCreated
-    })
-    newAuction.save(function(err, newAuction) {
-        var result;
+
+    usersModel.findOne({email: thisSession.email}, function(err, seller){
+        
+
+        var newAuction = new auctionsModel({
+            sellerID: seller._id,
+            productName:req.body.productName,
+            description:req.body.description,
+            delivery:req.body.delivery,
+            contactNum:req.body.contactNum,
+            expiryDate:req.body.expiryDate,
+            startingBid:req.body.startingBid,
+            highestBid:0,
+            increments:req.body.increments,
+            watchers:0,
+            productImg:req.body.productImg,
+            dateCreated: req.body.dateCreated
+        })
+        newAuction.save(function(err, newAuction) {
+            var result;
+        
+            /** == README == **
+              Added error handling! Check out the object printed out in the console.
+              (Try clicking Add Student when the name or id is blank)
+            **/
+            if (err) {
+              console.log(err.errors);
+        
+              result = "Auction was not created!";
+              res.send(result);
+              // throw err; // This is commented so that the server won't be killed.
+            } else {
+              console.log("Successfully added auction!");
+              console.log(newAuction); // Check out the logs and see there's a new __v attribute!
+        
+              // Let's create a custom response that the student was created successfully
+              result = "Auction created!";
+        
+              // Sending the result as is to handle it the "AJAX-way".
+              res.send(result);
+            }
+        
+          });
+    });
+
     
-        /** == README == **
-          Added error handling! Check out the object printed out in the console.
-          (Try clicking Add Student when the name or id is blank)
-        **/
-        if (err) {
-          console.log(err.errors);
-    
-          result = "Auction was not created!";
-          res.send(result);
-          // throw err; // This is commented so that the server won't be killed.
-        } else {
-          console.log("Successfully added auction!");
-          console.log(newAuction); // Check out the logs and see there's a new __v attribute!
-    
-          // Let's create a custom response that the student was created successfully
-          result = "Student created!";
-    
-          // Sending the result as is to handle it the "AJAX-way".
-          res.send(result);
-        }
-    
-      });
 
 
     //mongodb Version***
@@ -379,7 +394,7 @@ app.post('/createAuction', checkLogIn, function(req, res){
 app.post('/explorePopular', function(req, res){
     
 
-    auctionsModel.find({}).sort({watchers: 1}).limit(100).exec(function(err, auctions){
+    auctionsModel.find({}).populate('sellerID').sort({watchers: 1}).limit(100).exec(function(err, auctions){
         console.log(auctions);
         res.send(auctions);
     });
@@ -406,7 +421,7 @@ app.post('/explorePopular', function(req, res){
 app.post('/exploreNew', function(req, res){
     
 
-    auctionsModel.find({}).sort({dateCreated: -1}).limit(100).exec(function(err, auctions){
+    auctionsModel.find({}).populate('sellerID').sort({dateCreated: -1}).limit(100).exec(function(err, auctions){
         console.log(auctions);
         res.send(auctions);
     });
@@ -431,10 +446,12 @@ app.post('/exploreNew', function(req, res){
     //   });
 })
 
+
+//Following 2 app.post for profileRouter
+
 app.post('/profilePage', function(req, res) {
 
     
-
     usersModel.findOne({ name: req.body.username }, function(err, profile) {
       console.log(profile);
       res.send(profile);
@@ -455,6 +472,7 @@ app.post('/profilePageAuctions', function(req, res) {
     });
 });
 
+
 app.get('/auction/:id', checkLogIn, function(req,res){
     res.render('auction',{
         title: auctions[req.params.id].productName,
@@ -469,4 +487,3 @@ app.get('/activity', checkLogIn, function(req,res){
         bids: auctions,
     })
 });
-
