@@ -59,6 +59,70 @@ body > *{
     justify-self: center;
 }
 
+.status {
+    display: grid;
+    grid-template-columns: 1fr 7fr;
+    grid-row: 10;
+}
+
+.status * {
+    margin: 3px;
+}
+
+.values {
+    display: grid;
+    row-gap: 2px;
+}
+
+.values > input, .status > p{
+    font-size: 12px;
+    height: 20px;
+}
+
+.icons {
+    display: grid;
+}
+
+.icons > span {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+}
+
+
+.deliveryIcon {
+    background: url(../images/icons/sprites.svg) -30px 0;
+    background-size: 151px 151px;
+}
+
+
+.contactIcon {
+    background: url(../images/icons/sprites.svg) -30px -50px;
+    background-size: 151px 151px;
+}
+
+.highestbidIcon {
+    background: url(../images/icons/sprites.svg) -30px -25px;
+    background-size: 151px 151px;
+}
+
+
+.incrementIcon {
+    background: url(../images/icons/sprites.svg) -55px 0px;
+    background-size: 151px 151px;
+}
+
+.expirydateIcon {
+    background: url(../images/icons/sprites.svg) -30px -75px;
+    background-size: 151px 151px;
+}
+
+.expiryIcon {
+    background: url(../images/icons/sprites.svg) -30px -100px;
+    background-size: 151px 151px;
+}
+
+
 
 
 
@@ -121,9 +185,43 @@ body > *{
     display:grid;
     grid-template-columns: 1fr 1fr;
     justify-self: end;
-    column-gap: 25px;
+    column-gap: 35px;
+    margin: 0 30px 0 0;
 }
 
+.nav_right span, .nav_right a {
+    height: 30px;
+    display: block;
+}
+
+.icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-size: 151px 151px;
+}
+
+.logout a:link, .logout a:visited {
+    background: url(../images/icons/sprites.svg) 0 0;
+    background-size: 151px 151px;
+}
+
+.logout a:hover {
+    background: url(../images/icons/sprites.svg) 0 -30px;
+    background-size: 151px 151px;
+    transition: 0s;
+}
+
+.create {
+    background: url(../images/icons/sprites.svg) 0 -60px;
+    background-size: 151px 151px;
+}
+
+.create a:hover {
+    background: url(../images/icons/sprites.svg) 0 -90px;
+    background-size: 151px 151px;
+    transition: 0s;
+}
 
 
 
@@ -215,6 +313,9 @@ body > *{
 #eyeIcon {
     /* sprite settings */
 }
+
+
+
 
 
 
@@ -355,12 +456,6 @@ body > *{
 
 .auction_description > .status {
     grid-row: 10;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-
-.auction_description > .status * {
-    margin: 3px;
 }
 
 .auction_image {
@@ -435,8 +530,13 @@ body > *{
     grid-row: 2/4;
 }
 
+.create_description > * {
+    margin: 15px;
+}
+
 .create_image {
     grid-row: 3/6;
+    grid-column: 2;
 }
 
 .create_image > #imgPreview {
@@ -450,9 +550,19 @@ body > *{
     justify-self: center;
 }
 
-.create_controls {
+.create_container > .errorMsg {
+    font-size: 12px;
+    justify-self: center;
     grid-row: 4;
+    grid-column: 1;
 }
+
+.create_container > button {
+    height: 40px;
+    grid-row: 5/6;
+    grid-column: 1;
+}
+
 
 
 
