@@ -15,7 +15,7 @@ router.get('/:username', function(req, res){
         console.log(doc);
         var profile = doc.toObject();
     
-        auctionsModel.find({sellerID: profile.email}, function(err, results) {
+        auctionsModel.find({sellerID: profile._id}, function(err, results) {
             if (err) throw err;
             console.log(results);
             var auctions = [];
