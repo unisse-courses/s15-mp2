@@ -47,7 +47,7 @@ router.post('/create', function(req, res){
 
 router.get('/:id', function(req,res){
     console.log("going to auction :" + req.params.id)
-    auctionsModel.findOne({_id: req.params.id}, function(err, auction){
+    auctionsModel.findOne({_id: req.params.id}).populate('sellerID').exec(function(err, auction){
         console.log(auction);
 
         var curAuction = auction.toObject()
@@ -64,7 +64,7 @@ router.get('/:id', function(req,res){
             title: auction.productName,
             auction: curAuction
         })
-    })
+    }) 
 });
 
 module.exports = router;
