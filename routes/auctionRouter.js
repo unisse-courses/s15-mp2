@@ -9,7 +9,7 @@ router.get('/', function(req,res){
 
 router.post('/create', function(req, res){
     var newAuction = new auctionsModel({
-        sellerEmail: req.session.email,
+        sellerID: req.session.email,
         productName:req.body.productName,
         description:req.body.description,
         delivery:req.body.delivery,
@@ -40,7 +40,7 @@ router.post('/create', function(req, res){
     });
 });
 
-app.get('/:id', function(req,res){
+router.get('/:id', function(req,res){
 
     //paedit nito ryan
 
