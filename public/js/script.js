@@ -41,6 +41,7 @@ $(document).ready(function(){
     var day = ("0" + tomorrow.getDate()).slice(-2);
     var month = ("0" + (tomorrow.getMonth() + 1)).slice(-2);
     date = tomorrow.getFullYear()+"-"+(month)+"-"+(day);
+    console.log(date);
     $("#expiryDate").attr('min', date);
 
     $("#expiryDate").change(function(){
@@ -53,12 +54,13 @@ $(document).ready(function(){
         }
     })
 
-    $("#expiryDate").timepicker
-
+    $("#amount").keypress(function (evt) {
+        evt.preventDefault();
+    });
+    
     // $("#startingBid").keypress(function (evt) {
     //     evt.preventDefault();
     // });
-
 
     //Default for Login
     $(".registerDiv").hide();
@@ -100,6 +102,9 @@ var validateRegister = function(){
     var confirmPassword = $("#confirmPassword").val();
     var valid = true;
 
+    if(img == '/images/icons/profileFiller.png'){
+        img = '/images/defaultProfile.png'
+    }
 
     if(email == "" || username == "" || password == "" || confirmPassword == ""){
         $("#registerError").text("some required input fields are empty.");
@@ -137,27 +142,36 @@ var createAuction = function(){
     var increments = $("#increments").val();
     var productImg = $("#imgPreview").attr("src");
 
+    var formattedDate = new Date(expiryDate + " " + expiryTime);
+    console.log(formattedDate);
+
+    console.log($("#expiryTime").val());
+    var curTime = (("0" + tomorrow.getHours()).slice(-2)+":"+("0" + tomorrow.getMinutes()).slice(-2));
+    console.log(curTime);
+
     if(productName == "" || description == "" ||
         delivery == "" || contactNum == "" || expiryDate == "" || 
         expiryTime == "" || startingBid == "" || increments == ""){
         $("#errorMsg").text("some required input fields are empty.");
+    } else if(productImg == '/images/icons/productFiller.png'){
+        $("#errorMsg").text("please provide a product image.");
     } else if($("#expiryDate").val() == date && 
-    $("#expiryTime").val() < (tomorrow.getHours()+":"+tomorrow.getMinutes())){
+    $("#expiryTime").val() < curTime){
         $("#errorMsg").text("minimum due time is 24 hours from current time.");
     } else{
+        $("#errorMsg").text("");
         var newAuction = {
             productName:productName,
             description:description,
             delivery:delivery,
             contactNum:contactNum,
-            expiryDate:expiryDate,
-            expiryTime:expiryTime,
+            expiryDate:formattedDate,
             startingBid:startingBid,
             increments:increments,
             productImg:productImg,
             dateCreated: new Date()
         }
-        $.post("createAuction", newAuction, function(data){
+        $.post("auction/create", newAuction, function(data){
             toHome();
         });
     }
@@ -186,5 +200,6 @@ var toHome = function(){
 }
 
 var toAuction = function(key){
+    console.log("toAuction: " + key);
     window.location.href = '/auction/'+key;
 }

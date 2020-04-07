@@ -1,6 +1,6 @@
 /* Layouting purposes only (delete when finished) */
 body, body *{
-    /* border: 0.5px solid red; */
+    border: 0.5px solid red;
 }
 
 
@@ -21,7 +21,7 @@ body > *{
 
 .seller_info {
     display:grid;
-    grid-template-columns: 1fr 5fr 1fr;
+    grid-template-columns: 1fr 5fr;
     justify-content: center;
     align-items: center;
 }
@@ -722,7 +722,6 @@ body > *{
     justify-content: center;
     row-gap: 10px;
     justify-items: center;
-
 }
 
 .profile_container > .seller_info {
