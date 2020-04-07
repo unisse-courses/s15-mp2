@@ -459,26 +459,20 @@ body > *{
     padding: 10px;
     justify-items: center;
     text-align: justify;
+    position: relative;
 }
 
 .auction_description > .textdescription::after {
     content: "";
     display: block;
     position: absolute;
-    top: 165px;
-    left: 305px;
-
+    top: -13px;
+    left: 15px;
     width: 0;
     height: 0;
-    /* border-top: 8px solid transparent;
-    border-bottom: 8px solid transparent;
-    border-right: 15px solid black; */
-
     border-right: 8px solid transparent;
     border-left: 8px solid transparent;
-    border-bottom: 15px solid whitesmoke;
-    
-    
+    border-bottom: 15px solid whitesmoke;   
 }
 
 .auction_description > * {
@@ -488,7 +482,8 @@ body > *{
 
 .auction_description > .status {
     display: grid;
-    grid-row: 10;
+    grid-row: 4;
+    align-self: end;
     align-items: stretch;
 }
 
