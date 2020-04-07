@@ -2,7 +2,7 @@
 
     <div class="auction_description">
 
-       <div class="seller_info">
+       <div class="seller_info" onclick="toProfile('{{auction.sellerID.username}}')">
             <img src="{{auction.sellerID.img}}">
             <p class="sellerName"> {{auction.sellerID.username}} </p>
             {{!-- <p class="location">  {{auction.location}} </p> --}}

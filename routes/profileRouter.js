@@ -12,6 +12,7 @@ router.get('/', function(req, res){
 router.get('/:username', function(req, res){
     console.log('username = '+ req.params.username);
     usersModel.findOne({ username: req.params.username }, function(err, doc) {
+        if (err) throw err;
         console.log(doc);
         var profile = doc.toObject();
     
