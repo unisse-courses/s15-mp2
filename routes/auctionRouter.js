@@ -66,10 +66,11 @@ router.get('/:id', function(req,res){
             var currUser = seller.toObject();
 
             var currUserID = currUser._id;
-            watchedModel.findOne({watchedID: currUserID },{auctionID: req.params.id}, function(err, auction){
+            watchedModel.findOne({watcherID: currUserID, auctionID: req.params.id}, function(err, auction){
                 
                 if (auction){
                     //yes, winawatch niya
+                    console.log("viewing watched auction");
                     res.render('auction',{
                         title: curAuction.productName,
                         auction: curAuction,
@@ -78,9 +79,11 @@ router.get('/:id', function(req,res){
                 }
                 else{
                     //no, hindi niya winawatch
+                    console.log("current auction not watched");
                     res.render('auction',{
                         title: curAuction.productName,
-                        auction: curAuction
+                        auction: curAuction,
+                        isWatched: false
                     })
                 }
             });
