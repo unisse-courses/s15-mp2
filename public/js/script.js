@@ -201,6 +201,7 @@ var watchToggle = function(key){
             if(data == "success"){
                 console.log("Now watching current auction");
                 $("#watchBtn").text("UNWATCH");
+                $("#watchers").text(parseInt($("#watchers").text())+1);
             } else {
                 console.log("Cannot watch auction");
             }
@@ -210,6 +211,7 @@ var watchToggle = function(key){
             if(data == "success"){
                 console.log("Unwatched current auction");
                 $("#watchBtn").text("WATCH");
+                $("#watchers").text(parseInt($("#watchers").text())-1);
             } else {
                 console.log("Unwatch failed");
             }

@@ -97,7 +97,7 @@ router.post('/watch', function(req, res){
 
         const currUserID = currUser._id;
 
-        auctionsModel.findOne({ _id: req.body._id }, function(err, auction) {
+        auctionsModel.findOneAndUpdate({ _id: req.body._id },{$inc: {watchers: 1}}, {new: true}, function(err, auction) {
             console.log(auction);
 
             const auctionid = auction._id;
@@ -129,6 +129,12 @@ router.post('/unwatch', function(req, res){
             console.log('Unwatch successful')
             res.send("success");
         });
+
+        auctionsModel.findOneAndUpdate({ _id: req.body._id },{$inc: {watchers: -1}}, {new: true}, function(err, auction) {
+            console.log("current watchers:"+auction.watchers);
+        });
+
+
     });
 });
 
