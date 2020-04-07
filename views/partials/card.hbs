@@ -1,12 +1,12 @@
-<div class="card" onclick="toAuction('{{_id}}')">
-    <div class="seller_info">
+<div class="card">
+    <div class="seller_info" onclick="toProfile('{{sellerID.username}}')">
         <img src="{{sellerID.img}}">
         <p class="sellerName">{{sellerID.username}}</p>
         {{!-- <p class="location">{{sellerID.location}}</p> --}}
         {{!-- <p class="rating">{{rating}}</p> --}}
     </div>
 
-    <div class="card_image">
+    <div class="card_image" onclick="toAuction('{{_id}}')">
         <img src="{{productImg}}">
     </div>
 

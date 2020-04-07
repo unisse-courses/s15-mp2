@@ -215,3 +215,8 @@ var toAuction = function(key){
     console.log("toAuction: " + key);
     window.location.href = '/auction/'+key;
 }
+
+var toProfile = function(key){
+    console.log("toProfile: "+key);
+    window.location.href = '/profile/'+key;
+}
