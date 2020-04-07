@@ -49,9 +49,9 @@
 
     <div class="watchBtns">
         {{#if isWatched}}
-            <button id="watchBtn">UNWATCH</button>
+            <button id="watchBtn" onclick="watchToggle()">UNWATCH</button>
         {{else}}
-            <button id="watchBtn">WATCH</button>
+            <button id="watchBtn" onclick="watchToggle()">WATCH</button>
         {{/if}}
     </div>
 

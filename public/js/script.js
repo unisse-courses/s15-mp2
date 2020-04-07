@@ -194,11 +194,14 @@ var logregSwitchTab = function (event, tabName){
 }
 
 var watchToggle = function(){
-    if($("#watchBtn").val() == "WATCH"){
-        
+    if($("#watchBtn").text() == "WATCH"){
+        console.log("Now watching current auction");
+        $("#watchBtn").text("UNWATCH")
+
     }
     else{
-
+        console.log("Unwatched current auction");
+        $("#watchBtn").text("WATCH")
     }
 }
 

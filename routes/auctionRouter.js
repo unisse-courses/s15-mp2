@@ -51,31 +51,6 @@ router.get('/:id', function(req,res){
     auctionsModel.findOne({_id: req.params.id}).populate('sellerID').exec(function(err, auction){
         console.log(auction);
 
-        usersModel.findOne({email: req.session.email}, function(err, seller){
-            console.log(seller);
-            var currUser = seller.toObject();
-
-            var currUserID = currUser._id;
-            watchedModel.findOne({watchedID: currUserID },{auctionID: req.params.id}, function(err, auction){
-                
-                if (auction){
-                    //yes, winawatch niya
-                }
-                else{
-                    //no, hindi niya winawatch
-                }
-            });
-        });
-        
-
-        
-
-
-
-
-
-
-
         var curAuction = auction.toObject()
         var dateObject = curAuction['expiryDate']
         var hours = ('0' + dateObject.getHours()).slice(-2);
@@ -86,10 +61,30 @@ router.get('/:id', function(req,res){
                             ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
                                     hours + ":" + minutes;
 
-        res.render('auction',{
-            title: auction.productName,
-            auction: curAuction
-        })
+        usersModel.findOne({email: req.session.email}, function(err, seller){
+            console.log(seller);
+            var currUser = seller.toObject();
+
+            var currUserID = currUser._id;
+            watchedModel.findOne({watchedID: currUserID },{auctionID: req.params.id}, function(err, auction){
+                
+                if (auction){
+                    //yes, winawatch niya
+                    res.render('auction',{
+                        title: curAuction.productName,
+                        auction: curAuction,
+                        isWatched: true
+                    })
+                }
+                else{
+                    //no, hindi niya winawatch
+                    res.render('auction',{
+                        title: curAuction.productName,
+                        auction: curAuction
+                    })
+                }
+            });
+        });      
     }) 
 });
 
