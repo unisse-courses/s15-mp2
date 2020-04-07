@@ -37,11 +37,11 @@ body > *{
     font-size: 15px;
 }
 
-.seller_info .location {
+/* .seller_info .location {
     grid-column: 2;
     grid-row: 2;
     font-size: 12px;
-}
+} */
 
 /* .seller_info .rating {
     grid-row: 1/3;
@@ -63,10 +63,17 @@ body > *{
     display: grid;
     grid-template-columns: 1fr 7fr;
     grid-row: 10;
+    align-items: center;
 }
 
 .status * {
     margin: 3px;
+}
+
+.status > span {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
 }
 
 .values {
@@ -112,15 +119,21 @@ body > *{
     background-size: 151px 151px;
 }
 
-.expirydateIcon {
+.expiryIcon {
     background: url(../images/icons/sprites.svg) -30px -75px;
     background-size: 151px 151px;
 }
 
-.expiryIcon {
+.expirydateIcon {
     background: url(../images/icons/sprites.svg) -30px -100px;
     background-size: 151px 151px;
 }
+
+.eyeIcon {
+    background: url(../images/icons/sprites.svg) -55px -25px;
+    background-size: 151px 151px;
+}
+
 
 
 
@@ -303,17 +316,8 @@ body > *{
 }
 
 .card_info > .status > .expiry {
-    grid-column: 6;
+    grid-column: 5;
 }
-
-#bidIcon {
-    /* sprite settings */
-}
-
-#eyeIcon {
-    /* sprite settings */
-}
-
 
 
 
@@ -716,6 +720,8 @@ body > *{
 .profile_container {
     display: grid;
     justify-content: center;
+    row-gap: 10px;
+    justify-items: center;
 }
 
 .profile_container > .seller_info {
@@ -728,12 +734,27 @@ body > *{
     width: 150px;
     height: 150px;
     border-radius: 75px;
+    grid-row: 1/5
+}
+
+.profile_container > .seller_info > p {
+    margin: 1px;
+}
+
+.profile_container > .seller_info > .count {
+    font-size: 17px;
+    grid-row: 3;
 }
 
 .profile_container > .seller_info > .sellerName {
     font-size: 30px;
+    grid-row: 2;
 }
 
+.profile_posts {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
 
 
 
@@ -769,15 +790,15 @@ body > *{
     row-gap: 1px;
 }
 
-.card_info > * {
+.post_info > * {
     margin: 1px;
 }
 
-.card_info > .productName {
+.post_info > .productName {
     grid-column: 1/6;
 }
 
-.card_info > .status {
+.post_info > .status {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 5fr;
     grid-row: 3;
@@ -786,19 +807,11 @@ body > *{
     height: 100
 }
 
-.card_info > .status > p {
+.post_info > .status > p {
     margin: 1px;
     font-size: 13px;
 }
 
-.card_info > .status > .expiry {
+.post_info > .status > .expiry {
     grid-column: 6;
-}
-
-#bidIcon {
-    /* sprite settings */
-}
-
-#eyeIcon {
-    /* sprite settings */
 }
