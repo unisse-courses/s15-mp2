@@ -16,7 +16,7 @@ mongoose.connect(databaseURL, options);
 const watchedSchema = new mongoose.Schema({
     watcherID: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required:true },
     auctionID: { type: mongoose.Schema.Types.ObjectId, ref: 'auctions', required:true },
-    bidDate : { type: Date, required: true }
+    watchedDate : { type: Date, required: true }
   }
   /** README **
     Virtuals are other fields that do not persist in mongodb.
