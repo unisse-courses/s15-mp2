@@ -193,15 +193,27 @@ var logregSwitchTab = function (event, tabName){
     event.currentTarget.className += " active";
 }
 
-var watchToggle = function(){
-    if($("#watchBtn").text() == "WATCH"){
-        console.log("Now watching current auction");
-        $("#watchBtn").text("UNWATCH")
+var watchToggle = function(key){
 
-    }
-    else{
-        console.log("Unwatched current auction");
-        $("#watchBtn").text("WATCH")
+    console.log("watchToggle:"+key);
+    if($("#watchBtn").text() == "WATCH"){
+        $.post("/auction/watch",{_id: key}, function(data){
+            if(data == "success"){
+                console.log("Now watching current auction");
+                $("#watchBtn").text("UNWATCH");
+            } else {
+                console.log("Cannot watch auction");
+            }
+        });
+    } else {
+        $.post("/auction/unwatch",{_id: key}, function(data){
+            if(data == "success"){
+                console.log("Unwatched current auction");
+                $("#watchBtn").text("WATCH");
+            } else {
+                console.log("Unwatch failed");
+            }
+        });
     }
 }
 
