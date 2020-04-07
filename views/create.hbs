@@ -3,7 +3,8 @@
     <p> Create an Auction </p>
      
     <div class="create_description">        
-        <input type="text" id="productDescription" placeholder="Description">
+        {{!-- <input type="text" id="productDescription" placeholder="Description" maxlength="150"> --}}
+        <textarea id="productDescription" placeholder="Description" rows="10" maxlength="400"></textarea>
 
         <div class="status">
          
@@ -14,7 +15,6 @@
                 <span class="incrementIcon"> </span>
                 <span class="expirydateIcon"> </span>
                 <span class="expiryIcon"> </span>
-
             </div>
 
             <div class="values">

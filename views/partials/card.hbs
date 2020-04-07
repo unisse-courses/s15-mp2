@@ -1,10 +1,6 @@
 <div class="card" onclick="toAuction('{{_id}}')">
     <div class="seller_info">
-        {{#if sellerID.img}}
-            <img src="{{sellerID.img}}">
-        {{else}}
-            <img src="/images/defaultProfile.png">
-        {{/if}}
+        <img src="{{sellerID.img}}">
         <p class="sellerName">{{sellerID.username}}</p>
         {{!-- <p class="location">{{sellerID.location}}</p> --}}
         {{!-- <p class="rating">{{rating}}</p> --}}
@@ -18,11 +14,11 @@
         <p class="productName">{{productName}}</p>
 
         <div class="status">
-            <img id="bidIcon"> 
+            <span class="highestbidIcon"> </span>
             <p class="bid">{{highestBid}}</p>
-            <img id="eyeIcon">
+            <span class="eyeIcon"> </span>
             <p class="watchers">{{watchers}}</p>
-            <img id="expiryIcon">
+            <span class="expiryIcon"> </span>
             <p class="expiry"> {{expiryDate}}</p>
         </div>
     </div>

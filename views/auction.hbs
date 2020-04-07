@@ -3,13 +3,8 @@
     <div class="auction_description">
 
        <div class="seller_info">
-            {{#if auction.sellerID.img}}
-                <img src="{{auction.sellerID.img}}">
-            {{else}}
-                <img src="images/defaultProfile.png">
-            {{/if}}
-            
-            <p class="name"> {{auction.sellerID.username}} </p>
+            <img src="{{auction.sellerID.img}}">
+            <p class="sellerName"> {{auction.sellerID.username}} </p>
             {{!-- <p class="location">  {{auction.location}} </p> --}}
             {{!-- <p class="rating"> {{auction.rating}} </p> --}}
         </div>
@@ -18,12 +13,12 @@
 
         <div class="status">
             <div class="icons">
-                <img class="deliveryIcon">
-                <img class="contactIcon">
-                <img class="highestbidIcon">
-                <img class="currentbidIcon">
-                <img class="watchersIcon">
-                <img class="expiryIcon">
+                <span class="deliveryIcon"> </span>
+                <span class="contactIcon"> </span>
+                <span class="highestbidIcon"> </span>
+                <span class="incrementIcon"> </span>
+                <span class="eyeIcon"> </span>
+                <span class="expiryIcon"> </span>
             </div>
 
             <div class="values">

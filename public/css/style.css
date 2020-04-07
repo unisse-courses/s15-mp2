@@ -31,17 +31,17 @@ body > *{
     font-weight: bold;
 }
 
-.seller_info .name {
+.seller_info .sellerName {
     grid-column: 2;
     grid-row: 1;
-    font-size: 15px;
+    font-size: 20px;
 }
 
-.seller_info .location {
+/* .seller_info .location {
     grid-column: 2;
     grid-row: 2;
     font-size: 12px;
-}
+} */
 
 /* .seller_info .rating {
     grid-row: 1/3;
@@ -55,18 +55,25 @@ body > *{
     width: 50px;
     height: 50px;
     border-radius: 75px;
-    grid-row: 1/3;
+    /* grid-row: 1/3; */
     justify-self: center;
 }
 
 .status {
     display: grid;
     grid-template-columns: 1fr 7fr;
-    grid-row: 10;
+    grid-row: 8;
+    align-items: center;
 }
 
 .status * {
     margin: 3px;
+}
+
+.status > span {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
 }
 
 .values {
@@ -74,9 +81,13 @@ body > *{
     row-gap: 2px;
 }
 
+.values > p {
+    font-size: 12px;
+}
+
 .values > input, .status > p{
     font-size: 12px;
-    height: 20px;
+    height: 18px;
 }
 
 .icons {
@@ -84,6 +95,18 @@ body > *{
 }
 
 .icons > span {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+}
+
+.status > span {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+}
+
+.bidPrice > span, .watchers > span, .expiry > span {
     display: inline-block;
     width: 25px;
     height: 25px;
@@ -112,15 +135,21 @@ body > *{
     background-size: 151px 151px;
 }
 
-.expirydateIcon {
+.expiryIcon {
     background: url(../images/icons/sprites.svg) -30px -75px;
     background-size: 151px 151px;
 }
 
-.expiryIcon {
+.expirydateIcon {
     background: url(../images/icons/sprites.svg) -30px -100px;
     background-size: 151px 151px;
 }
+
+.eyeIcon {
+    background: url(../images/icons/sprites.svg) -55px -25px;
+    background-size: 151px 151px;
+}
+
 
 
 
@@ -233,9 +262,9 @@ body > *{
 .explore_container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 10px;
+    column-gap: 40px;
     justify-items: center;
-    row-gap: 15px;
+    row-gap: 30px;
 }
 
 /* @media only screen and (max-width: 800px){
@@ -290,11 +319,14 @@ body > *{
 
 .card_info > .status {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 5fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 8fr 1fr 9fr;
     grid-row: 3;
     grid-column: 1/6;
     column-gap: 3px;
-    height: 100
+    height: 100;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
 }
 
 .card_info > .status > p {
@@ -302,18 +334,13 @@ body > *{
     font-size: 13px;
 }
 
-.card_info > .status > .expiry {
+.card_info > .status >.expiryIcon {
     grid-column: 6;
 }
 
-#bidIcon {
-    /* sprite settings */
+.card_info > .status > .expiry {
+    grid-column: 7;
 }
-
-#eyeIcon {
-    /* sprite settings */
-}
-
 
 
 
@@ -335,6 +362,8 @@ body > *{
 
 
 /* TILE */
+
+
 .tile {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -427,6 +456,8 @@ body > *{
 .auction_description > .textdescription {
     background-color: whitesmoke;
     padding: 10px;
+    justify-items: center;
+    text-align: justify;
 }
 
 .auction_description > .textdescription::after {
@@ -455,7 +486,15 @@ body > *{
 }
 
 .auction_description > .status {
+    display: grid;
     grid-row: 10;
+    align-items: stretch;
+}
+
+.auction_description > .status > .values {
+    display: grid;
+    row-gap: 2px;
+    align-items: center;
 }
 
 .auction_image {
@@ -486,6 +525,7 @@ body > *{
 
 
 
+
 /* CREATE AUCTION */
 
 .create_container {
@@ -506,6 +546,7 @@ body > *{
     margin: 1px;
 }
 
+
 .create_container > p {
     font-size: 25px;
     font-weight: bold;
@@ -518,8 +559,7 @@ body > *{
     align-items: start;
     align-content: start;
     display: grid;
-    grid-template-rows: 1fr 1fr 6fr;
-    row-gap: 5px;
+    grid-template-rows: 1fr 6fr;
     min-height: 450px;
     max-height: 450px;
     max-width: 250px;
@@ -532,6 +572,18 @@ body > *{
 
 .create_description > * {
     margin: 15px;
+}
+
+.create_description > .status {
+    display: grid;
+    align-content: center;
+    align-items: center;
+}
+
+.create_description > #productDescription {
+    height: 200px;
+    font-size: 12px;
+    border: 1px solid gray;
 }
 
 .create_image {
@@ -716,6 +768,8 @@ body > *{
 .profile_container {
     display: grid;
     justify-content: center;
+    row-gap: 10px;
+    justify-items: center;
 }
 
 .profile_container > .seller_info {
@@ -728,11 +782,29 @@ body > *{
     width: 150px;
     height: 150px;
     border-radius: 75px;
+    grid-row: 1/5
+}
+
+.profile_container > .seller_info > p {
+    margin: 1px;
+}
+
+.profile_container > .seller_info > .count {
+    font-size: 17px;
+    grid-row: 3;
 }
 
 .profile_container > .seller_info > .sellerName {
     font-size: 30px;
+    grid-row: 2;
 }
+
+.profile_posts {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 30px;
+}
+
 
 
 
@@ -769,36 +841,32 @@ body > *{
     row-gap: 1px;
 }
 
-.card_info > * {
+.post_info > * {
     margin: 1px;
 }
 
-.card_info > .productName {
+.post_info > .productName {
     grid-column: 1/6;
 }
 
-.card_info > .status {
+.post_info > .status {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 5fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 8fr 1fr 9fr;
     grid-row: 3;
     grid-column: 1/6;
     column-gap: 3px;
     height: 100
 }
 
-.card_info > .status > p {
+.post_info > .status > p {
     margin: 1px;
     font-size: 13px;
 }
 
-.card_info > .status > .expiry {
+.post_info > .status > .expiryIcon {
     grid-column: 6;
 }
 
-#bidIcon {
-    /* sprite settings */
-}
-
-#eyeIcon {
-    /* sprite settings */
+.post_info > .status > .expiry {
+    grid-column: 7;
 }
