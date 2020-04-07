@@ -1,12 +1,41 @@
 const router = require('express').Router();
+const usersModel = require ('../models/users');
+const auctionsModel = require ('../models/auctions');
+const bidsModel = require ('../models/bids');
+const watchedModel = require ('../models/watched');
 
-router.get('/activity', function(req,res){
+router.get('/', function(req,res){
 
-    res.render('activity',{
-        title: "Activity"
-        // watched,
-        // bids,
-    })
+    var watched = [];
+    var bids = [];
+
+    usersModel.findOne({ email: req.session.email }, function(err, profile) {
+        console.log(profile);
+
+        watchedModel.find({watcherID: profile._id}).populate('watcherID').populate('auctionID').exec(function(err, results) {
+            if (err) throw err;
+            console.log(results);
+            
+            results.forEach(watch => {
+                watched.push(watch.toObject());
+            });
+        });
+
+        bidsModel.find({bidderID: profile._id}).populate('bidderID').populate('auctionID').exec(function(err, results) {
+            if (err) throw err;
+            console.log(results);
+
+            results.forEach(bid => {
+                bids.push(bid.toObject());
+            });
+        });
+
+        res.render('activity',{
+            title: "Activity",
+                    watched,
+                    bids
+        })
+    });
 });
 
 module.exports = router;
