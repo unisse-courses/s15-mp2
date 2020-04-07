@@ -21,7 +21,16 @@ router.get('/:username', function(req, res){
             var auctions = [];
 
             results.forEach(auction=>{
-                auctions.push(auction.toObject());
+                var curAuction = auction.toObject()
+                var dateObject = curAuction['expiryDate']
+                var hours = ('0' + dateObject.getHours()).slice(-2);
+                var minutes = ('0' + dateObject.getMinutes()).slice(-2);
+
+                curAuction['expiryDate'] = curAuction.expiryDate.getFullYear()+"-"+
+                                    ('0' + curAuction.expiryDate.getMonth()).slice(-2)+"-"+
+                                    ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
+                                            hours + ":" + minutes;
+                auctions.push(curAuction);
             })
 
             res.render('profile',{title: profile.username, profile, auctions})
