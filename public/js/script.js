@@ -5,7 +5,7 @@ var date;
 $(document).ready(function(){
 
     $.each( $(".nav_left").children(), function(i, val){
-        if($(this).attr("href")==window.location.pathname) {
+        if($(this).attr("href")==window.location.pathname || window.location.pathname.match(new RegExp($(this).attr("href") + "(\/.*)?"))) {
             $(this).attr("class","activeTab");
         }
         else {
