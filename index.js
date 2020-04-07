@@ -562,7 +562,7 @@ app.post('/watchAuction', function(req, res) {
             watch.save(function(err, result){
                 if(err) throw err;
                 console.log(result);
-                res.send(result);
+                res.send("success");
             });
         });
     });
@@ -578,8 +578,9 @@ app.post('/unwatchAuction', function(req, res) {
 
         watchedModel.deleteOne({ auctionID: req.body._id },{watcherID: currUserID}, function(err, unwatch) {
             if(err) throw err;
-            console.log(unwatch);
-            console.log('Unwatch successful') 
+            console.log(unwatch)
+            console.log('Unwatch successful')
+            res.send("success");
         });
     });
 });

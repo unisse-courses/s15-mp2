@@ -88,4 +88,45 @@ router.get('/:id', function(req,res){
     }) 
 });
 
+router.post('/watch', function(req, res){
+    //find logged in userID via email
+    usersModel.findOne({email: thisSession.email}, function(err, currUser){
+
+        const currUserID = currUser._id;
+
+        auctionsModel.findOne({ _id: req.body._id }, function(err, auction) {
+            console.log(auction);
+
+            const auctionid = auction._id;
+            
+            const watch = new watchedModel({
+                watcherID: currUserID,
+                auctionID: auctionid,
+                watchedDate: new Date
+            })
+
+            watch.save(function(err, result){
+                if(err) throw err;
+                console.log(result);
+                res.send("success");
+            });
+        });
+    });
+});
+
+router.post('/unwatch', function(req, res){
+    //find logged in userID via email
+    usersModel.findOne({email: thisSession.email}, function(err, currUser){
+
+        const currUserID = currUser._id;
+
+        watchedModel.deleteOne({ auctionID: req.body._id },{watcherID: currUserID}, function(err, unwatch) {
+            if(err) throw err;
+            console.log(unwatch)
+            console.log('Unwatch successful')
+            res.send("success");
+        });
+    });
+});
+
 module.exports = router;

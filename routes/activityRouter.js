@@ -17,7 +17,19 @@ router.get('/', function(req,res){
             console.log(results);
             
             results.forEach(watch => {
-                watched.push(watch.toObject());
+                
+                var curWatch = watch.toObject()
+
+                var curAuction = curWatch['auctionID'];
+                var dateObject = curAuction['expiryDate']
+                var hours = ('0' + dateObject.getHours()).slice(-2);
+                var minutes = ('0' + dateObject.getMinutes()).slice(-2);
+
+                curAuction['expiryDate'] = curAuction.expiryDate.getFullYear()+"-"+
+                                    ('0' + curAuction.expiryDate.getMonth()).slice(-2)+"-"+
+                                    ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
+                                            hours + ":" + minutes;
+                watched.push(curWatch);
             });
         });
 
@@ -26,7 +38,19 @@ router.get('/', function(req,res){
             console.log(results);
 
             results.forEach(bid => {
-                bids.push(bid.toObject());
+
+                var curBid = bid.toObject()
+
+                var curAuction = curBid['auctionID'];
+                var dateObject = curAuction['expiryDate']
+                var hours = ('0' + dateObject.getHours()).slice(-2);
+                var minutes = ('0' + dateObject.getMinutes()).slice(-2);
+
+                curAuction['expiryDate'] = curAuction.expiryDate.getFullYear()+"-"+
+                                    ('0' + curAuction.expiryDate.getMonth()).slice(-2)+"-"+
+                                    ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
+                                            hours + ":" + minutes;
+                bids.push(curBid);
             });
         });
 
