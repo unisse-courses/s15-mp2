@@ -1,10 +1,6 @@
 <div class="card" onclick="toAuction('{{_id}}')">
     <div class="seller_info">
-        {{#if sellerID.img}}
-            <img src="{{sellerID.img}}">
-        {{else}}
-            <img src="/images/defaultProfile.png">
-        {{/if}}
+        <img src="{{sellerID.img}}">
         <p class="sellerName">{{sellerID.username}}</p>
         {{!-- <p class="location">{{sellerID.location}}</p> --}}
         {{!-- <p class="rating">{{rating}}</p> --}}
