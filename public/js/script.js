@@ -193,6 +193,15 @@ var logregSwitchTab = function (event, tabName){
     event.currentTarget.className += " active";
 }
 
+var watchToggle = function(){
+    if($("#watchBtn").val() == "WATCH"){
+        
+    }
+    else{
+
+    }
+}
+
 /* NAVIGATION FUNCTIONS */
 
 var toHome = function(){
