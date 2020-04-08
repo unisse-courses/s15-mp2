@@ -147,8 +147,10 @@ router.post('/bid', function(req, res) {
         const date = new Date();
         auctionsModel.findOne({ _id: req.body._id }, function(err, auction) {
             console.log(auction);
-
-            if (auction.highestBid < req.body.bidPrice){
+            
+            var curAuction = auction.toObject()
+            
+            if (curAuction.highestBid < req.body.bidPrice){
                 const auctionid = auction._id;
             
                 auctionsModel.findOneAndUpdate({_id: auctionid}, {$set: {highestBid: req.body.bidPrice, highestBidderID: currUserID, highestBidDate: date}}, {new: true}, function (err, updatedAuction){
@@ -157,7 +159,7 @@ router.post('/bid', function(req, res) {
                     res.send(updatedAuction);
                 });
             }
-            else throw err;
+            
         });
     });
 });
