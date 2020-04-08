@@ -1,20 +1,20 @@
-<div class="tile" onclick="toAuction('{{auctionID._id}}')">
-    <img src="{{auctionID.productImg}}">
-    <p class="productName"> {{auctionID.productName}}</p>
+<div class="tile" onclick="toAuction('{{_id}}')">
+    <img src="{{productImg}}">
+    <p class="productName"> {{productName}}</p>
 
     <div class="bidPrice">
         <span class="highestbidIcon"> </span>
-        <p>{{auctionID.highestBid}}</p>
+        <p>{{highestBid}}</p>
     </div>
 
     <div class="watchers">
         <span class="eyeIcon" alt="mata"> </span>
-        <p>{{auctionID.watchers}}</p>
+        <p>{{watchers}}</p>
     </div>
 
     <div class="expiry">
         <span class="expiryIcon" alt="expiry"> </span>
-        <p>{{auctionID.expiryDate}}</p>
+        <p>{{expiryDate}}</p>
     </div>
 
 </div>
