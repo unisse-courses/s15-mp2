@@ -376,71 +376,78 @@ ryan.save(function(err, newUser) {
     }
 });
 
-usersModel.findOne({email: "brian_jezreel_so@dlsu.edu.ph"}, function(err, brian){
+
+auctionsModel.findOne({}, function(err, auctions){
+    if (!auctions){
+        usersModel.findOne({email: "brian_jezreel_so@dlsu.edu.ph"}, function(err, brian){
         
-    var newAuction = new auctionsModel({
-        sellerID: brian._id,
-        productName: "Realistic Lightup Pokeballs",
-        description: "These flashy balls are sure to catch anyone's heart",
-        delivery: "Taft avenue DLSU north gate",
-        contactNum:"639296439999",
-        expiryDate: new Date("10-13-2020 12:00"),
-        startingBid: 200,
-        highestBid:0,
-        increments: 50,
-        watchers:0,
-        productImg:"/testimages/pokeballs.jpg",
-        dateCreated: new Date
-    })
-    newAuction.save(function(err, newAuction) {
-        var result;
-    
-        if (err) {
-          console.log(err.errors);
-    
-          result = "Auction was not created!";
-          res.send(result);
-
-        } else {
-          console.log("Successfully added auction!");
-          console.log(newAuction); 
-          result = "Auction created!";   
-        }
-    });
-});
-
-usersModel.findOne({email: "ryan_miguel_sarabia@dlsu.edu.ph"}, function(err, ryan){
+            var newAuction = new auctionsModel({
+                sellerID: brian._id,
+                productName: "Realistic Lightup Pokeballs",
+                description: "These flashy balls are sure to catch anyone's heart",
+                delivery: "Taft avenue DLSU north gate",
+                contactNum:"639296439999",
+                expiryDate: new Date("10-13-2020 12:00"),
+                startingBid: 200,
+                highestBid:0,
+                increments: 50,
+                watchers:0,
+                productImg:"/testimages/pokeballs.jpg",
+                dateCreated: new Date
+            })
+            newAuction.save(function(err, newAuction) {
+                var result;
+            
+                if (err) {
+                  console.log(err.errors);
+            
+                  result = "Auction was not created!";
+                  res.send(result);
         
-    var newAuction = new auctionsModel({
-        sellerID: ryan._id,
-        productName: "Pacemaker",
-        description: "Heart pacemaker, used but not abused; condition = 8.73/10",
-        delivery: "Meet up at Taft/MoA area",
-        contactNum:"639296439998",
-        expiryDate: new Date("12-13-2020 12:00"),
-        startingBid: 500,
-        highestBid:0,
-        increments: 50,
-        watchers:0,
-        productImg:"/testimages/pacemaker.jpg",
-        dateCreated: new Date
-    })
-    newAuction.save(function(err, newAuction) {
-        var result;
-    
-        if (err) {
-          console.log(err.errors);
-    
-          result = "Auction was not created!";
-          res.send(result);
+                } else {
+                  console.log("Successfully added auction!");
+                  console.log(newAuction); 
+                  result = "Auction created!";   
+                }
+            });
+        });
 
-        } else {
-          console.log("Successfully added auction!");
-          console.log(newAuction); 
-          result = "Auction created!";   
-        }
-    });
-});
+        usersModel.findOne({email: "ryan_miguel_sarabia@dlsu.edu.ph"}, function(err, ryan){
+        
+            var newAuction = new auctionsModel({
+                sellerID: ryan._id,
+                productName: "Pacemaker",
+                description: "Heart pacemaker, used but not abused; condition = 8.73/10",
+                delivery: "Meet up at Taft/MoA area",
+                contactNum:"639296439998",
+                expiryDate: new Date("12-13-2020 12:00"),
+                startingBid: 500,
+                highestBid:0,
+                increments: 50,
+                watchers:0,
+                productImg:"/testimages/pacemaker.jpg",
+                dateCreated: new Date
+            })
+            newAuction.save(function(err, newAuction) {
+                var result;
+            
+                if (err) {
+                  console.log(err.errors);
+            
+                  result = "Auction was not created!";
+                  res.send(result);
+        
+                } else {
+                  console.log("Successfully added auction!");
+                  console.log(newAuction); 
+                  result = "Auction created!";   
+                }
+            });
+        });
+    }
+})
+
+//end of test data
 
 
 app.post('/createAuction', checkLogIn, function(req, res){

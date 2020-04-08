@@ -41,7 +41,6 @@ router.post('/create', function(req, res){
             result = "Auction created!";
             res.send(result);
             }
-        
         });
     });
 });
