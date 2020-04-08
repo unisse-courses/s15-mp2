@@ -48,7 +48,7 @@ router.post('/create', function(req, res){
 
 router.get('/:id', function(req,res){
     console.log("going to auction :" + req.params.id)
-    auctionsModel.findOne({_id: req.params.id}).populate('sellerID').exec(function(err, auction){
+    auctionsModel.findOne({_id: req.params.id}).populate('sellerID').populate('highestBidderID').exec(function(err, auction){
         
         var curAuction = auction.toObject()
         var dateObject = curAuction['expiryDate']
