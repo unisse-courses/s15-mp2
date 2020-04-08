@@ -1,16 +1,16 @@
 <div class="activity_container">
     {{!-- <h1>{{title}}</h1> --}}
-    <div id="watchedContainer">
+    <div id="watchedContainer" class="list_container">
         <h2>Watched</h2>
-        <div id="watchedList">
+        <div id="watchedList" class="list">
             {{#each watched}}
                 {{> tile}}
             {{/each}}
         </div>
     </div>
-    <div id="bidsContainer">
+    <div id="bidsContainer" class="list_container">
         <h2>Bids</h2>
-        <div id="bidsList">
+        <div id="bidsList" class="list">
             {{#each bids}}
                 {{> tile}}
             {{/each}}
