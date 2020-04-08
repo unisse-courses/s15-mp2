@@ -46,14 +46,16 @@
             {{/if}}
         </div>
         
-
         <form> 
             <input type="number" name="amount" id="amount" placeholder="Place bid amount" 
-                min="{{auction.highestBid}}"> 
-            <button id="bid"> Bid </button>
+                min="{{minBid auction.highestBid auction.startingBid auction.increments}}" 
+                step="{{auction.increments}}"> 
+            <button id="bid()" onclick="bid('{{auction._id}}')"> Bid </button>
         </form>
     </div>
 
     <h1 class="productName"> {{auction.productName}} </h1>  
+
+    <p>Started at Php{{auction.startingBid}}.00</p>
 
 </div>

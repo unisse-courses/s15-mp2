@@ -1,4 +1,3 @@
-
 const express = require("express");
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -37,7 +36,17 @@ app.listen(port, function(){
     console.log("listening to port " + port);
 });
 
+var minBid = function(highestBid, startingBid, increments){
+    if(highestBid < startingBid)
+        return startingBid;
+    else
+        return highestBid + increments;
+};
+
 app.engine('hbs', hbs({
+    helpers: {
+        minBid: minBid
+    },
     extname: 'hbs',
     defaultView: 'main',
     layoutsDir: __dirname + "/views/layouts/",
@@ -49,7 +58,7 @@ app.set('view engine', 'hbs');
 app.use(function(req, res, next) {
     thisSession = req.session;
     next();
-})
+}); 
 
 const checkLogIn = function(req, res, next) {
     if(thisSession.email){
