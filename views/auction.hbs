@@ -38,23 +38,23 @@
     </div>
 
     <div class="auction_controls"> 
-            <form> 
-                <input type="number" name="amount" id="amount" placeholder="Place bid amount" 
-                    min="{{minBid auction.highestBid auction.startingBid auction.increments}}" 
-                    step="{{auction.increments}}"> 
-                <button id="bid()" onclick="bid('{{auction._id}}')"> Bid </button>
-            </form>
+        <div class="watchBtns">
+            {{#if isWatched}}
+                <button class="unwatch" id="watchBtn" onclick="watchToggle('{{auction._id}}')">UNWATCH</button>
+            {{else}}
+                <button class="watch" id="watchBtn" onclick="watchToggle('{{auction._id}}')">WATCH</button>
+            {{/if}}
+        </div>
+        
+        <form> 
+            <input type="number" name="amount" id="amount" placeholder="Place bid amount" 
+                min="{{minBid auction.highestBid auction.startingBid auction.increments}}" 
+                step="{{auction.increments}}"> 
+            <button id="bid()" onclick="bid('{{auction._id}}')"> Bid </button>
+        </form>
     </div>
 
     <h1 class="productName"> {{auction.productName}} </h1>  
-
-    <div class="watchBtns">
-        {{#if isWatched}}
-            <button id="watchBtn" onclick="watchToggle('{{auction._id}}')">UNWATCH</button>
-        {{else}}
-            <button id="watchBtn" onclick="watchToggle('{{auction._id}}')">WATCH</button>
-        {{/if}}
-    </div>
 
     <p>Started at Php{{auction.startingBid}}.00</p>
 
