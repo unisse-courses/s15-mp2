@@ -221,10 +221,18 @@ var watchToggle = function(key){
 
 var bid = function(key){
     console.log("Bidding");
-    $.post("/auction/bid", {_id: key, bidPrice: $("#watchBtn").val()}, function(data){
-        console.log("bid successful");
-    });
-    toAuction(key);
+
+    var bidPrice =  $("#amount").val();
+    if(bidPrice){
+        $.post("/auction/bid", {_id: key, bidPrice: bidPrice}, function(data){
+            console.log("bid successful");
+            alert("Bid Successful! You are now the highest bidder");
+        });
+        toAuction(key);
+    }
+    else{
+        alert("please input an amount");
+    }
 };
 
 /* NAVIGATION FUNCTIONS */

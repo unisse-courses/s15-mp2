@@ -49,8 +49,7 @@ router.post('/create', function(req, res){
 router.get('/:id', function(req,res){
     console.log("going to auction :" + req.params.id)
     auctionsModel.findOne({_id: req.params.id}).populate('sellerID').exec(function(err, auction){
-        console.log(auction);
-
+        
         var curAuction = auction.toObject()
         var dateObject = curAuction['expiryDate']
         var hours = ('0' + dateObject.getHours()).slice(-2);
@@ -62,7 +61,7 @@ router.get('/:id', function(req,res){
                                     hours + ":" + minutes;
 
         usersModel.findOne({email: req.session.email}, function(err, seller){
-            console.log(seller);
+            console.log(seller.username);
             var currUser = seller.toObject();
 
             var currUserID = currUser._id;
@@ -146,12 +145,16 @@ router.post('/bid', function(req, res) {
         const currUserID = currUser._id;
         const date = new Date();
         auctionsModel.findOne({ _id: req.body._id }, function(err, auction) {
-            console.log(auction);
+            console.log("Bidding on:"+auction.productName);
             
             var curAuction = auction.toObject()
-            
+
+            console.log("highestBid:" + curAuction.highestBid)
+            console.log("bidPrice:"+req.body.bidPrice)            
             if (curAuction.highestBid < req.body.bidPrice){
                 const auctionid = auction._id;
+
+                console.log("processing Bid");
             
                 auctionsModel.findOneAndUpdate({_id: auctionid}, {$set: {highestBid: req.body.bidPrice, highestBidderID: currUserID, highestBidDate: date}}, {new: true}, function (err, updatedAuction){
                     if (err) throw err;
