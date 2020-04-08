@@ -22,6 +22,8 @@ const auctionsSchema = new mongoose.Schema({
     expiryDate:{ type: Date, required: [true, "No expiry date provided"] },
     startingBid:{ type: Number, required: [true, "No username provided"] },
     highestBid:{ type: Number, default: 0 },
+    highestBidderID: {type: mongoose.Schema.Types.ObjectId, ref: 'users', required:true },
+    highestBidDate: {type: Date, required:true},
     increments:{ type: Number, required: [true, "No increments provided"] },
     watchers:{ type: Number, default: 0 },
     productImg:{ type: String, required:true },
