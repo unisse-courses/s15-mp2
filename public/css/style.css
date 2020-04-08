@@ -603,14 +603,14 @@ button {
     width: 120px;
 }
 
-.auction_controls > form > #bid {
+.auction_controls > form > .bidClass {
     background-color: black;
     color: white;
     height: 25px;
     width: 50px;
 }
 
-.auction_controls > form > #bid:hover {
+.auction_controls > form > .bidClass:hover {
     background-color: #002B23;
     color: white;
     transition: 0.1s;
