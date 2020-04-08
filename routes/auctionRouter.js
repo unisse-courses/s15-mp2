@@ -138,4 +138,29 @@ router.post('/unwatch', function(req, res){
     });
 });
 
+router.post('/bid', function(req, res) {
+
+    //find logged in userID via email
+    usersModel.findOne({email: req.session.email}, function(err, currUser){
+
+        const currUserID = currUser._id;
+        const date = new Date();
+        auctionsModel.findOne({ _id: req.body._id }, function(err, auction) {
+            console.log(auction);
+
+            if (auction.highestBid < req.body.bidPrice){
+                const auctionid = auction._id;
+            
+                auctionsModel.findOneAndUpdate({_id: auctionid}, {$set: {highestBid: req.body.bidPrice, highestBidderID: currUserID, highestBidDate: date}}, {new: true}, function (err, updatedAuction){
+                    if (err) throw err;
+                    console.log("Highest bidder updated");
+                    res.send(updatedAuction);
+                });
+            }
+            else throw err;
+        });
+    });
+});
+
+
 module.exports = router;

@@ -42,7 +42,7 @@
                 <input type="number" name="amount" id="amount" placeholder="Place bid amount" 
                     min="{{minBid auction.highestBid auction.startingBid auction.increments}}" 
                     step="{{auction.increments}}"> 
-                <button id="bid" onclick="bid({{auction._id}})"> Bid </button>
+                <button id="bid()" onclick="bid('{{auction._id}}')"> Bid </button>
             </form>
     </div>
 
