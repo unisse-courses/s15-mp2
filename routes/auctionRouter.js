@@ -38,8 +38,8 @@ router.post('/create', function(req, res){
             } else {
             console.log("Successfully added auction!");
             console.log(newAuction);
-            result = "Auction created!";
-            res.send(result);
+            result = newAuction.toObject();
+            res.send(result._id);
             }
         
         });
