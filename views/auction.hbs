@@ -25,7 +25,11 @@
                 <p> {{auction.delivery}} </p>
                 <p> {{auction.contactNum}} </p>
                 <p> Php {{auction.highestBid}} </p>
-                <p> {{auction.highestBidderID.username}} </p>
+                {{#if auction.highestBidderID.username}}
+                    <p> {{auction.highestBidderID.username}} </p>
+                {{else}}
+                    <p> No bidders yet. </p>
+                {{/if}}
                 <p id="watchers"> {{auction.watchers}} </p>
                 <p> {{auction.expiryDate}}</p> 
             </div>
