@@ -162,7 +162,6 @@ router.post('/bid', function(req, res) {
                     res.send(updatedAuction);
                 });
             }
-            
         });
     });
 });
