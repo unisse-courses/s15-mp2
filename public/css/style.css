@@ -39,9 +39,9 @@ button {
 }
 
 .seller_info:hover {
-    border: 1px solid whitesmoke; 
+    border: 2px solid whitesmoke; 
     border-radius: 10px;
-    padding: 4px;
+    padding: 3px;
 }
 
 .seller_info > p {
@@ -144,6 +144,11 @@ button {
 
 .highestbidIcon {
     background: url(../images/icons/sprites.svg) -30px -25px;
+    background-size: 151px 151px;
+}
+
+.highestbidderIcon {
+    background: url(../images/icons/sprites.svg) -55px -50px;
     background-size: 151px 151px;
 }
 
@@ -312,7 +317,7 @@ button {
 }
 
 .card:hover {
-    background-color: #93BE89;    ;
+    background-color: #BBE5B7;
     transition: 0.1s ease-out;
 }
 
@@ -426,7 +431,7 @@ button {
 }
 
 .tile:hover {
-    background-color: #93BE89;    ;
+    background-color: #BBE5B7;
     transition: 0.1s ease-out;
 }
 
@@ -584,7 +589,7 @@ button {
     display: grid;
     justify-self: center;
     grid-row: 3;
-    row-gap: 10px;
+    row-gap: 5px;
 }
 
 .auction_controls > form {
@@ -599,16 +604,22 @@ button {
 }
 
 .auction_controls > form > #bid {
-    background-color: #002B23;
+    background-color: black;
     color: white;
     height: 25px;
     width: 50px;
 }
 
 .auction_controls > form > #bid:hover {
-    background-color: gray;
+    background-color: #002B23;
     color: white;
     transition: 0.1s;
+}
+
+.auction_controls > p {
+    font-size: 11px;
+    justify-self: center;
+    margin: 0px;
 }
 
 
@@ -621,14 +632,13 @@ button {
 }
 
 
-
 .watchBtns > .watch {
-    background-color: black;
-
+    background-color: gray;
 }
 
 .watchBtns > .watch:hover {
-    background-color: #D01B1B;
+    background-color: whitesmoke;
+    color: black;
     transition: 0.1s ease-in;
 }
 
@@ -637,7 +647,8 @@ button {
 }
 
 .watchBtns > .unwatch:hover {
-    background-color: black;
+    background-color: whitesmoke;
+    color: black;
     transition: 0.1s ease-in;
 }
 
@@ -772,8 +783,6 @@ button {
     background-color: white;
     border-radius: 5px;
     box-shadow: 9px 8px 2px -4px rgba(0,0,0,0.22);
-    
-    
 }
 
 .login_left{
@@ -897,10 +906,21 @@ button {
     outline: none;
     border: none;
     font-size: 13px;
-    background-color: green;
+    background-color: #4A7A6C;
     color: white;
     height: 30px;
     align-self: end; 
+}
+
+.login_button:hover {
+    outline: none;
+    border: none;
+    font-size: 13px;
+    background-color: #002B23;
+    color: white;
+    height: 30px;
+    align-self: end;
+    transition: 0.1s ease-in; 
 }
 
 
@@ -970,7 +990,7 @@ button {
 }
 
 .post:hover {
-    background-color: #93BE89;    ;
+    background-color: #BBE5B7;
     transition: 0.1s ease-out;
 }
 

@@ -16,7 +16,7 @@
                 <span class="deliveryIcon"> </span>
                 <span class="contactIcon"> </span>
                 <span class="highestbidIcon"> </span>
-                <span class="incrementIcon"> </span>
+                <span class="highestbidderIcon"> </span>
                 <span class="eyeIcon"> </span>
                 <span class="expiryIcon"> </span>
             </div>
@@ -24,8 +24,8 @@
             <div class="values">
                 <p> {{auction.delivery}} </p>
                 <p> {{auction.contactNum}} </p>
-                <p> {{auction.highestBid}} </p>
-                <p> {{auction.increments}} </p>
+                <p> Php {{auction.highestBid}} </p>
+                <p> {{auction.highestBidderID.username}} </p>
                 <p id="watchers"> {{auction.watchers}} </p>
                 <p> {{auction.expiryDate}}</p> 
             </div>
@@ -50,12 +50,15 @@
             <input type="number" name="amount" id="amount" placeholder="Place bid amount" 
                 min="{{minBid auction.highestBid auction.startingBid auction.increments}}" 
                 step="{{auction.increments}}"> 
-            <button onclick="bid('{{auction._id}}')"> Bid </button>
+            <button id="bid" onclick="bid('{{auction._id}}')"> Bid </button>
+            
         </form>
+
+        <p class="startingbid">Started at Php {{auction.startingBid}}.00</p>
+        <p> Increments of Php {{auction.increments}}.00 </p>
+
     </div>
 
     <h1 class="productName"> {{auction.productName}} </h1>  
-
-    <p>Started at Php{{auction.startingBid}}.00</p>
 
 </div>
