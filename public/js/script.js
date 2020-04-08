@@ -172,7 +172,7 @@ var createAuction = function(){
             dateCreated: new Date()
         }
         $.post("auction/create", newAuction, function(data){
-            toHome();
+            toAuction(data);
         });
     }
 }
