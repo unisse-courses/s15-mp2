@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const databaseURL = 'mongodb://localhost:27017/laselldb';
+const { databaseURL } = require('../config');
 
 /** README **
   We need to set useFindAndModify to false because mongoose's findOneAndUpdate
