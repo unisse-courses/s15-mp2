@@ -101,29 +101,37 @@ var ryan = new usersModel({
     password: "abc"
 });
 
-brian.save(function(err, newUser) {
-      var result;
-      if (err) {
-          console.log(err.errors);
-          result = "";
-          res.send(result);
-      } else {
-          console.log("Successfully added student!");
-          console.log(newUser)
-      }
+usersModel.findOne({username: 'ryanSarabia'}, function(err, users){
+
+    if(!users){
+        brian.save(function(err, newUser) {
+            var result;
+            if (err) {
+                console.log(err.errors);
+                result = "";
+                res.send(result);
+            } else {
+                console.log("Successfully added student!");
+                console.log(newUser)
+            }
+      });
+      
+      ryan.save(function(err, newUser) {
+          var result;
+          if (err) {
+              console.log(err.errors);
+              result = "";
+              res.send(result);
+          } else {
+              console.log("Successfully added student!");
+              console.log(newUser)
+          }
+      });
+    }
+    
+    
 });
 
-ryan.save(function(err, newUser) {
-    var result;
-    if (err) {
-        console.log(err.errors);
-        result = "";
-        res.send(result);
-    } else {
-        console.log("Successfully added student!");
-        console.log(newUser)
-    }
-});
 
 auctionsModel.findOne({}, function(err, auctions){
     if (!auctions){
