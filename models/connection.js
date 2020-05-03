@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const databaseURL = 'mongodb://localhost:27017/laselldb';
+const { databaseURL } = require('../config');
 
 const options = { useNewUrlParser: true,
   useUnifiedTopology: true,
