@@ -1,14 +1,31 @@
 const router = require('express').Router();
 const usersModel = require ('../models/users');
 
-router.get('/', function(req, res){
+const isLoggedIn = function(req, res, next) {
+    if(req.session.email){
+        res.redirect('/explore')
+    } else {
+        next();
+    }
+}
+
+router.get('/', isLoggedIn, function(req, res){
     res.render('login',{ 
         title: "Welcome to Lasell!",
         layout: "login"
     })
 });
 
-router.post('/validate', function(req, res){
+router.get('/logout', function(req, res){
+    if (req.session) {
+        req.session.destroy(() => {
+            res.clearCookie('connect.sid');
+            res.redirect('/login');
+        });
+    }
+});
+
+router.post('/validate', isLoggedIn, function(req, res){
 
     usersModel.findOne({email: req.body.email}, {password: req.body.password}, function(err, userResult){
         if(err) throw err;
@@ -25,7 +42,7 @@ router.post('/validate', function(req, res){
     });
 });
 
-router.post('/register', function(req, res){
+router.post('/register', isLoggedIn, function(req, res){
 
     var newUser = new usersModel({
         username: req.body.username,
