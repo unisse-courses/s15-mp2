@@ -103,7 +103,7 @@ var ryan = new usersModel({
 
 usersModel.findOne({username: 'ryanSarabia'}, function(err, users){
 
-    if(!users){
+    if(err){
         brian.save(function(err, newUser) {
             var result;
             if (err) {
@@ -114,22 +114,21 @@ usersModel.findOne({username: 'ryanSarabia'}, function(err, users){
                 console.log("Successfully added student!");
                 console.log(newUser)
             }
-      });
-      
-      ryan.save(function(err, newUser) {
-          var result;
-          if (err) {
-              console.log(err.errors);
-              result = "";
-              res.send(result);
-          } else {
-              console.log("Successfully added student!");
-              console.log(newUser)
-          }
-      });
+        });
+        
+        ryan.save(function(err, newUser) {
+            var result;
+            if (err) {
+                console.log(err.errors);
+                result = "";
+                res.send(result);
+            } else {
+                console.log("Successfully added student!");
+                console.log(newUser)
+            }
+        });
     }
-    
-    
+
 });
 
 
