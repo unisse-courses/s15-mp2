@@ -1,6 +1,7 @@
 const express = require("express");
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const hbs = require("express-handlebars");
 const bodyParser = require('body-parser');
 const mongodb = require('mongodb');
@@ -8,6 +9,7 @@ const mongodb = require('mongodb');
 const app = express();
 const port = 3000;
 
+const mongoose = require('./models/connection');
 const usersModel = require ('./models/users');
 const auctionsModel = require ('./models/auctions');
 const bidsModel = require ('./models/bids');
@@ -20,7 +22,14 @@ const auction = require('./routes/auctionRouter');
 const activity = require('./routes/activityRouter');
 
 app.use(cookieParser());
-app.use(session({secret: "sikretong malupet"}));
+app.use(session({
+    secret: "sikretong malupet",
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false, maxAge: 1000 * 60 * 60 * 24 * 7 }
+}));
+
 var thisSession;
 
 app.use(bodyParser.json());
