@@ -1,15 +1,14 @@
-const router = require('express').Router();
 const auctionsModel = require ('../models/auctions');
 const usersModel = require('../models/users');
 const watchedModel = require ('../models/watched');
 
-router.get('/', function(req,res){
+exports.auction = function(req,res){
     res.render('create',{
         title: "Create Auction"
     })
-});
+};
 
-router.post('/create', function(req, res){
+exports.create = function(req, res){
     usersModel.findOne({email: req.session.email}, function(err, seller){
         console.log(seller);
         var sellerid = seller.toObject();
@@ -42,9 +41,9 @@ router.post('/create', function(req, res){
             }
         });
     });
-});
+};
 
-router.get('/:id', function(req,res){
+exports.getAuctionByID = function(req,res){
     console.log("going to auction :" + req.params.id)
     auctionsModel.findOne({_id: req.params.id}).populate('sellerID').populate('highestBidderID').exec(function(err, auction){
         
@@ -86,9 +85,9 @@ router.get('/:id', function(req,res){
             });
         });      
     }) 
-});
+};
 
-router.post('/watch', function(req, res){
+exports.watch = function(req, res){
     //find logged in userID via email
     usersModel.findOne({email: req.session.email}, function(err, currUser){
 
@@ -112,9 +111,9 @@ router.post('/watch', function(req, res){
             });
         });
     });
-});
+};
 
-router.post('/unwatch', function(req, res){
+exports.unwatch = function(req, res){
     //find logged in userID via email
     usersModel.findOne({email: req.session.email}, function(err, currUser){
 
@@ -133,9 +132,9 @@ router.post('/unwatch', function(req, res){
 
 
     });
-});
+};
 
-router.post('/bid', function(req, res) {
+exports.bid = function(req, res) {
 
     //find logged in userID via email
     usersModel.findOne({email: req.session.email}, function(err, currUser){
@@ -162,7 +161,4 @@ router.post('/bid', function(req, res) {
             }
         });
     });
-});
-
-
-module.exports = router;
+};

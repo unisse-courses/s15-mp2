@@ -1,10 +1,8 @@
-const router = require('express').Router();
 const usersModel = require ('../models/users');
 const auctionsModel = require ('../models/auctions');
-const bidsModel = require ('../models/bids');
 const watchedModel = require ('../models/watched');
 
-router.get('/', function(req,res){
+exports.activity = function(req,res){
 
     var watched = [];
     var bids = [];
@@ -50,8 +48,6 @@ router.get('/', function(req,res){
             });
         });
     });
-});
-
-module.exports = router;
+};
 
 
