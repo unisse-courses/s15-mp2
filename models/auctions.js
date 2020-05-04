@@ -26,7 +26,7 @@ const auctionsSchema = new mongoose.Schema({
     increments:{ type: Number, required: [true, "No increments provided"] },
     watchers:{ type: Number, default: 0 },
     productImg:{ type: String, required:true },
-    dateCreated: { type: Date, required:true },
+    dateCreated: { type: Date, default: Date.now, required:true },
   }
   /** README **
     Virtuals are other fields that do not persist in mongodb.
