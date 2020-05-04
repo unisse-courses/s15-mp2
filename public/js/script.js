@@ -231,6 +231,7 @@ var bid = function(key){
         $.post("/auction/bid", {_id: key, bidPrice: bidPrice}, function(data){
             console.log("bid successful");
             alert("Bid Successful! You are now the highest bidder");
+            window.location.href = window.location.href;
         });
         toAuction(key);
     }
