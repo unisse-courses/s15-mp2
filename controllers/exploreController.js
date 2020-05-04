@@ -1,7 +1,6 @@
-const router = require('express').Router();
 const auctionsModel = require ('../models/auctions');
 
-router.get('/', function(req, res){
+exports.explore = function(req, res){
 
     auctionsModel.find({}).populate('sellerID').sort({watchers: 1}).limit(100).exec(function(err, results){
         var auctions = [];
@@ -16,10 +15,7 @@ router.get('/', function(req, res){
                                 ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
                                         hours + ":" + minutes;
             auctions.push(curAuction);
-            console.log(auctions);
         })
         res.render('explore',{ title: "Explore", auctions})
     });
-});
-
-module.exports = router;
+};
