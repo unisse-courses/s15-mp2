@@ -16,6 +16,7 @@ router.get('/', function(req, res){
                                 ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
                                         hours + ":" + minutes;
             auctions.push(curAuction);
+            console.log(auctions);
         })
         res.render('explore',{ title: "Explore", auctions})
     });
