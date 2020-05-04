@@ -1,15 +1,14 @@
-const router = require('express').Router();
 const usersModel = require ('../models/users');
 const auctionsModel = require ('../models/auctions');
 
-router.get('/', function(req, res){
+exports.selfProfile = function(req, res){
     usersModel.findOne({ email: req.session.email }, function(err, profile) {
         console.log(profile);
         res.redirect('/profile/'+profile.username);
     });
-});
+};
 
-router.get('/:username', function(req, res){
+exports.profile = function(req, res){
     console.log('username = '+ req.params.username);
     usersModel.findOne({ username: req.params.username }, function(err, doc) {
         if (err) throw err;
@@ -37,6 +36,4 @@ router.get('/:username', function(req, res){
             res.render('profile',{title: profile.username, profile, auctions})
         })
     });
-});
-
-module.exports = router;
+};
