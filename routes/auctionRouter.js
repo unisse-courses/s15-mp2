@@ -25,7 +25,6 @@ router.post('/create', function(req, res){
             increments:req.body.increments,
             watchers:0,
             productImg:req.body.productImg,
-            dateCreated: req.body.dateCreated
         })
         newAuction.save(function(err, newAuction) {
             var result;
