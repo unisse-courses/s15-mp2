@@ -91,7 +91,7 @@ router.get('/:id', function(req,res){
 
 router.post('/watch', function(req, res){
     //find logged in userID via email
-    usersModel.findOne({email: thisSession.email}, function(err, currUser){
+    usersModel.findOne({email: req.session.email}, function(err, currUser){
 
         const currUserID = currUser._id;
 
@@ -117,7 +117,7 @@ router.post('/watch', function(req, res){
 
 router.post('/unwatch', function(req, res){
     //find logged in userID via email
-    usersModel.findOne({email: thisSession.email}, function(err, currUser){
+    usersModel.findOne({email: req.session.email}, function(err, currUser){
 
         const currUserID = currUser._id;
 
