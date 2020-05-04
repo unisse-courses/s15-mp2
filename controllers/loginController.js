@@ -25,20 +25,14 @@ exports.logout = function(req, res){
 };
 
 exports.validate = function(req, res){
-
-    usersModel.findOne({email: req.body.email}, {password: req.body.password}, function(err, userResult){
-        if(err) throw err;
-        if (userResult){
-            console.log("Login successful!");
-            
+    usersModel.validateLogin(req.body.email, req.body.password, function(result){
+        if(result){
             req.session.email = req.body.email;
             res.send("valid");
-        }
-        else{
-            console.log("Login failed");
+        } else {
             res.send("");
         }
-    });
+    })
 };
 
 exports.register = function(req, res){

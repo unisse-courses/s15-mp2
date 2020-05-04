@@ -38,4 +38,22 @@ const usersSchema = new mongoose.Schema({
 /** README **
   Export the model as the main content of this module.
 **/
+
+const usersModel = mongoose.model('users', usersSchema);
+
 module.exports = mongoose.model('users', usersSchema);
+
+module.exports.validateLogin = function(email, password, next) {
+  usersModel.findOne({email: email}, {password: password}, function(err, userResult){
+    if(err) throw err;
+    if (userResult){
+        console.log("Login successful!");
+        next("valid");
+    }
+    else{
+        console.log("Login failed");
+        next();
+    }
+  });
+};
+
