@@ -52,6 +52,39 @@ const auctionsModel = mongoose.model('auctions', auctionsSchema);
 
 module.exports = mongoose.model('auctions', auctionsSchema);
 
+module.exports.createAuction = function(sellerID, productName, description, 
+                                        delivery, contactNum, expiryDate, 
+                                        startingBid, increments, productImg, next){
+  var newAuction = new auctionsModel({
+      sellerID: sellerID,
+      productName: productName,
+      description: description,
+      delivery: delivery,
+      contactNum: contactNum,
+      expiryDate: expiryDate,
+      startingBid: startingBid,
+      highestBid: 0,
+      increments: increments,
+      watchers:0,
+      productImg: productImg,
+  })
+
+  newAuction.save(function(err, newAuction) {
+      var result;
+      if (err) {
+        console.log(err.errors);
+        console.log("Auction was not created!");
+        next();
+      } else {
+        console.log("Successfully added auction!");
+        console.log(newAuction);
+        result = newAuction.toObject();
+        next(result._id);
+      }
+  });
+
+};
+
 module.exports.getAuctionsBySellerID = function(_id, next){
   auctionsModel.find({sellerID: _id}, function(err, results) {
     if (err) throw err;
@@ -68,11 +101,10 @@ module.exports.getAuctionsBySellerID = function(_id, next){
                             ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
                                     hours + ":" + minutes;
         auctions.push(curAuction);
-    })
+    });
     next(auctions);
   });
-
-}
+};
 
 module.exports.explore = function(next){
   auctionsModel.find({}).populate('sellerID').sort({watchers: 1}).limit(100).exec(function(err, results){
@@ -88,7 +120,7 @@ module.exports.explore = function(next){
                             ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
                                     hours + ":" + minutes;
         auctions.push(curAuction);
-    })
+    });
     next(auctions);
   });
 };

@@ -9,35 +9,16 @@ exports.auction = function(req,res){
 };
 
 exports.create = function(req, res){
-    usersModel.findOne({email: req.session.email}, function(err, seller){
+    usersModel.getProfileByEmail(req.session.email, function(seller){
         console.log(seller);
-        var sellerid = seller.toObject();
-        var newAuction = new auctionsModel({
-            sellerID: sellerid._id,
-            productName:req.body.productName,
-            description:req.body.description,
-            delivery:req.body.delivery,
-            contactNum:req.body.contactNum,
-            expiryDate:req.body.expiryDate,
-            startingBid:req.body.startingBid,
-            highestBid:0,
-            increments:req.body.increments,
-            watchers:0,
-            productImg:req.body.productImg,
-        })
-        newAuction.save(function(err, newAuction) {
-            var result;
-
-            if (err) {
-            console.log(err.errors);
-        
-            result = "Auction was not created!";
-            res.send(result);
+        auctionsModel.createAuction(seller._id, req.body.productName, req.body.description,
+                                    req.body.delivery, req.body.contactNum, req.body.expiryDate,
+                                    req.body.startingBid, req.body.increments, req.body.productImg, 
+                                    function(result){
+            if(result){
+                res.send(result);
             } else {
-            console.log("Successfully added auction!");
-            console.log(newAuction);
-            result = newAuction.toObject();
-            res.send(result._id);
+                res.render('error',{ title:"ERROR", message:"could not create auction."})
             }
         });
     });
