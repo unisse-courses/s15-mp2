@@ -1,5 +1,6 @@
 const usersModel = require ('../models/users');
 
+
 exports.isLoggedIn = function(req, res, next) {
     if(req.session.email){
         res.redirect('/explore')
