@@ -52,6 +52,19 @@ const auctionsModel = mongoose.model('auctions', auctionsSchema);
 
 module.exports = mongoose.model('auctions', auctionsSchema);
 
+module.exports.bid = function(auctionID, bidPrice, userID, date, next){
+  auctionsModel.findOneAndUpdate({_id: auctionID}, {$set: {highestBid: bidPrice, highestBidderID: userID, 
+                                  highestBidDate: date}}, {new: true}, function (err, updatedAuction){
+    if (err) throw err;
+    if(updatedAuction){
+      console.log("Highest bidder updated");
+      next(updatedAuction.toObject());
+    } else {
+      console.log("Unable to bid");
+      next();
+    }
+  });
+}
 module.exports.createAuction = function(sellerID, productName, description, 
                                         delivery, contactNum, expiryDate, 
                                         startingBid, increments, productImg, next){
@@ -84,6 +97,47 @@ module.exports.createAuction = function(sellerID, productName, description,
   });
 
 };
+
+module.exports.watchAuction = function(_id, next){
+  auctionsModel.findOneAndUpdate({ _id: _id },{$inc: {watchers: 1}}, {new: true}, function(err, auction) {
+    if (err) throw err;
+    if(auction){
+      next(auction.toObject());
+    } else {
+      next();
+    }
+  });
+}
+
+module.exports.unwatchAuction = function(_id, next){
+  auctionsModel.findOneAndUpdate({ _id: _id },{$inc: {watchers: -1}}, {new: true}, function(err, auction) {
+    if (err) throw err;
+    if(auction){
+      next(auction.toObject());
+    } else {
+      next();
+    }
+  });
+}
+
+module.exports.getAuctionByID = function( _id, next){
+  auctionsModel.findOne({_id: _id}).populate('sellerID').populate('highestBidderID').exec(function(err, auction){
+    if (err) throw err;
+    if(auction){
+      var curAuction = auction.toObject()
+      var dateObject = curAuction['expiryDate']
+      var hours = ('0' + dateObject.getHours()).slice(-2);
+      var minutes = ('0' + dateObject.getMinutes()).slice(-2);
+      curAuction['expiryDate'] = curAuction.expiryDate.getFullYear()+"-"+
+                          ('0' + curAuction.expiryDate.getMonth()).slice(-2)+"-"+
+                          ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
+                                  hours + ":" + minutes;
+      next(curAuction);
+    } else {
+      next();
+    }
+  });
+}
 
 module.exports.getAuctionsBySellerID = function(_id, next){
   auctionsModel.find({sellerID: _id}, function(err, results) {

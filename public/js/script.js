@@ -228,11 +228,15 @@ var bid = function(key){
     var bidPrice =  $("#amount").val();
     if(bidPrice){
         $.post("/auction/bid", {_id: key, bidPrice: bidPrice}, function(data){
-            console.log("bid successful");
-            alert("Bid Successful! You are now the highest bidder");
-            window.location.href = window.location.href;
+            if(data == "success"){
+                console.log("bid successful");
+                toAuction(key);
+                alert("Bid Successful! You are now the highest bidder");
+            } else {
+                console.log("bid failed");
+                toAuction(key);
+            }
         });
-        toAuction(key);
     }
     else{
         alert("please input an amount");
