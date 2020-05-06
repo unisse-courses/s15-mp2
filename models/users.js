@@ -57,3 +57,39 @@ module.exports.validateLogin = function(email, password, next) {
   });
 };
 
+module.exports.createUser = function(username, email, img, password, next){
+
+  var newUser = new usersModel({
+    username: username,
+    email: email,
+    img: img,
+    password: password
+  });
+
+  usersModel.findOne({$or:[{username: username}, {email: email}]}, function(err, userResults){
+      if(err) throw err;
+
+      if (userResults){
+          console.log("Username/email already exists");
+          next();
+      }
+      else{
+          newUser.save(function(err, newUser) {
+              var result;
+              if (err) {
+                  console.log(err.errors);
+              
+                  result = "";
+                  next();
+              } else {
+                  console.log("Successfully added student!");
+                  console.log(newUser);
+
+                  result = "valid";
+                  next(result);
+              }
+          });
+      }
+  });
+}
+
