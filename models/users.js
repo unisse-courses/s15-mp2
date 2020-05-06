@@ -43,6 +43,13 @@ const usersModel = mongoose.model('users', usersSchema);
 
 module.exports = mongoose.model('users', usersSchema);
 
+module.exports.getProfile = function(email, next){
+  usersModel.findOne({ email: email }, function(err, profile) {
+    if(err) throw err;
+    next(profile);
+  });
+};
+
 module.exports.validateLogin = function(email, password, next) {
   usersModel.findOne({email: email}, {password: password}, function(err, userResult){
     if(err) throw err;

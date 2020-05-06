@@ -71,3 +71,22 @@ module.exports.explore = function(next){
   });
 };
 
+module.exports.activeBids = function(_id ,next){
+  auctionsModel.find({ highestBidderID: _id }, function(err, results) {
+    if(err) throw err;
+    var bids = [];
+    results.forEach(auction => {
+        var curAuction = auction.toObject()
+        var dateObject = curAuction['expiryDate']
+        var hours = ('0' + dateObject.getHours()).slice(-2);
+        var minutes = ('0' + dateObject.getMinutes()).slice(-2);
+        curAuction['expiryDate'] = curAuction.expiryDate.getFullYear()+"-"+
+                            ('0' + curAuction.expiryDate.getMonth()).slice(-2)+"-"+
+                            ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
+                                    hours + ":" + minutes;
+        bids.push(curAuction);
+    });
+    next(bids);
+  });
+};
+
