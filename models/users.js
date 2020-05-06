@@ -51,27 +51,25 @@ module.exports.getProfile = function(email, next){
 };
 
 module.exports.validateLogin = function(email, password, next) {
-  usersModel.findOne({email: email, password: password}, function(err, userResult){
+  usersModel.findOne({email: email}, function(err, userResult){
     if(err) throw err;
-    if (userResult){
+
+    bcrypt.compare(password, userResult.password, (err, result) =>{
+      if (userResult && result){
         console.log("Login successful!");
         next("valid");
-    }
-    else{
-        console.log("Login failed");
-        next();
-    }
+      }
+      else{
+          console.log("Login failed");
+          next();
+      }
+    })
+
+    
   });
 };
 
 module.exports.createUser = function(username, email, img, password, next){
-
-  var newUser = new usersModel({
-    username: username,
-    email: email,
-    img: img,
-    password: password
-  });
 
   usersModel.findOne({$or:[{username: username}, {email: email}]}, function(err, userResults){
       if(err) throw err;
@@ -84,24 +82,31 @@ module.exports.createUser = function(username, email, img, password, next){
 
         const saltRounds = 10;
         bcrypt.hash(password, saltRounds, (err, hashed) =>{
-          newUser.password = hashed
+          
+          const newhashed = new usersModel({
+            username: username,
+            email: email,
+            img: img,
+            password: hashed
+          });
+          newhashed.save(function(err, newUser) {
+            var result;
+            if (err) {
+                console.log(err.errors);
+            
+                result = "";
+                next();
+            } else {
+                console.log("Successfully added student!");
+                console.log(newUser);
+
+                result = "valid";
+                next(result);
+            }
+        });
         });
 
-          newUser.save(function(err, newUser) {
-              var result;
-              if (err) {
-                  console.log(err.errors);
-              
-                  result = "";
-                  next();
-              } else {
-                  console.log("Successfully added student!");
-                  console.log(newUser);
-
-                  result = "valid";
-                  next(result);
-              }
-          });
+          
       }
   });
 }
