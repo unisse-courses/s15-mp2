@@ -7,7 +7,7 @@ exports.activity = function(req,res){
     var watched = [];
     var bids = [];
 
-    usersModel.getProfile(req.session.email, function(profile){
+    usersModel.getProfileByEmail(req.session.email, function(profile){
 
         watchedModel.watched(profile._id, function(results){
             watched = results;

@@ -43,10 +43,25 @@ const usersModel = mongoose.model('users', usersSchema);
 
 module.exports = mongoose.model('users', usersSchema);
 
-module.exports.getProfile = function(email, next){
+module.exports.getProfileByEmail = function(email, next){
   usersModel.findOne({ email: email }, function(err, profile) {
     if(err) throw err;
-    next(profile);
+    if(profile){
+      next(profile.toObject());
+    } else {
+      next();
+    }
+  });
+};
+
+module.exports.getProfileByUsername = function(username, next){
+  usersModel.findOne({ username: username }, function(err, profile) {
+    if(err) throw err;
+    if(profile){
+      next(profile.toObject());
+    } else {
+      next();
+    }
   });
 };
 
