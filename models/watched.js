@@ -42,6 +42,49 @@ watchedModel =  mongoose.model('watched', watchedSchema);
 
 module.exports = mongoose.model('watched', watchedSchema);
 
+module.exports.watchAuction = function(userID, auctionID, next){
+  const watch = new watchedModel({
+    watcherID: userID,
+    auctionID: auctionID,
+    watchedDate: new Date
+  })
+  watch.save(function(err, result){
+      if(err) throw err;
+      console.log(result);
+      if(result){
+        next("success");
+      } else {
+        next();
+      }
+  });
+};
+
+module.exports.unwatchAuction = function(userID, auctionID, next){
+  watchedModel.deleteOne({auctionID: auctionID, watcherID: userID}, function(err, unwatch) {
+    if (err) throw err;
+    console.log(unwatch);
+    console.log('Unwatch successful')
+    if(unwatch){
+      next("success");
+    } else {
+      next();
+    }
+  });
+};
+
+module.exports.isWatching = function(userID, auctionID, next){
+  watchedModel.findOne({watcherID: userID, auctionID: auctionID}, function(err, auction){
+    if (err) throw err;
+    if(auction){
+      console.log("viewing watched auction");
+      next(true);
+    } else {
+      console.log("current auction not watched");
+      next(false);
+    }
+  });
+};
+
 module.exports.watched = function(_id ,next){
   watchedModel.find({watcherID: _id}).populate('watcherID').populate('auctionID').exec(function(err, results) {
     if (err) throw err;
