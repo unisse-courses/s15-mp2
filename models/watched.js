@@ -37,4 +37,27 @@ const watchedSchema = new mongoose.Schema({
 /** README **
   Export the model as the main content of this module.
 **/
+
+watchedModel =  mongoose.model('watched', watchedSchema);
+
 module.exports = mongoose.model('watched', watchedSchema);
+
+module.exports.watched = function(_id ,next){
+  watchedModel.find({watcherID: _id}).populate('watcherID').populate('auctionID').exec(function(err, results) {
+    if (err) throw err;
+    var watched = [];
+    results.forEach(watch => {
+        var curWatch = watch.toObject()
+        var curAuction = curWatch['auctionID'];
+        var dateObject = curAuction['expiryDate']
+        var hours = ('0' + dateObject.getHours()).slice(-2);
+        var minutes = ('0' + dateObject.getMinutes()).slice(-2);
+        curAuction['expiryDate'] = curAuction.expiryDate.getFullYear()+"-"+
+                            ('0' + curAuction.expiryDate.getMonth()).slice(-2)+"-"+
+                            ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
+                                    hours + ":" + minutes;
+        watched.push(curWatch);
+    });
+    next(watched);
+  });
+} 

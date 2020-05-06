@@ -25,56 +25,23 @@ exports.logout = function(req, res){
 };
 
 exports.validate = function(req, res){
-
-    usersModel.findOne({email: req.body.email}, {password: req.body.password}, function(err, userResult){
-        if(err) throw err;
-        if (userResult){
-            console.log("Login successful!");
-            
+    usersModel.validateLogin(req.body.email, req.body.password, function(result){
+        if(result){
             req.session.email = req.body.email;
             res.send("valid");
-        }
-        else{
-            console.log("Login failed");
+        } else {
             res.send("");
         }
-    });
+    })
 };
 
 exports.register = function(req, res){
-
-    var newUser = new usersModel({
-        username: req.body.username,
-        email: req.body.email,
-        img: req.body.img,
-        password: req.body.password
-    });
-
-    usersModel.findOne({$or:[{username: req.body.username}, {email: req.body.email}]}, function(err, userResults){
-        if(err) throw err;
-
-        if (userResults){
-            console.log("Username/email already exists");
+    usersModel.createUser(req.body.username, req.body.email, req.body.img, req.body.password, function(result){
+        if(result){
+            req.session.email = req.body.email;
+            res.send("valid");
+        } else {
             res.send("");
         }
-        else{
-            newUser.save(function(err, newUser) {
-                var result;
-                if (err) {
-                    console.log(err.errors);
-                
-                    result = "";
-                    res.send(result);
-                } else {
-                    console.log("Successfully added student!");
-                    console.log(newUser);
-
-                    req.session.email = req.body.email;
-
-                    result = "valid";
-                    res.send(result);
-                }
-            });
-        }
-    });
+    })
 };

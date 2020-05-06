@@ -38,4 +38,65 @@ const usersSchema = new mongoose.Schema({
 /** README **
   Export the model as the main content of this module.
 **/
+
+const usersModel = mongoose.model('users', usersSchema);
+
 module.exports = mongoose.model('users', usersSchema);
+
+module.exports.getProfile = function(email, next){
+  usersModel.findOne({ email: email }, function(err, profile) {
+    if(err) throw err;
+    next(profile);
+  });
+};
+
+module.exports.validateLogin = function(email, password, next) {
+  usersModel.findOne({email: email}, {password: password}, function(err, userResult){
+    if(err) throw err;
+    if (userResult){
+        console.log("Login successful!");
+        next("valid");
+    }
+    else{
+        console.log("Login failed");
+        next();
+    }
+  });
+};
+
+module.exports.createUser = function(username, email, img, password, next){
+
+  var newUser = new usersModel({
+    username: username,
+    email: email,
+    img: img,
+    password: password
+  });
+
+  usersModel.findOne({$or:[{username: username}, {email: email}]}, function(err, userResults){
+      if(err) throw err;
+
+      if (userResults){
+          console.log("Username/email already exists");
+          next();
+      }
+      else{
+          newUser.save(function(err, newUser) {
+              var result;
+              if (err) {
+                  console.log(err.errors);
+              
+                  result = "";
+                  next();
+              } else {
+                  console.log("Successfully added student!");
+                  console.log(newUser);
+
+                  result = "valid";
+                  next(result);
+              }
+          });
+      }
+  });
+}
+

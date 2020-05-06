@@ -47,4 +47,46 @@ const auctionsSchema = new mongoose.Schema({
 /** README **
   Export the model as the main content of this module.
 **/
+
+const auctionsModel = mongoose.model('auctions', auctionsSchema);
+
 module.exports = mongoose.model('auctions', auctionsSchema);
+
+module.exports.explore = function(next){
+  auctionsModel.find({}).populate('sellerID').sort({watchers: 1}).limit(100).exec(function(err, results){
+    var auctions = [];
+    results.forEach(function(doc){
+        var curAuction = doc.toObject()
+        var dateObject = curAuction['expiryDate']
+        var hours = ('0' + dateObject.getHours()).slice(-2);
+        var minutes = ('0' + dateObject.getMinutes()).slice(-2);
+
+        curAuction['expiryDate'] = curAuction.expiryDate.getFullYear()+"-"+
+                            ('0' + curAuction.expiryDate.getMonth()).slice(-2)+"-"+
+                            ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
+                                    hours + ":" + minutes;
+        auctions.push(curAuction);
+    })
+    next(auctions);
+  });
+};
+
+module.exports.activeBids = function(_id ,next){
+  auctionsModel.find({ highestBidderID: _id }, function(err, results) {
+    if(err) throw err;
+    var bids = [];
+    results.forEach(auction => {
+        var curAuction = auction.toObject()
+        var dateObject = curAuction['expiryDate']
+        var hours = ('0' + dateObject.getHours()).slice(-2);
+        var minutes = ('0' + dateObject.getMinutes()).slice(-2);
+        curAuction['expiryDate'] = curAuction.expiryDate.getFullYear()+"-"+
+                            ('0' + curAuction.expiryDate.getMonth()).slice(-2)+"-"+
+                            ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
+                                    hours + ":" + minutes;
+        bids.push(curAuction);
+    });
+    next(bids);
+  });
+};
+
