@@ -1,5 +1,5 @@
+const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
-
 const { databaseURL } = require('../config');
 
 /** README **
@@ -81,6 +81,12 @@ module.exports.createUser = function(username, email, img, password, next){
           next();
       }
       else{
+
+        const saltRounds = 10;
+        bcrypt.hash(password, saltRounds, (err, hashed) =>{
+          newUser.password = hashed
+        });
+
           newUser.save(function(err, newUser) {
               var result;
               if (err) {
