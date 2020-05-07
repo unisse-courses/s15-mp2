@@ -96,7 +96,7 @@ module.exports.watched = function(_id ,next){
         var hours = ('0' + dateObject.getHours()).slice(-2);
         var minutes = ('0' + dateObject.getMinutes()).slice(-2);
         curAuction['expiryDate'] = curAuction.expiryDate.getFullYear()+"-"+
-                            ('0' + curAuction.expiryDate.getMonth()).slice(-2)+"-"+
+                            ('0' + (curAuction.expiryDate.getMonth()+1)).slice(-2)+"-"+
                             ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
                                     hours + ":" + minutes;
         watched.push(curWatch);
