@@ -152,7 +152,7 @@ var createAuction = function(){
         $("#errorMsg").text("some required input fields are empty.");
     } else if(productImg == '/images/icons/productFiller.png'){
         $("#errorMsg").text("please provide a product image.");
-    } else if($("#expiryDate").val() == date && 
+    } else if($("#expiryDate").val() <= date && 
     $("#expiryTime").val() < curTime){
         $("#errorMsg").text("minimum due time is 24 hours from current time.");
     } else{
