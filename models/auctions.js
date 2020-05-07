@@ -57,10 +57,8 @@ module.exports.bid = function(auctionID, bidPrice, userID, date, next){
                                   highestBidDate: date}}, {new: true}, function (err, updatedAuction){
     if (err) throw err;
     if(updatedAuction){
-      console.log("Highest bidder updated");
       next(updatedAuction.toObject());
     } else {
-      console.log("Unable to bid");
       next();
     }
   });
@@ -85,12 +83,8 @@ module.exports.createAuction = function(sellerID, productName, description,
   newAuction.save(function(err, newAuction) {
       var result;
       if (err) {
-        console.log(err.errors);
-        console.log("Auction was not created!");
         next();
       } else {
-        console.log("Successfully added auction!");
-        console.log(newAuction);
         result = newAuction.toObject();
         next(result._id);
       }
@@ -124,7 +118,6 @@ module.exports.getAuctionByID = function( _id, next){
   auctionsModel.findOne({_id: _id}).populate('sellerID').populate('highestBidderID').exec(function(err, auction){
     if (err) throw err;
     if(auction){
-      console.log(auction['expiryDate']);
       var curAuction = auction.toObject();
       var dateObject = curAuction['expiryDate']
       var hours = ('0' + dateObject.getHours()).slice(-2);

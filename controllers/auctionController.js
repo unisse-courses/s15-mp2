@@ -10,7 +10,6 @@ exports.auction = function(req,res){
 
 exports.create = function(req, res){
     usersModel.getProfileByEmail(req.session.email, function(seller){
-        console.log(seller);
         auctionsModel.createAuction(seller._id, req.body.productName, req.body.description,
                                     req.body.delivery, req.body.contactNum, req.body.expiryDate,
                                     req.body.startingBid, req.body.increments, req.body.productImg, 
@@ -25,25 +24,18 @@ exports.create = function(req, res){
 };
 
 exports.getAuctionByID = function(req,res){
-    console.log("going to auction :" + req.params.id)
     auctionsModel.getAuctionByID(req.params.id, function(curAuction){
         if(curAuction){
             usersModel.getProfileByEmail(req.session.email, function(seller){
-                console.log(seller.username);
                 watchedModel.isWatching(seller._id, req.params.id, function(result){
 
-                    console.log(curAuction.expiryDate);
-                    console.log(new Date(curAuction.expiryDate));
-                    console.log(new Date());
                     if(new Date(curAuction.expiryDate) > new Date()){
-                        console.log("open");
                         res.render('auction',{
                             title: curAuction.productName,
                             auction: curAuction,
                             isWatched: result
                         })
                     } else {
-                        console.log("closed");
                         res.render('auctionclose',{
                             title: curAuction.productName,
                             auction: curAuction,
@@ -62,7 +54,6 @@ exports.getAuctionByID = function(req,res){
 exports.watch = function(req, res){
     usersModel.getProfileByEmail(req.session.email, function(currUser){
         auctionsModel.watchAuction(req.body._id, function(auction) {
-            console.log(auction);
             watchedModel.watchAuction(currUser._id, auction._id, function(result){
                 if(result){
                     res.send(result);
@@ -92,12 +83,8 @@ exports.bid = function(req, res) {
     usersModel.getProfileByEmail(req.session.email, function(currUser){
         const date = new Date();
 
-        auctionsModel.getAuctionByID(req.body._id, function(auction) {
-            console.log("Bidding on:"+auction.productName);
-            console.log("highestBid:" + auction.highestBid)
-            console.log("bidPrice:" + req.body.bidPrice)            
+        auctionsModel.getAuctionByID(req.body._id, function(auction) {         
             if (auction.highestBid < req.body.bidPrice){
-                console.log("processing Bid");
 
                 auctionsModel.bid(auction._id, req.body.bidPrice, currUser._id, date, function(result){
                     if(result){
