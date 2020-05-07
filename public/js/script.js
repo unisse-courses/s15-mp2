@@ -125,15 +125,22 @@ var validateRegister = function(){
             password:password,
         }
         $("#registerError").text("Verifying email...");
-        $.post("/login/register", newUser,function(data){
-            if(data==='valid') {
-                toHome();
-            } else if (data==='invalid'){
-                $("#registerError").text("Email does not exist");
+
+        $.get("https://isitarealemail.com/api/email/validate?email=" + email, function responseHandler(data) {
+            if (data.status === 'valid') {
+                // the email is valid and the mail box is active
+                $.post("/login/register", newUser,function(data){
+                    if(data==='valid') {
+                        toHome();
+                    } else {
+                        $("#registerError").text("User already exists");
+                    }
+                });
             } else {
-                $("#registerError").text("User already exists");
+                $("#registerError").text("Email does not exist");
             }
-        });
+        })
+
     }
 }
 
