@@ -112,6 +112,9 @@ var validateRegister = function(){
     } else if(password != confirmPassword){
         $("#registerError").text("passwords do not match.");
         valid = false;
+    } else if(!email.endsWith("@dlsu.edu.ph")){
+        $("#registerError").text("DLSU Email is required");
+        valid = false;
     }
     
     if(valid){
@@ -120,14 +123,24 @@ var validateRegister = function(){
             img: img,
             username:username,
             password:password,
-        }    
-        $.post("/login/register", newUser,function(data){
-            if(data==='valid') {
-                toHome();
-            } else{
-                $("#registerError").text("User already exists");
+        }
+        $("#registerError").text("Verifying email...");
+
+        $.get("https://isitarealemail.com/api/email/validate?email=" + email, function responseHandler(data) {
+            if (data.status === 'valid') {
+                // the email is valid and the mail box is active
+                $.post("/login/register", newUser,function(data){
+                    if(data==='valid') {
+                        toHome();
+                    } else {
+                        $("#registerError").text("User already exists");
+                    }
+                });
+            } else {
+                $("#registerError").text("Email does not exist");
             }
-        });
+        })
+
     }
 }
 

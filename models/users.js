@@ -72,9 +72,7 @@ module.exports.validateLogin = function(email, password, next) {
     if(!userResult){
       console.log("Login failed");
       next();
-    }
-
-    else{
+    } else {
       bcrypt.compare(password, userResult.password, (err, result) =>{
         if (userResult && result){
           console.log("Login successful!");
@@ -86,7 +84,6 @@ module.exports.validateLogin = function(email, password, next) {
         }
       })
     }
-    
   });
 };
 

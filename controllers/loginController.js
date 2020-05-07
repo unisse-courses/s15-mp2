@@ -1,6 +1,5 @@
 const usersModel = require ('../models/users');
 
-
 exports.isLoggedIn = function(req, res, next) {
     if(req.session.email){
         res.redirect('/explore')
@@ -42,6 +41,7 @@ exports.register = function(req, res){
             req.session.email = req.body.email;
             res.send("valid");
         } else {
+            console.log("user already exists")
             res.send("");
         }
     })
