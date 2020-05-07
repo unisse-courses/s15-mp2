@@ -9,12 +9,18 @@ An online bidding site for Lasallians inspired by DLSU Bids to Pick.
 * SO, Brian Jezreel So
 * SARABIA, Ryan Miguel
 
-## Setting up
+## Running the app
 
+### Local setup
 1. Go to the project folder in the command line.
 2. Run `npm install` to install dependencies.
-3. Run `node index.js` to start the server.
-4. Go to http://localhost:3000/ in the browser to view the app.
+3. Run `npm run start_local` to start the server.
+4. Set up environment variables (view .env-sample file for format)
+5. Go to http://localhost:3000/ in the browser to view the application.
+
+### Heroku
+1. Go to https://lasell.herokuapp.com/ to view the application.
+
 
 ## Navigating the app
 
@@ -22,7 +28,7 @@ An online bidding site for Lasallians inspired by DLSU Bids to Pick.
 
 | Email                          | Password |
 |--------------------------------|------------|
-| brian_jezreel_so@dlsu.edu.ph | abc      | 
+| brian_jezreel_so@dlsu.edu.ph  | abc      | 
 | ryan_miguel_sarabia@dlsu.edu.ph | abc      | 
 
 
@@ -36,7 +42,14 @@ An online bidding site for Lasallians inspired by DLSU Bids to Pick.
 
 6. **Log Out** - Clicking on the rightmost button on the header will direct the user back to the login page.
 
-## Missing Features
-
-* Functions associated with closing the auction haven't been made yet.
-* Number of user’s posts not yet displayed in profile. 
+## Dependencies
+  * `bcrypt`
+  * `body-parser`
+  * `connect-mongo`
+  * `cookie-parser`
+  * `express`
+  * `express-handlebars`
+  * `express-session`
+  * `mongodb`
+  * `mongoose`
+  * `validator`
