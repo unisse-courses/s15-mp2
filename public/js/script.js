@@ -112,6 +112,9 @@ var validateRegister = function(){
     } else if(password != confirmPassword){
         $("#registerError").text("passwords do not match.");
         valid = false;
+    } else if(!email.endsWith("@dlsu.edu.ph")){
+        $("#registerError").text("DLSU Email is required");
+        valid = false;
     }
     
     if(valid){
@@ -120,11 +123,14 @@ var validateRegister = function(){
             img: img,
             username:username,
             password:password,
-        }    
+        }
+        $("#registerError").text("Verifying email...");
         $.post("/login/register", newUser,function(data){
             if(data==='valid') {
                 toHome();
-            } else{
+            } else if (data==='invalid'){
+                $("#registerError").text("Email does not exist");
+            } else {
                 $("#registerError").text("User already exists");
             }
         });

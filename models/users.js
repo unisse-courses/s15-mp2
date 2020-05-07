@@ -69,18 +69,20 @@ module.exports.validateLogin = function(email, password, next) {
   usersModel.findOne({email: email}, function(err, userResult){
     if(err) throw err;
 
-    bcrypt.compare(password, userResult.password, (err, result) =>{
-      if (userResult && result){
-        console.log("Login successful!");
-        next("valid");
-      }
-      else{
-          console.log("Login failed");
-          next();
-      }
-    })
-
-    
+    if(userResult){
+      bcrypt.compare(password, userResult.password, (err, result) =>{
+        if (userResult && result){
+          console.log("Login successful!");
+          next("valid");
+        }
+        else{
+            console.log("Login failed");
+            next();
+        }
+      })
+    } else {
+        next();
+    }
   });
 };
 

@@ -1,5 +1,5 @@
 const usersModel = require ('../models/users');
-
+const emailExistence = require("email-existence");
 
 exports.isLoggedIn = function(req, res, next) {
     if(req.session.email){
@@ -37,12 +37,21 @@ exports.validate = function(req, res){
 };
 
 exports.register = function(req, res){
-    usersModel.createUser(req.body.username, req.body.email, req.body.img, req.body.password, function(result){
-        if(result){
-            req.session.email = req.body.email;
-            res.send("valid");
+    emailExistence.check(req.body.email, function(error, response){
+        console.log(response)
+        if(response == true){
+            usersModel.createUser(req.body.username, req.body.email, req.body.img, req.body.password, function(result){
+                if(result){
+                    req.session.email = req.body.email;
+                    res.send("valid");
+                } else {
+                    console.log("user already exists")
+                    res.send("");
+                }
+            })
         } else {
-            res.send("");
+            console.log("invalid email")
+            res.send("invalid");
         }
-    })
+    });
 };
