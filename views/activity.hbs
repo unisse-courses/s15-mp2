@@ -17,7 +17,7 @@
         <h2>Active Bids</h2>
         <div id="bidsList" class="list">
             {{#each bids}}
-                {{#isClosed auctionID.expiryDate}}
+                {{#isClosed expiryDate}}
                     {{>tileclose}}
                 {{else}}
                     {{>tile}}
