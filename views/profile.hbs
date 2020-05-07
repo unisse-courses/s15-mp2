@@ -7,7 +7,11 @@
     
     <div class="profile_posts">
         {{#each auctions}}
-            {{>post}}
+            {{#isClosed expiryDate}}
+                {{>postclose}}
+            {{else}}
+                {{>post}}
+            {{/isClosed}}
         {{/each}}
     </div>
 </div>
