@@ -14,8 +14,8 @@ An online bidding site for Lasallians inspired by DLSU Bids to Pick.
 ### Local setup
 1. Go to the project folder in the command line.
 2. Run `npm install` to install dependencies.
-3. Run `npm run start_local` to start the server.
-4. Set up environment variables (view .env.sample file for format)
+3. Set up environment variables (view .env.sample file for format)
+4. Run `npm run start_local` to start the server.
 5. Go to http://localhost:3000/ in the browser to view the application.
 
 ### Heroku
