@@ -1,0 +1,73 @@
+
+<div class="auction_container">
+
+    <div class="auction_description">
+
+       <div class="seller_info" onclick="toProfile('{{auction.sellerID.username}}')">
+            <img src="{{auction.sellerID.img}}">
+            <p class="sellerName"> {{auction.sellerID.username}} </p>
+            {{!-- <p class="location">  {{auction.location}} </p> --}}
+            {{!-- <p class="rating"> {{auction.rating}} </p> --}}
+        </div>
+
+        <p class="textdescription"> {{auction.description}} </p>
+
+        <div class="status">
+            <div class="icons">
+                <div class="tooltip">
+                    <span class="deliveryIcon"> </span>
+                    <span class="tooltiptext"> Delivery </span>
+                </div>
+
+                <div class="tooltip">
+                    <span class="contactIcon"> </span>
+                    <span class="tooltiptext"> Contact Number </span>
+                </div>
+
+                <div class="tooltip">
+                    <span class="highestbidIcon"> </span>
+                    <span class="tooltiptext"> Highest Bid </span>
+                </div>
+
+                <div class="tooltip">
+                    <span class="highestbidderIcon"> </span>
+                    <span class="tooltiptext"> Highest Bidder </span>
+                </div>
+
+                <div class="tooltip">
+                    <span class="eyeIcon"> </span>
+                    <span class="tooltiptext"> No. of Watchers </span>
+                </div>
+
+                <div class="tooltip">
+                    <span class="expiryIcon"> </span>
+                    <span class="tooltiptext"> Auction End </span>
+                </div>
+
+            </div>
+
+            <div class="values">
+                <p> {{auction.delivery}} </p>
+                <p> {{auction.contactNum}} </p>
+                <p> Php {{auction.highestBid}} </p>
+                {{#if auction.highestBidderID.username}}
+                    <p> {{auction.highestBidderID.username}} </p>
+                {{else}}
+                    <p> No bidders yet. </p>
+                {{/if}}
+                <p id="watchers"> {{auction.watchers}} </p>
+                <p> {{auction.expiryDate}}</p> 
+            </div>
+        </div>
+
+    </div>
+
+    <div class="auction_image">
+        <img src="{{auction.productImg}}">
+    </div>
+
+    <p class="auction_soldto"> {{auction.highestBidderID.username}} </p>
+
+    <h1 class="productName"> {{auction.productName}} </h1>  
+
+</div>
