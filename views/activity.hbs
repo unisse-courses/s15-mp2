@@ -4,15 +4,24 @@
         <h2>Watched</h2>
         <div id="watchedList" class="list">
             {{#each watched}}
-                {{> tile auctionID}}
+                {{#isClosed auctionID.expiryDate}}
+                    {{>tileclose auctionID}}
+                {{else}}
+                    {{>tile auctionID}}
+                {{/isClosed}}
             {{/each}}
         </div>
     </div>
+    
     <div id="bidsContainer" class="list_container">
         <h2>Active Bids</h2>
         <div id="bidsList" class="list">
             {{#each bids}}
-                {{> tile}}
+                {{#isClosed expiryDate}}
+                    {{>tileclose}}
+                {{else}}
+                    {{>tile}}
+                {{/isClosed}}
             {{/each}}
         </div>
     </div>

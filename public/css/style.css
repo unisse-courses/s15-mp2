@@ -226,7 +226,14 @@ button {
     opacity: 1;
 }
 
+.closedsign {
+    color: #D01B1B;
+    font-weight: bold;
+}
 
+.closedline {
+    color: gray;
+}
 
 
 
@@ -552,9 +559,27 @@ button {
 }
 
 
+.tile.close {
+    column-gap: 10px;
+}
+
+.tile.close:hover{
+    background-color: #a6a6a6;
+    transition: 0.1s ease-out;
+}
 
 
+.tile.close >.expiry{
+    grid-column: 4;
+}
 
+
+.tile.close > .closedsign {
+    grid-row: 3;
+    grid-column: 2; 
+    justify-self: end;
+    align-self: center;
+}
 
 
 
@@ -721,9 +746,20 @@ button {
     transition: 0.1s ease-in;
 }
 
+.auctionclose_controls {
+    display: grid;
+    justify-self: center;
+    justify-items: center;
+    grid-row: 3;
+    grid-column: 2;
+    row-gap: 5px;
+}
 
-
-
+.auction_winner {
+    font-weight: bold;
+    font-size: 15px;
+    margin: 1px;
+}
 
 
 
@@ -1144,7 +1180,7 @@ button {
 
 .postclose_info > .status {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 9fr 1fr 9fr;
+    grid-template-columns: 1fr 9fr 1fr 9fr;
     grid-row: 3;
     grid-column: 1/6;
     column-gap: 3px;
@@ -1157,9 +1193,14 @@ button {
 }
 
 .postclose_info > .status > .expiryIcon {
-    grid-column: 6;
+    grid-column: 5;
 }
 
 .postclose_info > .status > .expiry {
-    grid-column: 7;
+    grid-column: 6;
+}
+
+.post.close:hover {
+    background-color: #a6a6a6;
+    transition: 0.1s ease-out;
 }

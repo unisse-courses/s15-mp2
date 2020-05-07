@@ -66,8 +66,21 @@
         <img src="{{auction.productImg}}">
     </div>
 
-    <p class="auction_soldto"> {{auction.highestBidderID.username}} </p>
+    <div class="auctionclose_controls"> 
 
-    <h1 class="productName"> {{auction.productName}} </h1>  
+        <p class="auction_winner"> WINNER: {{auction.highestBidderID.username}} </p>
+
+        <div class="watchBtns">
+            {{#if isWatched}}
+                <button class="unwatch" id="watchBtn" onclick="watchToggle('{{auction._id}}')">UNWATCH</button>
+            {{else}}
+                <button class="watch" id="watchBtn" onclick="watchToggle('{{auction._id}}')">WATCH</button>
+            {{/if}}
+        </div>
+
+    </div>
+
+
+    <h1 class="productName"> {{auction.productName}} <span class="closedsign"> CLOSED </span> </h1>  
 
 </div>
