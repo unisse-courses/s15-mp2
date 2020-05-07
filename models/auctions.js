@@ -124,12 +124,13 @@ module.exports.getAuctionByID = function( _id, next){
   auctionsModel.findOne({_id: _id}).populate('sellerID').populate('highestBidderID').exec(function(err, auction){
     if (err) throw err;
     if(auction){
-      var curAuction = auction.toObject()
+      console.log(auction['expiryDate']);
+      var curAuction = auction.toObject();
       var dateObject = curAuction['expiryDate']
       var hours = ('0' + dateObject.getHours()).slice(-2);
       var minutes = ('0' + dateObject.getMinutes()).slice(-2);
       curAuction['expiryDate'] = curAuction.expiryDate.getFullYear()+"-"+
-                          ('0' + curAuction.expiryDate.getMonth()).slice(-2)+"-"+
+                          ('0' + (curAuction.expiryDate.getMonth()+1)).slice(-2)+"-"+
                           ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
                                   hours + ":" + minutes;
       next(curAuction);
@@ -151,7 +152,7 @@ module.exports.getAuctionsBySellerID = function(_id, next){
         var minutes = ('0' + dateObject.getMinutes()).slice(-2);
 
         curAuction['expiryDate'] = curAuction.expiryDate.getFullYear()+"-"+
-                            ('0' + curAuction.expiryDate.getMonth()).slice(-2)+"-"+
+                            ('0' + (curAuction.expiryDate.getMonth()+1)).slice(-2)+"-"+
                             ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
                                     hours + ":" + minutes;
         auctions.push(curAuction);
@@ -170,7 +171,7 @@ module.exports.explore = function(next){
         var minutes = ('0' + dateObject.getMinutes()).slice(-2);
 
         curAuction['expiryDate'] = curAuction.expiryDate.getFullYear()+"-"+
-                            ('0' + curAuction.expiryDate.getMonth()).slice(-2)+"-"+
+                            ('0' + (curAuction.expiryDate.getMonth()+1)).slice(-2)+"-"+
                             ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
                                     hours + ":" + minutes;
         auctions.push(curAuction);
@@ -189,7 +190,7 @@ module.exports.activeBids = function(_id ,next){
         var hours = ('0' + dateObject.getHours()).slice(-2);
         var minutes = ('0' + dateObject.getMinutes()).slice(-2);
         curAuction['expiryDate'] = curAuction.expiryDate.getFullYear()+"-"+
-                            ('0' + curAuction.expiryDate.getMonth()).slice(-2)+"-"+
+                            ('0' + (curAuction.expiryDate.getMonth()+1)).slice(-2)+"-"+
                             ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
                                     hours + ":" + minutes;
         bids.push(curAuction);

@@ -31,11 +31,26 @@ exports.getAuctionByID = function(req,res){
             usersModel.getProfileByEmail(req.session.email, function(seller){
                 console.log(seller.username);
                 watchedModel.isWatching(seller._id, req.params.id, function(result){
-                    res.render('auction',{
-                        title: curAuction.productName,
-                        auction: curAuction,
-                        isWatched: result
-                    })
+
+                    console.log(curAuction.expiryDate);
+                    console.log(new Date(curAuction.expiryDate));
+                    console.log(new Date());
+                    if(new Date(curAuction.expiryDate) > new Date()){
+                        console.log("open");
+                        res.render('auction',{
+                            title: curAuction.productName,
+                            auction: curAuction,
+                            isWatched: result
+                        })
+                    } else {
+                        console.log("closed");
+                        res.render('auctionclose',{
+                            title: curAuction.productName,
+                            auction: curAuction,
+                            isWatched: result
+                        })
+                    }
+
                 });
             });   
         } else {
