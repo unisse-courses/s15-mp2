@@ -46,11 +46,12 @@ $(document).ready(function(){
         evt.preventDefault();
     });
     
-    // $("#startingBid").keypress(function (evt) {
-    //     evt.preventDefault();
-    // });
+    if((window.location.href).endsWith('#refresh=success')){
+        alert("Bid Successful! You are now the highest bidder");
+    } else if((window.location.href).endsWith('#refresh=failed')){
+        alert("Bid Failed.");
+    }
 
-    //Default for Login
     $(".registerDiv").hide();
     $(".loginDiv").show();
 });
@@ -66,9 +67,6 @@ var validateLogin = function(){
         $("#loginError").text("some required input fields are empty.");
         valid = false;
     }
-
-    // validate if exists
-    // validate if password match
 
     if(valid){
         $.post("/login/validate",{email:email,password:password},function(data){
@@ -225,10 +223,9 @@ var bid = function(key){
     if(bidPrice){
         $.post("/auction/bid", {_id: key, bidPrice: bidPrice}, function(data){
             if(data == "success"){
-                toAuction(key);
-                alert("Bid Successful! You are now the highest bidder");
+                refreshAuction(key, "success");
             } else {
-                toAuction(key);
+                refreshAuction(key, "failed");
             }
         });
     }
@@ -245,6 +242,11 @@ var toHome = function(){
 
 var toAuction = function(key){
     window.location.href = '/auction/'+key;
+}
+
+var refreshAuction = function(key, status){
+    location.replace('/auction/'+key+"#refresh="+status);
+    window.location.reload();
 }
 
 var toProfile = function(key){
