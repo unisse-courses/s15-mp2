@@ -141,7 +141,7 @@ module.exports.getAuctionByID = function( _id, next){
 }
 
 module.exports.getAuctionsBySellerID = function(_id, next){
-  auctionsModel.find({sellerID: _id}, function(err, results) {
+  auctionsModel.find({sellerID: _id}).sort({dateCreated: -1}).exec(function(err, results) {
     if (err) throw err;
     var auctions = [];
     results.forEach(auction=>{
@@ -161,7 +161,7 @@ module.exports.getAuctionsBySellerID = function(_id, next){
 };
 
 module.exports.explore = function(next){
-  auctionsModel.find({expiryDate: {$gt: new Date()}}).populate('sellerID').sort({watchers: 1}).limit(100).exec(function(err, results){
+  auctionsModel.find({expiryDate: {$gt: new Date()}}).populate('sellerID').sort({dateCreated: -1}).limit(100).exec(function(err, results){
     var auctions = [];
     results.forEach(function(doc){
         var curAuction = doc.toObject()
