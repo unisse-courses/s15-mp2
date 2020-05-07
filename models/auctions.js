@@ -143,7 +143,6 @@ module.exports.getAuctionByID = function( _id, next){
 module.exports.getAuctionsBySellerID = function(_id, next){
   auctionsModel.find({sellerID: _id}, function(err, results) {
     if (err) throw err;
-    console.log(results);
     var auctions = [];
     results.forEach(auction=>{
         var curAuction = auction.toObject()

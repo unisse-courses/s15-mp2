@@ -54,9 +54,19 @@ var minBid = function(highestBid, startingBid, increments){
         return highestBid + increments;
 };
 
+var isClosed = function(expiryDate, options){
+    console.log(expiryDate);
+    if(new Date(expiryDate) <= new Date()){ // closed
+        return options.fn(this);
+    } else {                                // not closed
+        return options.inverse(this);
+    }
+}
+
 app.engine('hbs', hbs({
     helpers: {
-        minBid: minBid
+        minBid: minBid,
+        isClosed: isClosed
     },
     extname: 'hbs',
     defaultView: 'main',
