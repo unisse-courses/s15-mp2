@@ -13,17 +13,6 @@ $(document).ready(function(){
         }
     });
 
-    // for (i in $("nav_left").children())
-    // {
-    //     console.log(i);
-    //     if($(this).attr("href")==window.location.pathname) {
-    //         $(this).attr("class","activeTab");
-    //     }
-    //     else {
-    //         $(this).attr("class",""); 
-    //     }
-    // }
-
     $("#file").change(function() {
         var file = $("#file");
 
@@ -41,7 +30,6 @@ $(document).ready(function(){
     var day = ("0" + tomorrow.getDate()).slice(-2);
     var month = ("0" + (tomorrow.getMonth() + 1)).slice(-2);
     date = tomorrow.getFullYear()+"-"+(month)+"-"+(day);
-    console.log(date);
     $("#expiryDate").attr('min', date);
 
     $("#expiryDate").change(function(){
@@ -156,11 +144,7 @@ var createAuction = function(){
     var productImg = $("#imgPreview").attr("src");
 
     var formattedDate = new Date(expiryDate + " " + expiryTime);
-    console.log(formattedDate);
-
-    console.log($("#expiryTime").val());
     var curTime = (("0" + tomorrow.getHours()).slice(-2)+":"+("0" + tomorrow.getMinutes()).slice(-2));
-    console.log(curTime);
 
     if(productName == "" || description == "" ||
         delivery == "" || contactNum == "" || expiryDate == "" || 
@@ -207,46 +191,42 @@ var logregSwitchTab = function (event, tabName){
 
 var watchToggle = function(key){
 
-    console.log("watchToggle:"+key);
     if($("#watchBtn").text() == "WATCH"){
         $.post("/auction/watch",{_id: key}, function(data){
             if(data == "success"){
-                console.log("Now watching current auction");
                 $("#watchBtn").text("UNWATCH");
                 $("#watchBtn").toggleClass("watch");
                 $("#watchBtn").toggleClass("unwatch");
                 $("#watchers").text(parseInt($("#watchers").text())+1);
-            } else {
-                console.log("Cannot watch auction");
-            }
+            } 
+            // else {
+            //     console.log("Cannot watch auction");
+            // }
         });
     } else {
         $.post("/auction/unwatch",{_id: key}, function(data){
             if(data == "success"){
-                console.log("Unwatched current auction");
                 $("#watchBtn").text("WATCH");
                 $("#watchBtn").toggleClass("watch");
                 $("#watchBtn").toggleClass("unwatch");
                 $("#watchers").text(parseInt($("#watchers").text())-1);
-            } else {
-                console.log("Unwatch failed");
-            }
+            } 
+            // else {
+            //     console.log("Unwatch failed");
+            // }
         });
     }
 }
 
 var bid = function(key){
-    console.log("Bidding");
 
     var bidPrice =  $("#amount").val();
     if(bidPrice){
         $.post("/auction/bid", {_id: key, bidPrice: bidPrice}, function(data){
             if(data == "success"){
-                console.log("bid successful");
                 toAuction(key);
                 alert("Bid Successful! You are now the highest bidder");
             } else {
-                console.log("bid failed");
                 toAuction(key);
             }
         });
@@ -263,11 +243,9 @@ var toHome = function(){
 }
 
 var toAuction = function(key){
-    console.log("toAuction: " + key);
     window.location.href = '/auction/'+key;
 }
 
 var toProfile = function(key){
-    console.log("toProfile: "+key);
     window.location.href = '/profile/'+key;
 }

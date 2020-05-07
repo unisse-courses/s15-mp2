@@ -70,16 +70,13 @@ module.exports.validateLogin = function(email, password, next) {
     if(err) throw err;
 
     if(!userResult){
-      console.log("Login failed");
       next();
     } else {
       bcrypt.compare(password, userResult.password, (err, result) =>{
         if (userResult && result){
-          console.log("Login successful!");
           next("valid");
         }
         else{
-            console.log("Login failed");
             next();
         }
       })
@@ -93,7 +90,6 @@ module.exports.createUser = function(username, email, img, password, next){
       if(err) throw err;
 
       if (userResults){
-          console.log("Username/email already exists");
           next();
       }
       else{
@@ -110,13 +106,10 @@ module.exports.createUser = function(username, email, img, password, next){
           newhashed.save(function(err, newUser) {
             var result;
             if (err) {
-                console.log(err.errors);
             
                 result = "";
                 next();
             } else {
-                console.log("Successfully added student!");
-                console.log(newUser);
 
                 result = "valid";
                 next(result);
