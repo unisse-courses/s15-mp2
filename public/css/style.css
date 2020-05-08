@@ -47,6 +47,7 @@ button {
     justify-content: center;
     align-items: center;
     padding: 5px;
+    column-gap: 5px;
 }
 
 .seller_info:hover {
