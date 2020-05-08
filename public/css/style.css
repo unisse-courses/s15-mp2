@@ -665,6 +665,8 @@ button {
 .auction_image {
     width: 450px;
     grid-row: 2/4;
+    display: grid;
+    row-gap: 3px;
 }
 
 .auction_image > img {
@@ -681,33 +683,34 @@ button {
 .auction_controls {
     display: grid;
     justify-self: center;
-    grid-row: 3;
+    grid-row: 3/4;
     grid-column: 2;
     row-gap: 5px;
 }
 
-.auction_controls > form {
+.auction_controls > .form {
     justify-self: center;
 }
 
-.auction_controls > form > input {
+.auction_controls > .form > input {
     height: 18px;
     font-size: 12px;
     font-weight: bold;
     width: 120px;
 }
 
-.auction_controls > form > .bidClass {
+.auction_controls > .form > .bidClass {
     background-color: black;
     color: white;
     height: 25px;
     width: 50px;
 }
 
-.auction_controls > form > .bidClass:hover {
-    background-color: #002B23;
-    color: white;
-    transition: 0.1s;
+.auction_controls > .form > .bidClass:hover {
+    background-color: whitesmoke;
+    border: 0.2px solid black;
+    color: black;
+    transition: 0.1s ease-in;
 }
 
 .auction_controls > p {
@@ -734,6 +737,7 @@ button {
     background-color: whitesmoke;
     color: black;
     transition: 0.1s ease-in;
+    border: 0.2px solid black;
 }
 
 .watchBtns > .unwatch {
@@ -742,6 +746,38 @@ button {
 
 .watchBtns > .unwatch:hover {
     background-color: whitesmoke;
+    color: black;
+    transition: 0.1s ease-in;
+    border: 0.2px solid black;
+}
+
+
+.auction_controlsleft {
+    display: grid;
+    grid-column: 0/1;
+    grid-row: 4;
+    grid-template-columns: 5fr 1fr;
+}
+
+.auction_controlsleft > p {
+    margin: 1px;
+    font-size: 14px;
+    font-weight: bold;
+    color: green;
+    text-align: end;
+    align-self: center;
+}
+
+.auction_controlsleft > button {
+    background-color: black;
+    color: white;
+    height: 25px;
+    width: 100px;
+}
+
+.auction_controlsleft > button:hover {
+    background-color: whitesmoke;
+    border: 0.2px solid black;
     color: black;
     transition: 0.1s ease-in;
 }

@@ -63,6 +63,11 @@
 
     <div class="auction_image">
         <img src="{{auction.productImg}}">
+
+        <div class="auction_controlsleft">
+            <button > Refresh </button>
+            <p class="auction_message"> Hello </p>
+        </div>
     </div>
 
     <div class="auction_controls"> 
@@ -74,10 +79,12 @@
             {{/if}}
         </div>
         
-        <input type="number" name="amount" id="amount" placeholder="Place bid amount" 
-            min="{{minBid auction.highestBid auction.startingBid auction.increments}}" 
-            step="{{auction.increments}}"> 
-        <button class="bidClass" onclick="bid('{{auction._id}}')"> Bid </button>
+        <div class="form">
+            <input type="number" name="amount" id="amount" placeholder="Place bid amount" 
+                min="{{minBid auction.highestBid auction.startingBid auction.increments}}" 
+                step="{{auction.increments}}"> 
+            <button class="bidClass" onclick="bid('{{auction._id}}')"> Bid </button>
+        </div>
 
         <p class="startingbid">Started at Php {{auction.startingBid}}.00</p>
         <p> Increments of Php {{auction.increments}}.00 </p>
