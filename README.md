@@ -28,7 +28,7 @@ You may use the following credentials to log in:
 | Email                          | Password |
 |--------------------------------|------------|
 | brian_jezreel_so@dlsu.edu.ph  | abc      | 
-| ryan_miguel_sarabia@dlsu.edu.ph | abc      | 
+| ryan_sarabia@dlsu.edu.ph | abc      | 
 | kenneth_uriel_loquinte@dlsu.edu.ph | abcd      | 
 | kenneth_loquinte@dlsu.edu.ph | scam      | 
 
