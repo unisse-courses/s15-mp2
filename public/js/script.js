@@ -46,10 +46,18 @@ $(document).ready(function(){
         evt.preventDefault();
     });
     
-    if((window.location.href).endsWith('#refresh=success')){
-        alert("Bid Successful! You are now the highest bidder");
-    } else if((window.location.href).endsWith('#refresh=failed')){
-        alert("Bid Failed.");
+    if((window.location.href).includes('/auction/') && !(window.location.href).endsWith('/auction/')){
+
+        var newTime = new Date()
+        var timestamp = ("0"+newTime.getHours()).slice(-2)+":"+("0"+newTime.getMinutes()).slice(-2);
+
+        if((window.location.href).endsWith('#refresh=success')){
+            $(".auction_message").text("Bid Successful! You are now the highest bidder "+timestamp);
+        } else if((window.location.href).endsWith('#refresh=failed')){
+            $(".auction_message").text("Bid Failed."+timestamp);
+        } else {
+            $(".auction_message").text("Last updated "+timestamp);
+        }
     }
 
     $(".registerDiv").hide();
@@ -219,7 +227,9 @@ var watchToggle = function(key){
 
 var bid = function(key){
 
+    $(".auction_message").text("Processing bid... ");
     var bidPrice =  $("#amount").val();
+
     if(bidPrice){
         $.post("/auction/bid", {_id: key, bidPrice: bidPrice}, function(data){
             if(data == "success"){

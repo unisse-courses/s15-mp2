@@ -756,7 +756,7 @@ button {
     display: grid;
     grid-column: 0/1;
     grid-row: 4;
-    grid-template-columns: 5fr 1fr;
+    grid-template-columns: 1fr 5fr;
 }
 
 .auction_controlsleft > p {
