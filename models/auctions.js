@@ -126,6 +126,13 @@ module.exports.getAuctionByID = function( _id, next){
                           ('0' + (curAuction.expiryDate.getMonth()+1)).slice(-2)+"-"+
                           ('0' + curAuction.expiryDate.getDate()).slice(-2)+ " "+
                                   hours + ":" + minutes;
+      var contact = new String (curAuction['contactNum']);
+      if(contact.startsWith("9")){
+        contact = "0" + contact;
+      } else if(contact.startsWith("63")){
+        contact = "+" + contact;
+      }
+      curAuction['contactNum'] = contact;
       next(curAuction);
     } else {
       next();
