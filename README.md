@@ -21,20 +21,25 @@ An online bidding site for Lasallians inspired by DLSU Bids to Pick.
 ### Heroku
 1. Go to https://lasell.herokuapp.com/ to view the application.
 
+## Login Credentials
 
-## Navigating the app
-
-1. **Log In/ Registration** - You will be greeted by the Log In / Registration page. You may also opt to make your own account by registering. Registering will automatically login the new user. Accessing other pages (via address bar) will not work when not logged-in. The following credentials may be used to log-in:
+You may use the following credentials to log in:
 
 | Email                          | Password |
 |--------------------------------|------------|
 | brian_jezreel_so@dlsu.edu.ph  | abc      | 
 | ryan_miguel_sarabia@dlsu.edu.ph | abc      | 
+| kenneth_uriel_loquinte@dlsu.edu.ph | abcd      | 
+| kenneth_loquinte@dlsu.edu.ph | scam      | 
 
+
+## Navigating the app
+
+1. **Log In/ Registration** - You will be greeted by the Log In / Registration page. You may use provided credentials or you can opt to register your own account. Registering will automatically login the new user. Accessing other pages (via address bar) will not work when not logged-in. 
 
 2. **Explore** - Once logged in, you will be greeted by the Explore page where all the auctions are displayed. You can view the auctions by pressing their images. Clicking the seller information at the top of each auction card will redirect you to the seller’s profile page. You can view the different pages of the app through the header of all pages.
 
-3. **Activity** - Accessed through the header, this page shows all watched and active bids of the user. Clicking on any of the shown auctions  will automatically lead the user to that auction’s page. However, if the user is currently not watching any auction or is not the highest bidder on any auction, the Activity page will be empty.
+3. **Activity** - Accessed through the header, this page shows all watched and winning bids of the user. Clicking on any of the shown auctions  will automatically lead the user to that auction’s page. However, if the user is currently not watching any auction or is not the highest bidder on any auction, the Activity page will be empty.
 
 4. **Profile** The profile page can be accessed through the header to access your own profile, or by clicking another seller’s info in the auctions. The auctions of the seller viewed will be shown in their profile page, and can be clicked to redirect to that auction’s page.
 
@@ -52,4 +57,3 @@ An online bidding site for Lasallians inspired by DLSU Bids to Pick.
   * `express-session`
   * `mongodb`
   * `mongoose`
-  * `validator`
